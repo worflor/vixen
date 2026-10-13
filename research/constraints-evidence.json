@@ -1,0 +1,20 @@
+{
+  "kind": "Annotated deployed Scryer component findings, not a whole-sampler proof DAG",
+  "engine_version": "1.0.28",
+  "algorithm": "vixen-hyperfield-c2/3",
+  "kernel": "q(t)=6t^3-8t^4+3t^5",
+  "findings": [
+    {"subject":"[[1,1,1,-1],[3,4,5,-1],[6,12,20,0]] | nullspace over ℚ","value":[["6","-8","3","1"]],"invocation":"b157a2d6-c136-4410-ab68-fc2dd52d37d2","scope":"Exact elimination derives boundary-kernel coefficients from endpoint value/derivative constraints."},
+    {"subject":"[[1,1,1],[3,4,5],[6,12,20]] | determinant","value":"2","invocation":"75b457fb-b49b-42b1-b052-22ae08653150","scope":"Nonzero determinant gives uniqueness in the chosen cubic/quartic/quintic ansatz."},
+    {"subject":"forall t. (t>=0 and t<=1) implies (6*t^3-8*t^4+3*t^5>=0 and 6*t^3-8*t^4+3*t^5<=t and 18*t^2-32*t^3+15*t^4>=0 and 18*t^2-32*t^3+15*t^4<=189/125)","value":true,"invocation":"a866dcf1-ef81-4900-a1e0-3b78443ca2e3","scope":"Exact real-line sign decomposition, not numerical sampling."},
+    {"subject":"handelman t-6*t^3+8*t^4-3*t^5 on t>=0,1-t>=0","certificate":{"degree":5,"rule":"handelman","sumOfCoeffs":"4","terms":[{"coeff":"1","exponents":[1,3]},{"coeff":"3","exponents":[2,3]}]},"invocation":"e458768e-1a4c-4a6f-b1d7-f31e1bb13fa5","scope":"Exact recomputed witness t-q=t(1-t)^3+3t^2(1-t)^3."}
+  ],
+  "refusals": [
+    {"invocation":"85515033-e715-4cdb-9849-e479b9f907fe","scope":"Direct semicolon-separated equation subject was not read. Switched to augmented-matrix nullspace rather than inventing a system response."},
+    {"invocation":"eb7a22cb-2d4e-49d6-9399-888504e6be3d","scope":"Alternate direct system syntax also refused."},
+    {"invocation":"e656f1ac-636f-42e2-a7df-816329e96be1","scope":"Matrix route does not answer inverse. Used its actual nullspace and determinant findings."},
+    {"invocation":"63b8866f-4b35-4983-b43c-a1c6e4d7a324","scope":"Handelman route does not expose a proof DAG reading. Certificate terms were returned on the ordinary subject; no live verify replay is claimed."}
+  ],
+  "composition_scope": "C2 joins, monotone scalar maps, first-hundred preservation, non-overlapping bands and constrained-guide behavior are documented composition arguments plus runtime acceptance, not one deployed formal certificate.",
+  "width_argument": "For a>0 and d>0, e/B=a*d/(d+2*a)>0 and 2*e/B<d, since 2*a*d<d*(d+2*a) reduces to 0<d^2. Zero gap returns the reference exactly."
+}

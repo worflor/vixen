@@ -1,8 +1,12 @@
-export const ALGORITHM: 'vixen-hyperfield-c2/2';
+export const ALGORITHM: 'vixen-hyperfield-c2/3';
 export const DIMENSIONS: 16;
 export const FEATURES: 48;
 export type Vector = readonly number[] | Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array | Float64Array;
+export type Floor = 'none' | 'zero' | 'baseline' | 'backbone';
 export interface Config {
+  floor?: Floor;
+  ceilingMargin?: number | null;
+  boundarySoftness?: number;
   seed?: string | number;
   stabilizer?: number;
   strength?: number;
@@ -13,6 +17,9 @@ export interface Config {
   velocity?: Vector;
 }
 export interface ResolvedConfig {
+  readonly floor: Floor;
+  readonly ceilingMargin: number | null;
+  readonly boundarySoftness: number;
   readonly seed: string | number;
   readonly stabilizer: number;
   readonly strength: number;
@@ -24,6 +31,14 @@ export interface ResolvedConfig {
 }
 export const DEFAULTS: ResolvedConfig;
 export interface Sample {
+  readonly unconstrainedValue: number;
+  readonly unconstrainedDeviation: number;
+  readonly unconstrainedGuideValue: number;
+  readonly unconstrainedGuideDeviation: number;
+  readonly floorValue: number | null;
+  readonly ceilingValue: number | null;
+  readonly boundaryWidth: number;
+  readonly constraintApplied: boolean;
   readonly x: number;
   readonly value: number;
   readonly base: number;
@@ -85,3 +100,5 @@ export function smooth5(t: number): number;
 export function bump(t: number): number;
 export function baseline(x: number): number;
 export function navigationBasis(index?: number): Readonly<{u: readonly number[]; v: readonly number[]}>;
+
+export function boundaryRamp(t: number): number;

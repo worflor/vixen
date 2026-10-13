@@ -17,3 +17,5 @@ The shipped scope is a dependency-free sampler, matching JavaScript/Python imple
 - Research audits use NumPy; runtime does not.
 
 No extra control or abstraction is planned merely to complete a framework. Let concrete integrations identify the next useful change.
+
+Boundary policies are shipped as an optional layer. Default constraints are disabled. Positive softness uses smooth joins; hard mode may introduce corners. A collapsed trajectory band deliberately removes variation. Hosted CI has infrastructure prerequisites and is not a substitute for the real local/browser acceptance reports.

@@ -88,6 +88,24 @@ Or vendor [vixen.py](vixen.py). Python 3.10+; standard library only. Neither imp
 
 See [the API reference](docs/reference/API.md) for configuration domains and the complete sample. Reward rounding, caps, authorization and anti-cheat belong in the host project.
 
+## Give the curve rules
+
+```js
+const bounded = create({
+  seed: "my-world",
+  floor: "backbone",       // none | zero | baseline | backbone
+  ceilingMargin: 0.35,      // null disables; margin is in baseline units
+  boundarySoftness: 0.1,    // 0 is hard clipping; positive uses C2 joins
+  stabilizer: 0.3
+});
+```
+
+Zero floor prevents negative raw values. Baseline/backbone floors prevent undercutting that reference. The optional ceiling is above the backbone, or above baseline when that floor is selected. Softness changes the transition width, not the limits. A zero-margin trajectory band deliberately collapses to its reference. Boundaries and stabilization are separate controls.
+
+`value` and game adapters describe the constrained signal. `unconstrainedValue` preserves the source for inspection. Inside a soft buffer, admissible values may be reshaped; outside it the mapping is identity. [Boundary semantics and evidence](docs/reference/CONSTRAINTS.md).
+
+Run `node examples/constraints.mjs`, or use the instrument's Allowed range panel.
+
 ## Tinker
 
 ```sh

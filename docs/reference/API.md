@@ -53,3 +53,11 @@ Let F0 be the existing curve, T the seeded broad backbone, and w=S(s)=6s^5-15s^4
 T uses the same counter-addressed ridge field at 32-times-broader coordinates, with gentle bounded modulation. At each point, distance to T contracts by 1-w. This is not a claim that distance to the unmodulated baseline decreases monotonically, or that every possible roughness metric decreases for every configuration.
 
 At full stabilization and maximum strength, the target lies conservatively between 0.5 and 1.5 times the positive authored baseline. Both endpoints preserve x<=100. The exact-real construction is C2; floating evaluations have roundoff.
+
+## Boundary policy configuration
+
+`floor`: none (default), zero, baseline, backbone. `ceilingMargin`: null (default) or finite [0,16], in baseline units above the chosen trajectory. `boundarySoftness`: finite [0,1], default 0.1. The upper anchor is baseline for baseline floor, original backbone otherwise. [Full boundary semantics](CONSTRAINTS.md).
+
+Current sampling adds unconstrainedValue, unconstrainedDeviation, unconstrainedGuideValue, unconstrainedGuideDeviation, nullable floorValue/ceilingValue, boundaryWidth, and constraintApplied. The guideValue/guideDeviation pair describes the constrained guide. Existing game adapters derive from constrained deviation. `boundaryRamp(t)` / Python `boundary_ramp(t)` expose the validated finite-coordinate C2 join (zero below 0, quintic in [0,1], identity above 1).
+
+Algorithm vixen-hyperfield-c2/3 explicitly restores valid v1/v2 configurations without newer constraint fields; default constraints are disabled.

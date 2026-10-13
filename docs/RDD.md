@@ -58,3 +58,9 @@ Let real integrations choose the next work:
 - Can the full projection/gating/stabilization composition earn a replayable certificate?
 
 Do not add knobs simply because they are possible. Preserve the small, understandable mechanism until a concrete use exposes a need.
+
+## Boundary-policy extension
+
+Developers need an admissible signal, not only interesting variation. Zero, baseline and backbone floors are distinct requirements. The new boundary kernel was derived with exact Scryer linear algebra and checked for range, monotonicity and endpoint joins. Full source evidence and explicit refusals live in research/constraints-evidence.json; these are component findings, not a blanket proof of the implementation.
+
+The design uses a gate-scaled transition width and smooth rational band allocation rather than hard minima between widths. A hard mode is explicit. Constraints can flatten excursions and weaken short-window coordinate distinguishability; this is a consequence of the requested admissible range, not an independently useful increase in chaos. Investigate host-specific tuning and boundary sensitivity before asserting universal improvements to roughness or balance.

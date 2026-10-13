@@ -1,10 +1,10 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="wg-power" content="script"><title>Vixen | controlled disorder</title><style>
 :root{color-scheme:dark;--bg:#101822;--panel:#172331;--ink:#f0e9dc;--muted:#b3bdcc;--line:#334457;--amber:#f3b878;--cyan:#80cee4;--purple:#bcabed}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,sans-serif}main{max-width:1040px;margin:auto;padding:38px 24px 55px}.eyebrow{letter-spacing:.17em;text-transform:uppercase;color:var(--amber);font-size:12px}h1{font:clamp(42px,6vw,72px)/1.03 Georgia,serif;letter-spacing:-.03em;margin:18px 0}h2{font:28px/1.2 Georgia,serif;margin:0 0 16px}h3{font-size:19px;margin:24px 0 12px}p{max-width:76ch}.lede{font-size:19px;color:var(--muted)}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;margin:24px 0}.controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.explorer{display:grid;grid-template-columns:minmax(230px,.8fr) minmax(240px,1.2fr);gap:22px;margin:18px 0}.note{color:var(--muted);font-size:14px}label{display:block;font-size:14px;color:var(--muted);min-width:0}input,select,textarea{display:block;width:100%;min-width:0;margin-top:7px;color:var(--ink);background:#101923;border:1px solid #52667d;border-radius:8px;padding:10px;font:inherit}input[type=range]{padding:0;accent-color:var(--amber);border:0;background:none}button{background:#283b50;border:1px solid #65778d;border-radius:8px;padding:10px 14px;color:var(--ink);font:inherit;cursor:pointer}button:hover{background:#38526d}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--amber);outline-offset:3px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}canvas{width:100%;height:340px;display:block;background:#101a26;border-radius:10px}#map{height:280px;touch-action:none}#calm{height:220px}#spectrum{height:220px}pre,code,textarea{font:13px/1.55 ui-monospace,Consolas,monospace}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#111b27;padding:16px;border-radius:10px}textarea{resize:vertical}.outputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}.output{padding:13px;border:1px solid var(--line);border-radius:10px}.output strong{display:block;font-size:22px;color:var(--amber);overflow-wrap:anywhere}.output span{font-size:12px;color:var(--muted)}details{margin:14px 0;border-top:1px solid var(--line);padding-top:12px}summary{cursor:pointer;color:var(--amber)}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;margin:14px 0}.green{color:#a3d0b5}.amber{color:var(--amber)}.purple{color:var(--purple)}.error{color:#ffb39c}.stat{color:var(--amber);font-size:14px}.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:9px;text-align:right;border-bottom:1px solid var(--line)}th:first-child,td:first-child{text-align:left}footer{color:var(--muted);font-size:13px}#vector{font-size:12px} @media(max-width:650px){main{padding:25px 14px}.panel{padding:16px}.controls{grid-template-columns:repeat(2,minmax(0,1fr))}.explorer{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:10px}.explorer>div:last-child>h3,.explorer>div:last-child>p:first-of-type{display:none}.explorer .actions{gap:6px}.explorer button{font-size:13px;padding:8px}.explorer label{font-size:12px}.explorer .note{font-size:11px}h2{font-size:25px}.outputs{grid-template-columns:repeat(2,minmax(0,1fr))}canvas{height:310px}}@media(max-width:360px){.controls{grid-template-columns:1fr}}
 </style></head><body><main><div class="eyebrow">A seeded mathematical instrument</div><h1>Vixen.<br>A landscape with teeth.</h1><p class="lede">One gentle century. Then an irregular continuation you can navigate through sixteen dimensions.</p><p>The seed chooses a landscape. Your hypervector chooses a slice through it. Drag sideways, rotate the exploration plane, or give the slice a travel vector. The first hundred stays exactly where it was.</p>
-<section class="panel"><h2>The instrument</h2><div class="controls"><label>Seed<input id="seed" type="text" value="vixen" maxlength="1024"></label><label>Seed type<select id="seedType"><option value="text">Text (UTF-8)</option><option value="number">Numeric uint32</option></select></label><label>Comparison text seed<input id="compareSeed" type="text" value="bench"></label></div><label>Stabilizer <span id="stabilizerV"></span><input id="stabilizer" type="range" min="0" max="1" step="any" value="0"></label><details><summary>Shape and display controls</summary><div class="controls"><label>Chaos strength <span id="strengthV"></span><input id="strength" type="range" min="0" max="2" step="any" value="1"></label><label>Entrance width <span id="rampV"></span><input id="ramp" type="range" min="1" max="64" step="any" value="16"></label><label>Feature scale <span id="tempoV"></span><input id="tempo" type="range" min=".25" max="4" step="any" value=".8"></label><label>Contrast <span id="contrastV"></span><input id="contrast" type="range" min="0" max="16" step="any" value="10"></label><label>View ends at <span id="extentV"></span><input id="extent" type="range" min="130" max="600" step="10" value="300"></label><label>Output<select id="output"><option value="value">Raw signed value</option><option value="deviation">Signed deviation</option><option value="multiplier">Signed multiplier</option><option value="positiveMultiplier">Positive game multiplier</option><option value="positiveValue">Positive growing value</option><option value="activity">Activity score</option></select></label><label>Rendering<select id="render"><option value="both">Smooth + points</option><option value="integer">Integer samples</option><option value="continuous">Smooth only</option></select></label><label>Vertical scale<select id="scale"><option value="linear">Linear</option><option value="symlog">Signed logarithmic</option></select></label><label>Comparison<select id="compare"><option value="yes">Show seed</option><option value="no">Hide seed</option></select></label></div></details>
+<section class="panel"><h2>The instrument</h2><div class="controls"><label>Seed<input id="seed" type="text" value="vixen" maxlength="1024"></label><label>Seed type<select id="seedType"><option value="text">Text (UTF-8)</option><option value="number">Numeric uint32</option></select></label><label>Comparison text seed<input id="compareSeed" type="text" value="bench"></label></div><label>Stabilizer <span id="stabilizerV"></span><input id="stabilizer" type="range" min="0" max="1" step="any" value="0"></label><details open><summary>Allowed range</summary><div class="controls"><label>Floor<select id="floor"><option value="none">Unrestricted</option><option value="zero">Zero — no negative values</option><option value="baseline">Authored growth</option><option value="backbone">Seeded backbone</option></select></label><label>Enable ceiling <input id="ceilingEnabled" type="checkbox" style="width:auto"></label><label>Upper margin <span id="ceilingMarginV"></span><input id="ceilingMargin" type="range" min="0" max="16" step="any" value=".5" disabled></label><label>Boundary softness <span id="boundarySoftnessV"></span><input id="boundarySoftness" type="range" min="0" max="1" step="any" value=".1"></label></div><p class="note">Margins are multiples of authored growth above the backbone, or above authored growth when that floor is selected. Softness 0 is hard clipping; positive softness uses C2 transitions. Bounds apply to raw value; negative deviation can still mean a positive value below its baseline. A zero-margin trajectory band deliberately collapses to its reference.</p></details><details><summary>Shape and display controls</summary><div class="controls"><label>Chaos strength <span id="strengthV"></span><input id="strength" type="range" min="0" max="2" step="any" value="1"></label><label>Entrance width <span id="rampV"></span><input id="ramp" type="range" min="1" max="64" step="any" value="16"></label><label>Feature scale <span id="tempoV"></span><input id="tempo" type="range" min=".25" max="4" step="any" value=".8"></label><label>Contrast <span id="contrastV"></span><input id="contrast" type="range" min="0" max="16" step="any" value="10"></label><label>View ends at <span id="extentV"></span><input id="extent" type="range" min="130" max="600" step="10" value="300"></label><label>Output<select id="output"><option value="value">Constrained raw value</option><option value="unconstrainedValue">Unconstrained diagnostic value</option><option value="deviation">Signed deviation</option><option value="multiplier">Signed multiplier</option><option value="positiveMultiplier">Positive game multiplier</option><option value="positiveValue">Positive growing value</option><option value="activity">Activity score</option></select></label><label>Rendering<select id="render"><option value="both">Smooth + points</option><option value="integer">Integer samples</option><option value="continuous">Smooth only</option></select></label><label>Vertical scale<select id="scale"><option value="linear">Linear</option><option value="symlog">Signed logarithmic</option></select></label><label>Comparison<select id="compare"><option value="yes">Show seed</option><option value="no">Hide seed</option></select></label></div></details>
 <div class="explorer"><div><canvas id="map" width="360" height="280" aria-label="Drag to explore a two-dimensional plane through the sixteen-dimensional field"></canvas><p id="mapCaption" class="note"></p></div><div><h3>Move through the hypervector</h3><p class="note">Drag the map, or use the two sliders. Amber is positive deviation; cyan is negative. The marker is your current slice. Rotating the plane changes the directions you can explore, not the curve you already selected.</p><label>Plane U <span id="uV"></span><input id="u" type="range" min="-6" max="6" step="any" value="0"></label><label>Plane V <span id="vV"></span><input id="v" type="range" min="-6" max="6" step="any" value="0"></label><label>Travel / 100 x <span id="travelV"></span><input id="travel" type="range" min="-2" max="2" step="any" value="0"></label><div class="actions"><button id="rotatePlane" type="button">Rotate</button><button id="origin" type="button">Origin</button></div><p id="planeLabel" class="note"></p><details><summary>Current 16-dimensional coordinate</summary><pre id="vector"></pre></details></div></div>
 <div class="actions"><button id="reset" type="button">Reset instrument</button><button id="nextSeed" type="button">Next seed</button></div><p id="error" class="error" role="status"></p><div class="legend"><span class="green">● First hundred</span><span class="amber">● Current slice</span><span class="purple">Dashed violet: comparison seed</span><span>Dashed cyan: stabilized backbone</span></div><canvas id="plot" width="960" height="340" aria-label="The selected Vixen slice"></canvas><p id="axes" class="note"></p><p id="stats" class="stat"></p><p id="hover" class="note">Tap or point at the curve to inspect a coordinate.</p><p class="note">The map is a cross-section at the inspected x, not the entire function. A flat map before x=100 is intentional. Signed-log affects display only. No samples are clipped. Integer sampling may hide fine structure.</p></section>
-<section class="panel"><h2>Stabilize onto a trajectory</h2><p>0 preserves the hyperfield exactly. Moving toward 1 pulls excursions onto a slow seeded backbone: broader field coordinates and gentler modulation. At 1 the curve is a positive, smoothly evolving growth trajectory, still shaped by the seed and hypervector. It is not guaranteed strictly monotone under every possible travel path.</p><pre>w = S(stabilizer)
+<section class="panel"><h2>Give the landscape boundaries</h2><p>Choose zero, authored growth, or the seeded backbone as a floor. An optional ceiling adds an upper envelope. The quintic q(t)=6t³−8t⁴+3t⁵ blends the boundary into the untouched curve with matching first and second derivatives. Softness controls a transition band, never permission to violate the limit. The first hundred stays exact.</p><p class="note">Constrained values drive every game adapter and CSV export. Unconstrained diagnostic fields preserve the source signal. Under limits, full stabilization follows the constrained guide; the unrestricted linear distance law does not extend through a nonlinear boundary map.</p><h2>Stabilize onto a trajectory</h2><p>0 preserves the hyperfield exactly. Moving toward 1 pulls excursions onto a slow seeded backbone: broader field coordinates and gentler modulation. At 1 the curve is a positive, smoothly evolving growth trajectory, still shaped by the seed and hypervector. It is not guaranteed strictly monotone under every possible travel path.</p><pre>w = S(stabilizer)
 T = B(x) · (1 + strength · G(x) · 0.25 · tanh(2 · broadScore))
 F = (1−w) · F_unstabilized + w · T</pre><p class="note">The broad field samples progression and latent coordinates at 1/32 scale. Distance to T contracts by 1−w in real arithmetic. Strength affects both field and backbone; stabilizer changes their blend. All first-hundred values remain untouched.</p></section><section class="panel"><h2>The first hundred, unchanged</h2><canvas id="calm" width="960" height="220" aria-label="The preserved opening with two dips"></canvas><p class="note">Same exponential-plus-notches baseline, same sampled minima at 41 and 70, across every seed, hypervector and travel path.</p></section>
 <section class="panel"><h2>Inspect a coordinate</h2><label>Input x<input id="inspectX" type="number" min="1" max="50000" step="any" value="144"></label><div class="outputs" id="outputs"></div><pre id="point"></pre><details><summary>Which fields are contributing?</summary><pre id="ridges"></pre><p class="note">These are fine-field contributions and their broad backbone counterparts, before nonlinear transforms; they are not additive final-output weights or scheduled events. There is no shared pulse clock anymore.</p></details></section>
@@ -347,8 +347,8 @@ O(48) work per configured-path sample; no prior samples needed.</pre><details><s
   &quot;legacy_proof_example&quot;:{&quot;property&quot;:&quot;Old compact pulse K(1/2)=27/64&quot;,&quot;verify_invocation&quot;:&quot;6e8fc9ee-8c75-4f52-9e5a-e7b4b14a2e09&quot;,&quot;result&quot;:&quot;valid&quot;,&quot;scope&quot;:&quot;This exact rational example only. The hyperfield does not use this pulse.&quot;}
 }
 </pre><p>This is procedural disorder, not proven dynamical chaos. Source-bound component mathematics and implementation tests have different scopes. Finite-window spectral improvement does not establish universal absence of rhythm. The 16-axis sensitivity audit is local and numerical; all directions need not have equal strength.</p></details><details><summary>Verification ledger</summary><pre>{
-  &quot;algorithm&quot;: &quot;vixen-hyperfield-c2/2&quot;,
-  &quot;node_tests&quot;: 18,
+  &quot;algorithm&quot;: &quot;vixen-hyperfield-c2/3&quot;,
+  &quot;node_tests&quot;: 26,
   &quot;cross_port&quot;: {
     &quot;cases&quot;: 2400,
     &quot;max_scaled_error&quot;: 6.30328289449802e-14,
@@ -357,120 +357,73 @@ O(48) work per configured-path sample; no prior samples needed.</pre><details><s
     &quot;navigation_basis_parity_tolerance&quot;: 1e-12,
     &quot;seed_types&quot;: 10
   },
-  &quot;spectral_scope&quot;: &quot;Finite-window numerical diagnostics; not proof of chaos, independence, or no periodicity&quot;,
-  &quot;rhythm_windows&quot;: [
-    [
-      180,
-      1203.5
+  &quot;constraints&quot;: {
+    &quot;floors&quot;: [
+      &quot;none&quot;,
+      &quot;zero&quot;,
+      &quot;baseline&quot;,
+      &quot;backbone&quot;
     ],
-    [
-      2300,
-      3323.5
-    ],
-    [
-      6000,
-      7023.5
-    ]
-  ],
-  &quot;rhythm_seeds&quot;: 25,
-  &quot;sensitivity&quot;: [
-    {
-      &quot;seed&quot;: &quot;vixen&quot;,
-      &quot;local_rank&quot;: 16,
-      &quot;condition_number&quot;: 5.125656259865751,
-      &quot;participation_ratio&quot;: 9.706281650742316,
-      &quot;largest_variance_fraction&quot;: 0.19681240825754553
-    },
-    {
-      &quot;seed&quot;: &quot;vixen&quot;,
-      &quot;local_rank&quot;: 16,
-      &quot;condition_number&quot;: 4.71267669393819,
-      &quot;participation_ratio&quot;: 8.89588065283264,
-      &quot;largest_variance_fraction&quot;: 0.20548318163491516
-    },
-    {
-      &quot;seed&quot;: &quot;bench&quot;,
-      &quot;local_rank&quot;: 16,
-      &quot;condition_number&quot;: 4.5288302788852,
-      &quot;participation_ratio&quot;: 9.483445649615563,
-      &quot;largest_variance_fraction&quot;: 0.17796885720006517
-    },
-    {
-      &quot;seed&quot;: &quot;bench&quot;,
-      &quot;local_rank&quot;: 16,
-      &quot;condition_number&quot;: 4.661093636866366,
-      &quot;participation_ratio&quot;: 8.64981509716989,
-      &quot;largest_variance_fraction&quot;: 0.19999650663692023
-    },
-    {
-      &quot;seed&quot;: 42,
-      &quot;local_rank&quot;: 16,
-      &quot;condition_number&quot;: 6.386568837454661,
-      &quot;participation_ratio&quot;: 8.145655365300327,
-      &quot;largest_variance_fraction&quot;: 0.2374515060200811
-    },
-    {
-      &quot;seed&quot;: 42,
-      &quot;local_rank&quot;: 16,
-      &quot;condition_number&quot;: 5.159343746368507,
-      &quot;participation_ratio&quot;: 8.62342264116714,
-      &quot;largest_variance_fraction&quot;: 0.2050137433240069
-    }
-  ],
+    &quot;ceiling&quot;: &quot;nullable baseline-scaled margin&quot;,
+    &quot;softness&quot;: &quot;0 hard; positive C2 boundary kernel&quot;
+  },
   &quot;acceptance&quot;: [
-    &quot;first100 unchanged&quot;,
-    &quot;random-access replay&quot;,
-    &quot;latent/path equivalence&quot;,
-    &quot;bounds and domains&quot;,
-    &quot;all axes locally active&quot;,
-    &quot;numerical C2 joins&quot;,
-    &quot;less former-clock phase coherence than legacy full-seed in every audited window&quot;
+    &quot;unchanged calm prefix&quot;,
+    &quot;unrestricted legacy replay&quot;,
+    &quot;feasible floor/ceiling band&quot;,
+    &quot;zero-width collapse&quot;,
+    &quot;constrained stabilization endpoint&quot;,
+    &quot;derived adapters agree with constrained signal&quot;,
+    &quot;numerical C2 kernel joins&quot;
   ],
+  &quot;component_evidence&quot;: &quot;research/constraints-evidence.json&quot;,
   &quot;limitations&quot;: [
-    &quot;This is not a proof of dynamical chaos or universal lack of rhythm.&quot;,
-    &quot;Numerical local rank is not a global independence theorem.&quot;,
+    &quot;Component evidence is not a whole-program certificate.&quot;,
+    &quot;Hard boundaries may introduce corners.&quot;,
+    &quot;Nonlinear boundaries do not preserve the unrestricted linear contraction factor.&quot;,
     &quot;Float curves are not cross-platform bitwise lockstep.&quot;
   ],
   &quot;browser_ui&quot;: {
-    &quot;served&quot;: false,
+    &quot;standalone&quot;: true,
     &quot;viewports&quot;: [
       {
         &quot;width&quot;: 1200,
-        &quot;negative&quot;: 8,
-        &quot;pointerNavigation&quot;: true,
-        &quot;rotationPreservesCurve&quot;: true,
-        &quot;overflow&quot;: false
+        &quot;floors&quot;: 4,
+        &quot;preciseConfig&quot;: true,
+        &quot;nonnegativeCSV&quot;: true,
+        &quot;columns&quot;: 34,
+        &quot;overflow&quot;: false,
+        &quot;pageErrors&quot;: []
       },
       {
         &quot;width&quot;: 390,
-        &quot;negative&quot;: 8,
-        &quot;pointerNavigation&quot;: true,
-        &quot;rotationPreservesCurve&quot;: true,
-        &quot;overflow&quot;: false
+        &quot;floors&quot;: 4,
+        &quot;preciseConfig&quot;: true,
+        &quot;nonnegativeCSV&quot;: true,
+        &quot;columns&quot;: 34,
+        &quot;overflow&quot;: false,
+        &quot;pageErrors&quot;: []
       },
       {
         &quot;width&quot;: 320,
-        &quot;negative&quot;: 8,
-        &quot;pointerNavigation&quot;: true,
-        &quot;rotationPreservesCurve&quot;: true,
-        &quot;overflow&quot;: false
+        &quot;floors&quot;: 4,
+        &quot;preciseConfig&quot;: true,
+        &quot;nonnegativeCSV&quot;: true,
+        &quot;columns&quot;: 34,
+        &quot;overflow&quot;: false,
+        &quot;pageErrors&quot;: []
       }
-    ],
-    &quot;preciseReplay&quot;: true,
-    &quot;outputModes&quot;: 6,
-    &quot;csvColumns&quot;: 28,
-    &quot;csvRows&quot;: 301,
-    &quot;oldAlgorithmRefused&quot;: true,
-    &quot;pageErrors&quot;: []
+    ]
   }
 }</pre></details></section>
 <section class="panel"><h2>Take the landscape with you</h2><label>Replay configuration<textarea id="config" rows="12" spellcheck="false"></textarea></label><div class="actions"><button id="applyConfig" type="button">Apply configuration</button><button id="csv" type="button">Generate integer CSV</button></div><label>Current samples<textarea id="csvText" rows="7" spellcheck="false" readonly></textarea></label><details><summary>JavaScript engine · no dependencies</summary><textarea id="jsSource" rows="20" spellcheck="false" readonly>/** Vixen: continuous seeded 16-D landscape. Dependency-free, random-access.
  * Save algorithm + full config. Float curves are not cross-libm bitwise lockstep.
  */
-export const ALGORITHM=&#x27;vixen-hyperfield-c2/2&#x27;;
+export const ALGORITHM=&#x27;vixen-hyperfield-c2/3&#x27;;
 export const DIMENSIONS=16,FEATURES=48;
-export const DEFAULTS=Object.freeze({seed:&#x27;vixen&#x27;,stabilizer:0,strength:1,ramp:16,tempo:.8,contrast:10,latent:Object.freeze(Array(16).fill(0)),velocity:Object.freeze(Array(16).fill(0))});
+export const DEFAULTS=Object.freeze({seed:&#x27;vixen&#x27;,floor:&#x27;none&#x27;,ceilingMargin:null,boundarySoftness:.1,stabilizer:0,strength:1,ramp:16,tempo:.8,contrast:10,latent:Object.freeze(Array(16).fill(0)),velocity:Object.freeze(Array(16).fill(0))});
 export function smooth5(t){if(t&lt;=0)return 0;if(t&gt;=1)return 1;return t*t*t*(10+t*(-15+6*t));}
+export function boundaryRamp(t){if(typeof t!==&#x27;number&#x27;||!Number.isFinite(t))throw new RangeError(&#x27;Finite boundary coordinate required&#x27;);return t&lt;=0?0:t&gt;=1?t:t*t*t*(6+t*(-8+3*t));}
 export function bump(t){if(Math.abs(t)&gt;=1)return 0;const v=1-t*t;return v*v*v;}
 export function seed32(seed){if(typeof seed===&#x27;number&#x27;){if(!Number.isInteger(seed)||seed&lt;0||seed&gt;0xffffffff)throw new RangeError(&#x27;Numeric seed must be uint32&#x27;);return seed&gt;&gt;&gt;0;}if(typeof seed!==&#x27;string&#x27;)throw new TypeError(&#x27;Seed must be text or uint32&#x27;);if(seed.length&gt;1024)throw new RangeError(&#x27;Text seed limit: 1024 UTF-16 code units&#x27;);let h=2166136261;for(const b of new TextEncoder().encode(seed))h=Math.imul(h^b,16777619)&gt;&gt;&gt;0;return h;}
 export function hash32(seed,index,channel){let h=(seed^Math.imul(index&gt;&gt;&gt;0,0x9e3779b9)^Math.imul(channel&gt;&gt;&gt;0,0x85ebca6b))&gt;&gt;&gt;0;h=Math.imul(h^(h&gt;&gt;&gt;16),0x7feb352d)&gt;&gt;&gt;0;h=Math.imul(h^(h&gt;&gt;&gt;15),0x846ca68b)&gt;&gt;&gt;0;return (h^(h&gt;&gt;&gt;16))&gt;&gt;&gt;0;}
@@ -483,30 +436,62 @@ export function baseline(x){return x*Math.exp(x/100)-25*Math.exp(-((x-42)**2)/32
 export function navigationBasis(index=0){if(!Number.isInteger(index)||index&lt;0||index&gt;100000)throw new RangeError(&#x27;Plane index must be an integer in [0,100000]&#x27;);let u,v;if(index===0){u=Array.from({length:16},(_,j)=&gt;j===0?1:0);v=Array.from({length:16},(_,j)=&gt;j===1?1:0);}else{const seed=seed32(&#x27;vixen-navigation&#x27;);u=normal(Array.from({length:16},(_,j)=&gt;2*unit(seed,index,100+j)-1));const raw=Array.from({length:16},(_,j)=&gt;2*unit(seed,index,200+j)-1),proj=dot(raw,u);v=raw.map((n,j)=&gt;n-proj*u[j]);if(dot(v,v)&lt;1e-20){const k=u.reduce((best,n,j)=&gt;Math.abs(n)&lt;Math.abs(u[best])?j:best,0);v=Array.from({length:16},(_,j)=&gt;(j===k?1:0)-u[k]*u[j]);}v=normal(v);}return Object.freeze({u:Object.freeze(u),v:Object.freeze(v)});}
 export function create(options={}){
  if(!options||typeof options!==&#x27;object&#x27;||Array.isArray(options))throw new TypeError(&#x27;Config must be an object&#x27;);for(const key of Object.keys(options))if(!Object.hasOwn(DEFAULTS,key))throw new TypeError(&#x27;Unknown config key: &#x27;+key);
- const c={...DEFAULTS,...options};const seed=seed32(c.seed);for(const [key,lo,hi] of [[&#x27;stabilizer&#x27;,0,1],[&#x27;strength&#x27;,0,2],[&#x27;ramp&#x27;,1,64],[&#x27;tempo&#x27;,.25,4],[&#x27;contrast&#x27;,0,16]])if(typeof c[key]!==&#x27;number&#x27;||!Number.isFinite(c[key])||c[key]&lt;lo||c[key]&gt;hi)throw new RangeError(`${key} must lie in [${lo},${hi}]`);
+ const c={...DEFAULTS,...options};if(![&#x27;none&#x27;,&#x27;zero&#x27;,&#x27;baseline&#x27;,&#x27;backbone&#x27;].includes(c.floor))throw new RangeError(&#x27;Invalid floor&#x27;);if(c.ceilingMargin!==null&amp;&amp;(typeof c.ceilingMargin!==&#x27;number&#x27;||!Number.isFinite(c.ceilingMargin)||c.ceilingMargin&lt;0||c.ceilingMargin&gt;16))throw new RangeError(&#x27;ceilingMargin must be null or in [0,16]&#x27;);const seed=seed32(c.seed);for(const [key,lo,hi] of [[&#x27;boundarySoftness&#x27;,0,1],[&#x27;stabilizer&#x27;,0,1],[&#x27;strength&#x27;,0,2],[&#x27;ramp&#x27;,1,64],[&#x27;tempo&#x27;,.25,4],[&#x27;contrast&#x27;,0,16]])if(typeof c[key]!==&#x27;number&#x27;||!Number.isFinite(c[key])||c[key]&lt;lo||c[key]&gt;hi)throw new RangeError(`${key} must lie in [${lo},${hi}]`);
  c.latent=Object.freeze(vector(c.latent,128));c.velocity=Object.freeze(vector(c.velocity,4));const config=Object.freeze(c);
  const ridges=[];for(let i=0;i&lt;FEATURES;i++){const direction=Object.freeze(normal(Array.from({length:16},(_,j)=&gt;2*unit(seed,i,20+j)-1))),scale=(4+76*unit(seed,i,1))*c.tempo,basePhase=unit(seed,i,2)*1024,phase=basePhase+dot(direction,c.latent),slope=1/scale+dot(direction,c.velocity)/100;ridges.push(Object.freeze({index:i,direction,scale,basePhase,phase,slope,guidePhase:basePhase+dot(direction,c.latent)/32,guideSlope:slope/32,channel:i+200}));}
  function noise(p,channel){const k=Math.floor(p),t=p-k,a=2*unit(seed,k,channel)-1,b=2*unit(seed,k+1,channel)-1;return a+(b-a)*smooth5(t);}
- function result(x,score,guideScore){const gate=smooth5((x-100)/c.ramp),rawDeviation=c.strength*gate*2.2*Math.tanh(c.contrast*score),guideDeviation=c.strength*gate*.25*Math.tanh(2*guideScore),w=smooth5(c.stabilizer),deviation=w===0?rawDeviation:w===1?guideDeviation:rawDeviation+(guideDeviation-rawDeviation)*w,base=baseline(x),positiveMultiplier=Math.exp(.55*Math.tanh(deviation));return Object.freeze({x,value:base+base*deviation,base,score,guideScore,rawDeviation,guideDeviation,guideValue:base+base*guideDeviation,stabilizationWeight:w,deviation,multiplier:1+deviation,activity:.5+.5*Math.tanh(deviation),positiveMultiplier,positiveValue:base*positiveMultiplier,gate});}
+ function floorMap(y,lo,e){if(y&lt;=lo)return lo;if(e===0||y&gt;=lo+e)return y;const t=(y-lo)/e;return lo+e*boundaryRamp(t);}
+ function ceilMap(y,hi,e){if(y&gt;=hi)return hi;if(e===0||y&lt;=hi-e)return y;const t=(hi-y)/e;return hi-e*boundaryRamp(t);}
+ function limits(base,guide,gate){
+ const floorValue=c.floor===&#x27;none&#x27;?null:c.floor===&#x27;zero&#x27;?0:c.floor===&#x27;baseline&#x27;?base:guide,ceilingValue=c.ceilingMargin===null?null:(c.floor===&#x27;baseline&#x27;?base:guide)+c.ceilingMargin*base,a=c.strength*gate*c.boundarySoftness,gap=floorValue!==null&amp;&amp;ceilingValue!==null?(ceilingValue-floorValue)/base:null,boundaryWidth=gap!==null?(gap&lt;=0||a===0?0:base*(a*gap/(gap+2*a))):(floorValue===null&amp;&amp;ceilingValue===null?0:base*a);
+ return {floorValue,ceilingValue,boundaryWidth};
+ }
+ function apply(y,lim){if(lim.floorValue!==null&amp;&amp;lim.ceilingValue!==null&amp;&amp;lim.ceilingValue&lt;=lim.floorValue)return lim.floorValue;const lo=lim.floorValue===null?y:floorMap(y,lim.floorValue,lim.boundaryWidth);return lim.ceilingValue===null?lo:ceilMap(lo,lim.ceilingValue,lim.boundaryWidth);}
+ function result(x,score,guideScore){
+ const gate=smooth5((x-100)/c.ramp),rawDeviation=c.strength*gate*2.2*Math.tanh(c.contrast*score),unconstrainedGuideDeviation=c.strength*gate*.25*Math.tanh(2*guideScore),w=smooth5(c.stabilizer),u=w===0?rawDeviation:w===1?unconstrainedGuideDeviation:rawDeviation+(unconstrainedGuideDeviation-rawDeviation)*w,base=baseline(x),unconstrainedValue=base+base*u,unconstrainedGuideValue=base+base*unconstrainedGuideDeviation,lim=limits(base,unconstrainedGuideValue,gate),value=apply(unconstrainedValue,lim),guideValue=apply(unconstrainedGuideValue,lim),deviation=c.floor===&#x27;none&#x27;&amp;&amp;c.ceilingMargin===null?u:(value-base)/base,guideDeviation=c.floor===&#x27;none&#x27;&amp;&amp;c.ceilingMargin===null?unconstrainedGuideDeviation:(guideValue-base)/base,positiveMultiplier=Math.exp(.55*Math.tanh(deviation));
+ return Object.freeze({x,value,base,score,guideScore,rawDeviation,guideDeviation,guideValue,stabilizationWeight:w,deviation,multiplier:1+deviation,activity:.5+.5*Math.tanh(deviation),positiveMultiplier,positiveValue:base*positiveMultiplier,gate,unconstrainedValue,unconstrainedDeviation:u,unconstrainedGuideValue,unconstrainedGuideDeviation,...lim,constraintApplied:value!==unconstrainedValue});
+ }
  function sample(x){coordinate(x);let score=0,guideScore=0;if(x&gt;100){const u=x-100;for(const r of ridges){score+=noise(r.phase+u*r.slope,r.channel)/FEATURES;guideScore+=noise(r.guidePhase+u*r.guideSlope,r.channel)/FEATURES;}}return result(x,score,guideScore);}
  function at(x,h){coordinate(x);const latent=vector(h);let score=0,guideScore=0;if(x&gt;100){const u=x-100;for(const r of ridges){const projection=dot(r.direction,latent);score+=noise(r.basePhase+projection+u/r.scale,r.channel)/FEATURES;guideScore+=noise(r.basePhase+projection/32+u/(32*r.scale),r.channel)/FEATURES;}}return result(x,score,guideScore);}
  function location(x){coordinate(x);const t=Math.max(0,x-100)/100;return Object.freeze(c.latent.map((h,i)=&gt;h+t*c.velocity[i]));}
  function inspect(x){coordinate(x);if(x&lt;=100)return Object.freeze([]);const u=x-100;return Object.freeze(ridges.map(r=&gt;{const p=r.phase+u*r.slope;return Object.freeze({index:r.index,scale:r.scale,coordinate:p,cell:Math.floor(p),contribution:noise(p,r.channel)/FEATURES,guideContribution:noise(r.guidePhase+u*r.guideSlope,r.channel)/FEATURES});}).sort((a,b)=&gt;Math.abs(b.contribution)-Math.abs(a.contribution)));}
  const envelope=(2.2*(1-smooth5(c.stabilizer))+.25*smooth5(c.stabilizer))*c.strength;
- const bounds=Object.freeze({score:Object.freeze([-1,1]),deviation:Object.freeze([-envelope,envelope]),multiplier:Object.freeze([1-envelope,1+envelope]),activity:Object.freeze([0,1]),positiveMultiplier:Object.freeze([Math.exp(-.55),Math.exp(.55)])});
+ const lower=c.floor===&#x27;none&#x27;?-envelope:c.floor===&#x27;zero&#x27;?-1:c.floor===&#x27;baseline&#x27;?0:-.25*c.strength;
+ const upper=c.ceilingMargin===null?envelope:(c.floor===&#x27;baseline&#x27;?0:.25*c.strength)+c.ceilingMargin;
+ const bounds=Object.freeze({score:Object.freeze([-1,1]),deviation:Object.freeze([lower,upper]),multiplier:Object.freeze([1+lower,1+upper]),activity:Object.freeze([0,1]),positiveMultiplier:Object.freeze([Math.exp(-.55),Math.exp(.55)])});
  return Object.freeze({algorithm:ALGORITHM,config,bounds,sample,at,location,inspect,ridges:()=&gt;Object.freeze(ridges.slice())});
 }
 
-export function restore(snapshot){if(!snapshot||typeof snapshot!==&#x27;object&#x27;)throw new TypeError(&#x27;Snapshot required&#x27;);if(snapshot.algorithm===ALGORITHM)return create(snapshot.config);if(snapshot.algorithm===&#x27;vixen-hyperfield-c2/1&#x27;){if(Object.hasOwn(snapshot.config||{},&#x27;stabilizer&#x27;))throw new TypeError(&#x27;Old snapshots cannot contain stabilizer&#x27;);return create({...snapshot.config,stabilizer:0});}throw new Error(&#x27;Algorithm mismatch: use the matching archived sampler&#x27;);}
+export function restore(snapshot){
+ if(!snapshot||typeof snapshot!==&#x27;object&#x27;||!snapshot.config||typeof snapshot.config!==&#x27;object&#x27;||Array.isArray(snapshot.config))throw new TypeError(&#x27;Snapshot with configuration required&#x27;);
+ if(snapshot.algorithm===ALGORITHM)return create(snapshot.config);
+ if([&#x27;vixen-hyperfield-c2/1&#x27;,&#x27;vixen-hyperfield-c2/2&#x27;].includes(snapshot.algorithm)){
+  if([&#x27;floor&#x27;,&#x27;ceilingMargin&#x27;,&#x27;boundarySoftness&#x27;].some(k=&gt;Object.hasOwn(snapshot.config,k)))throw new TypeError(&#x27;Old snapshots cannot contain constraints&#x27;);
+  if(snapshot.algorithm===&#x27;vixen-hyperfield-c2/1&#x27;&amp;&amp;Object.hasOwn(snapshot.config,&#x27;stabilizer&#x27;))throw new TypeError(&#x27;Old snapshots cannot contain stabilizer&#x27;);
+  return create({...snapshot.config,floor:&#x27;none&#x27;,ceilingMargin:null});
+ }
+ throw new Error(&#x27;Algorithm mismatch: use the matching archived sampler&#x27;);
+}
 </textarea></details><details><summary>Python engine · standard library</summary><textarea id="pySource" rows="20" spellcheck="false" readonly>&quot;&quot;&quot;Vixen hyperfield reference port; standard library, no RNG state.&quot;&quot;&quot;
 import math
 from types import MappingProxyType
-ALGORITHM=&#x27;vixen-hyperfield-c2/2&#x27;
+ALGORITHM=&#x27;vixen-hyperfield-c2/3&#x27;
 DIMENSIONS=16
 FEATURES=48
-DEFAULTS={&#x27;seed&#x27;:&#x27;vixen&#x27;,&#x27;stabilizer&#x27;:0,&#x27;strength&#x27;:1,&#x27;ramp&#x27;:16,&#x27;tempo&#x27;:.8,&#x27;contrast&#x27;:10,&#x27;latent&#x27;:(0,)*16,&#x27;velocity&#x27;:(0,)*16}
+DEFAULTS={&#x27;seed&#x27;:&#x27;vixen&#x27;,&#x27;floor&#x27;:&#x27;none&#x27;,&#x27;ceilingMargin&#x27;:None,&#x27;boundarySoftness&#x27;:.1,&#x27;stabilizer&#x27;:0,&#x27;strength&#x27;:1,&#x27;ramp&#x27;:16,&#x27;tempo&#x27;:.8,&#x27;contrast&#x27;:10,&#x27;latent&#x27;:(0,)*16,&#x27;velocity&#x27;:(0,)*16}
 MASK=0xffffffff
 def smooth5(t):return 0 if t&lt;=0 else 1 if t&gt;=1 else t*t*t*(10+t*(-15+6*t))
+def boundary_ramp(t):
+ if isinstance(t,bool) or not isinstance(t,(int,float)) or not math.isfinite(t):raise ValueError(&#x27;Finite boundary coordinate required&#x27;)
+ return 0 if t&lt;=0 else t if t&gt;=1 else t*t*t*(6+t*(-8+3*t))
+def _floor_map(y,lo,e):
+ if y&lt;=lo:return lo
+ if e==0 or y&gt;=lo+e:return y
+ return lo+e*boundary_ramp((y-lo)/e)
+def _ceil_map(y,hi,e):
+ if y&gt;=hi:return hi
+ if e==0 or y&lt;=hi-e:return y
+ return hi-e*boundary_ramp((hi-y)/e)
 def bump(t):return 0 if abs(t)&gt;=1 else (1-t*t)**3
 def seed32(seed):
  if isinstance(seed,bool):raise TypeError(&#x27;Seed must be text or uint32&#x27;)
@@ -547,6 +532,9 @@ class Vixen:
  def __init__(self,**options):
   if set(options)-set(DEFAULTS):raise ValueError(&#x27;Unknown configuration field&#x27;)
   c={**DEFAULTS,**options};self.seed=seed32(c[&#x27;seed&#x27;])
+  if c[&#x27;floor&#x27;] not in (&#x27;none&#x27;,&#x27;zero&#x27;,&#x27;baseline&#x27;,&#x27;backbone&#x27;):raise ValueError(&#x27;Invalid floor&#x27;)
+  m=c[&#x27;ceilingMargin&#x27;]
+  if m is not None and (isinstance(m,bool) or not isinstance(m,(int,float)) or not math.isfinite(m) or not 0&lt;=m&lt;=16):raise ValueError(&#x27;Invalid ceilingMargin&#x27;)
   for key,lo,hi in [(&#x27;stabilizer&#x27;,0,1),(&#x27;strength&#x27;,0,2),(&#x27;ramp&#x27;,1,64),(&#x27;tempo&#x27;,.25,4),(&#x27;contrast&#x27;,0,16)]:
    v=c[key]
    if isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) or not lo&lt;=v&lt;=hi:raise ValueError(&#x27;Invalid &#x27;+key)
@@ -558,13 +546,26 @@ class Vixen:
    ridges.append(MappingProxyType({&#x27;index&#x27;:i,&#x27;direction&#x27;:direction,&#x27;scale&#x27;:scale,&#x27;basePhase&#x27;:base_phase,&#x27;phase&#x27;:base_phase+_dot(direction,c[&#x27;latent&#x27;]),&#x27;slope&#x27;:1/scale+_dot(direction,c[&#x27;velocity&#x27;])/100,&#x27;guidePhase&#x27;:base_phase+_dot(direction,c[&#x27;latent&#x27;])/32,&#x27;guideSlope&#x27;:(1/scale+_dot(direction,c[&#x27;velocity&#x27;])/100)/32,&#x27;channel&#x27;:i+200}))
   self._ridges=tuple(ridges)
   envelope=(2.2*(1-smooth5(c[&#x27;stabilizer&#x27;]))+.25*smooth5(c[&#x27;stabilizer&#x27;]))*c[&#x27;strength&#x27;]
-  self.bounds=MappingProxyType({&#x27;score&#x27;:(-1,1),&#x27;deviation&#x27;:(-envelope,envelope),&#x27;multiplier&#x27;:(1-envelope,1+envelope),&#x27;activity&#x27;:(0,1),&#x27;positiveMultiplier&#x27;:(math.exp(-.55),math.exp(.55))})
+  lower=-envelope if c[&#x27;floor&#x27;]==&#x27;none&#x27; else -1 if c[&#x27;floor&#x27;]==&#x27;zero&#x27; else 0 if c[&#x27;floor&#x27;]==&#x27;baseline&#x27; else -.25*c[&#x27;strength&#x27;]
+  upper=envelope if c[&#x27;ceilingMargin&#x27;] is None else (0 if c[&#x27;floor&#x27;]==&#x27;baseline&#x27; else .25*c[&#x27;strength&#x27;])+c[&#x27;ceilingMargin&#x27;]
+  self.bounds=MappingProxyType({&#x27;score&#x27;:(-1,1),&#x27;deviation&#x27;:(lower,upper),&#x27;multiplier&#x27;:(1+lower,1+upper),&#x27;activity&#x27;:(0,1),&#x27;positiveMultiplier&#x27;:(math.exp(-.55),math.exp(.55))})
  def _noise(self,p,channel):
   k=math.floor(p);t=p-k;a=2*_unit(self.seed,k,channel)-1;b=2*_unit(self.seed,k+1,channel)-1
   return a+(b-a)*smooth5(t)
+ def _limits(self,base,guide,gate):
+  c=self.config;lo=None if c[&#x27;floor&#x27;]==&#x27;none&#x27; else 0 if c[&#x27;floor&#x27;]==&#x27;zero&#x27; else base if c[&#x27;floor&#x27;]==&#x27;baseline&#x27; else guide
+  hi=None if c[&#x27;ceilingMargin&#x27;] is None else (base if c[&#x27;floor&#x27;]==&#x27;baseline&#x27; else guide)+c[&#x27;ceilingMargin&#x27;]*base
+  a=c[&#x27;strength&#x27;]*gate*c[&#x27;boundarySoftness&#x27;];gap=(hi-lo)/base if lo is not None and hi is not None else None
+  e=(0 if gap&lt;=0 or a==0 else base*(a*gap/(gap+2*a))) if gap is not None else (0 if lo is None and hi is None else base*a)
+  return {&#x27;floorValue&#x27;:lo,&#x27;ceilingValue&#x27;:hi,&#x27;boundaryWidth&#x27;:e}
+ def _apply(self,y,lim):
+  lo=lim[&#x27;floorValue&#x27;];hi=lim[&#x27;ceilingValue&#x27;];e=lim[&#x27;boundaryWidth&#x27;]
+  if lo is not None and hi is not None and hi&lt;=lo:return lo
+  y=y if lo is None else _floor_map(y,lo,e)
+  return y if hi is None else _ceil_map(y,hi,e)
  def _result(self,x,score,guide_score):
-  c=self.config;gate=smooth5((x-100)/c[&#x27;ramp&#x27;]);raw=c[&#x27;strength&#x27;]*gate*2.2*math.tanh(c[&#x27;contrast&#x27;]*score);guide=c[&#x27;strength&#x27;]*gate*.25*math.tanh(2*guide_score);w=smooth5(c[&#x27;stabilizer&#x27;]);d=raw if w==0 else guide if w==1 else raw+(guide-raw)*w;base=baseline(x);pos=math.exp(.55*math.tanh(d))
-  return {&#x27;x&#x27;:x,&#x27;value&#x27;:base+base*d,&#x27;base&#x27;:base,&#x27;score&#x27;:score,&#x27;guideScore&#x27;:guide_score,&#x27;rawDeviation&#x27;:raw,&#x27;guideDeviation&#x27;:guide,&#x27;guideValue&#x27;:base+base*guide,&#x27;stabilizationWeight&#x27;:w,&#x27;deviation&#x27;:d,&#x27;multiplier&#x27;:1+d,&#x27;activity&#x27;:.5+.5*math.tanh(d),&#x27;positiveMultiplier&#x27;:pos,&#x27;positiveValue&#x27;:base*pos,&#x27;gate&#x27;:gate}
+  c=self.config;gate=smooth5((x-100)/c[&#x27;ramp&#x27;]);raw=c[&#x27;strength&#x27;]*gate*2.2*math.tanh(c[&#x27;contrast&#x27;]*score);ug=c[&#x27;strength&#x27;]*gate*.25*math.tanh(2*guide_score);w=smooth5(c[&#x27;stabilizer&#x27;]);u=raw if w==0 else ug if w==1 else raw+(ug-raw)*w;base=baseline(x);uv=base+base*u;ugv=base+base*ug;lim=self._limits(base,ugv,gate);value=self._apply(uv,lim);gv=self._apply(ugv,lim);inactive=c[&#x27;floor&#x27;]==&#x27;none&#x27; and c[&#x27;ceilingMargin&#x27;] is None;d=u if inactive else (value-base)/base;gd=ug if inactive else (gv-base)/base;pos=math.exp(.55*math.tanh(d))
+  return {&#x27;x&#x27;:x,&#x27;value&#x27;:value,&#x27;base&#x27;:base,&#x27;score&#x27;:score,&#x27;guideScore&#x27;:guide_score,&#x27;rawDeviation&#x27;:raw,&#x27;guideDeviation&#x27;:gd,&#x27;guideValue&#x27;:gv,&#x27;stabilizationWeight&#x27;:w,&#x27;deviation&#x27;:d,&#x27;multiplier&#x27;:1+d,&#x27;activity&#x27;:.5+.5*math.tanh(d),&#x27;positiveMultiplier&#x27;:pos,&#x27;positiveValue&#x27;:base*pos,&#x27;gate&#x27;:gate,&#x27;unconstrainedValue&#x27;:uv,&#x27;unconstrainedDeviation&#x27;:u,&#x27;unconstrainedGuideValue&#x27;:ugv,&#x27;unconstrainedGuideDeviation&#x27;:ug,**lim,&#x27;constraintApplied&#x27;:value!=uv}
  def sample(self,x):
   _coordinate(x);score=guide_score=0
   if x&gt;100:
@@ -595,20 +596,23 @@ class Vixen:
   return sorted(out,key=lambda r:abs(r[&#x27;contribution&#x27;]),reverse=True)
 
 def restore(snapshot):
- if not isinstance(snapshot,dict):raise ValueError(&#x27;Snapshot required&#x27;)
- if snapshot.get(&#x27;algorithm&#x27;)==ALGORITHM:return Vixen(**snapshot[&#x27;config&#x27;])
- if snapshot.get(&#x27;algorithm&#x27;)==&#x27;vixen-hyperfield-c2/1&#x27;:
-  if &#x27;stabilizer&#x27; in snapshot.get(&#x27;config&#x27;,{}):raise ValueError(&#x27;Old snapshots cannot contain stabilizer&#x27;)
-  return Vixen(**{**snapshot[&#x27;config&#x27;],&#x27;stabilizer&#x27;:0})
+ if not isinstance(snapshot,dict) or not isinstance(snapshot.get(&#x27;config&#x27;),(dict,MappingProxyType)):raise ValueError(&#x27;Snapshot with configuration required&#x27;)
+ cfg=snapshot[&#x27;config&#x27;];algorithm=snapshot.get(&#x27;algorithm&#x27;)
+ if algorithm==ALGORITHM:return Vixen(**cfg)
+ if algorithm in (&#x27;vixen-hyperfield-c2/1&#x27;,&#x27;vixen-hyperfield-c2/2&#x27;):
+  if any(k in cfg for k in (&#x27;floor&#x27;,&#x27;ceilingMargin&#x27;,&#x27;boundarySoftness&#x27;)):raise ValueError(&#x27;Old snapshots cannot contain constraints&#x27;)
+  if algorithm==&#x27;vixen-hyperfield-c2/1&#x27; and &#x27;stabilizer&#x27; in cfg:raise ValueError(&#x27;Old snapshots cannot contain stabilizer&#x27;)
+  return Vixen(**{**cfg,&#x27;floor&#x27;:&#x27;none&#x27;,&#x27;ceilingMargin&#x27;:None})
  raise ValueError(&#x27;Algorithm mismatch&#x27;)
 </textarea></details><p class="note">Save the algorithm identifier plus the complete configuration, including all latent and velocity coordinates. Older sampler configurations are deliberately refused rather than silently reinterpreted; the former engine is preserved in the source package. Samples support x=1–50,000. Floating curves are not cross-platform bitwise lockstep: bake shared samples or use a specified numeric backend for that requirement.</p></section><footer>Vixen remains the same public instrument. Its internal algorithm identifier exists to preserve an honest replay contract. The document runs locally after loading; exploration makes no network requests.</footer></main><script>
 /** Vixen: continuous seeded 16-D landscape. Dependency-free, random-access.
  * Save algorithm + full config. Float curves are not cross-libm bitwise lockstep.
  */
-const ALGORITHM='vixen-hyperfield-c2/2';
+const ALGORITHM='vixen-hyperfield-c2/3';
 const DIMENSIONS=16,FEATURES=48;
-const DEFAULTS=Object.freeze({seed:'vixen',stabilizer:0,strength:1,ramp:16,tempo:.8,contrast:10,latent:Object.freeze(Array(16).fill(0)),velocity:Object.freeze(Array(16).fill(0))});
+const DEFAULTS=Object.freeze({seed:'vixen',floor:'none',ceilingMargin:null,boundarySoftness:.1,stabilizer:0,strength:1,ramp:16,tempo:.8,contrast:10,latent:Object.freeze(Array(16).fill(0)),velocity:Object.freeze(Array(16).fill(0))});
 function smooth5(t){if(t<=0)return 0;if(t>=1)return 1;return t*t*t*(10+t*(-15+6*t));}
+function boundaryRamp(t){if(typeof t!=='number'||!Number.isFinite(t))throw new RangeError('Finite boundary coordinate required');return t<=0?0:t>=1?t:t*t*t*(6+t*(-8+3*t));}
 function bump(t){if(Math.abs(t)>=1)return 0;const v=1-t*t;return v*v*v;}
 function seed32(seed){if(typeof seed==='number'){if(!Number.isInteger(seed)||seed<0||seed>0xffffffff)throw new RangeError('Numeric seed must be uint32');return seed>>>0;}if(typeof seed!=='string')throw new TypeError('Seed must be text or uint32');if(seed.length>1024)throw new RangeError('Text seed limit: 1024 UTF-16 code units');let h=2166136261;for(const b of new TextEncoder().encode(seed))h=Math.imul(h^b,16777619)>>>0;return h;}
 function hash32(seed,index,channel){let h=(seed^Math.imul(index>>>0,0x9e3779b9)^Math.imul(channel>>>0,0x85ebca6b))>>>0;h=Math.imul(h^(h>>>16),0x7feb352d)>>>0;h=Math.imul(h^(h>>>15),0x846ca68b)>>>0;return (h^(h>>>16))>>>0;}
@@ -621,38 +625,60 @@ function baseline(x){return x*Math.exp(x/100)-25*Math.exp(-((x-42)**2)/32)-38*Ma
 function navigationBasis(index=0){if(!Number.isInteger(index)||index<0||index>100000)throw new RangeError('Plane index must be an integer in [0,100000]');let u,v;if(index===0){u=Array.from({length:16},(_,j)=>j===0?1:0);v=Array.from({length:16},(_,j)=>j===1?1:0);}else{const seed=seed32('vixen-navigation');u=normal(Array.from({length:16},(_,j)=>2*unit(seed,index,100+j)-1));const raw=Array.from({length:16},(_,j)=>2*unit(seed,index,200+j)-1),proj=dot(raw,u);v=raw.map((n,j)=>n-proj*u[j]);if(dot(v,v)<1e-20){const k=u.reduce((best,n,j)=>Math.abs(n)<Math.abs(u[best])?j:best,0);v=Array.from({length:16},(_,j)=>(j===k?1:0)-u[k]*u[j]);}v=normal(v);}return Object.freeze({u:Object.freeze(u),v:Object.freeze(v)});}
 function create(options={}){
  if(!options||typeof options!=='object'||Array.isArray(options))throw new TypeError('Config must be an object');for(const key of Object.keys(options))if(!Object.hasOwn(DEFAULTS,key))throw new TypeError('Unknown config key: '+key);
- const c={...DEFAULTS,...options};const seed=seed32(c.seed);for(const [key,lo,hi] of [['stabilizer',0,1],['strength',0,2],['ramp',1,64],['tempo',.25,4],['contrast',0,16]])if(typeof c[key]!=='number'||!Number.isFinite(c[key])||c[key]<lo||c[key]>hi)throw new RangeError(`${key} must lie in [${lo},${hi}]`);
+ const c={...DEFAULTS,...options};if(!['none','zero','baseline','backbone'].includes(c.floor))throw new RangeError('Invalid floor');if(c.ceilingMargin!==null&&(typeof c.ceilingMargin!=='number'||!Number.isFinite(c.ceilingMargin)||c.ceilingMargin<0||c.ceilingMargin>16))throw new RangeError('ceilingMargin must be null or in [0,16]');const seed=seed32(c.seed);for(const [key,lo,hi] of [['boundarySoftness',0,1],['stabilizer',0,1],['strength',0,2],['ramp',1,64],['tempo',.25,4],['contrast',0,16]])if(typeof c[key]!=='number'||!Number.isFinite(c[key])||c[key]<lo||c[key]>hi)throw new RangeError(`${key} must lie in [${lo},${hi}]`);
  c.latent=Object.freeze(vector(c.latent,128));c.velocity=Object.freeze(vector(c.velocity,4));const config=Object.freeze(c);
  const ridges=[];for(let i=0;i<FEATURES;i++){const direction=Object.freeze(normal(Array.from({length:16},(_,j)=>2*unit(seed,i,20+j)-1))),scale=(4+76*unit(seed,i,1))*c.tempo,basePhase=unit(seed,i,2)*1024,phase=basePhase+dot(direction,c.latent),slope=1/scale+dot(direction,c.velocity)/100;ridges.push(Object.freeze({index:i,direction,scale,basePhase,phase,slope,guidePhase:basePhase+dot(direction,c.latent)/32,guideSlope:slope/32,channel:i+200}));}
  function noise(p,channel){const k=Math.floor(p),t=p-k,a=2*unit(seed,k,channel)-1,b=2*unit(seed,k+1,channel)-1;return a+(b-a)*smooth5(t);}
- function result(x,score,guideScore){const gate=smooth5((x-100)/c.ramp),rawDeviation=c.strength*gate*2.2*Math.tanh(c.contrast*score),guideDeviation=c.strength*gate*.25*Math.tanh(2*guideScore),w=smooth5(c.stabilizer),deviation=w===0?rawDeviation:w===1?guideDeviation:rawDeviation+(guideDeviation-rawDeviation)*w,base=baseline(x),positiveMultiplier=Math.exp(.55*Math.tanh(deviation));return Object.freeze({x,value:base+base*deviation,base,score,guideScore,rawDeviation,guideDeviation,guideValue:base+base*guideDeviation,stabilizationWeight:w,deviation,multiplier:1+deviation,activity:.5+.5*Math.tanh(deviation),positiveMultiplier,positiveValue:base*positiveMultiplier,gate});}
+ function floorMap(y,lo,e){if(y<=lo)return lo;if(e===0||y>=lo+e)return y;const t=(y-lo)/e;return lo+e*boundaryRamp(t);}
+ function ceilMap(y,hi,e){if(y>=hi)return hi;if(e===0||y<=hi-e)return y;const t=(hi-y)/e;return hi-e*boundaryRamp(t);}
+ function limits(base,guide,gate){
+ const floorValue=c.floor==='none'?null:c.floor==='zero'?0:c.floor==='baseline'?base:guide,ceilingValue=c.ceilingMargin===null?null:(c.floor==='baseline'?base:guide)+c.ceilingMargin*base,a=c.strength*gate*c.boundarySoftness,gap=floorValue!==null&&ceilingValue!==null?(ceilingValue-floorValue)/base:null,boundaryWidth=gap!==null?(gap<=0||a===0?0:base*(a*gap/(gap+2*a))):(floorValue===null&&ceilingValue===null?0:base*a);
+ return {floorValue,ceilingValue,boundaryWidth};
+ }
+ function apply(y,lim){if(lim.floorValue!==null&&lim.ceilingValue!==null&&lim.ceilingValue<=lim.floorValue)return lim.floorValue;const lo=lim.floorValue===null?y:floorMap(y,lim.floorValue,lim.boundaryWidth);return lim.ceilingValue===null?lo:ceilMap(lo,lim.ceilingValue,lim.boundaryWidth);}
+ function result(x,score,guideScore){
+ const gate=smooth5((x-100)/c.ramp),rawDeviation=c.strength*gate*2.2*Math.tanh(c.contrast*score),unconstrainedGuideDeviation=c.strength*gate*.25*Math.tanh(2*guideScore),w=smooth5(c.stabilizer),u=w===0?rawDeviation:w===1?unconstrainedGuideDeviation:rawDeviation+(unconstrainedGuideDeviation-rawDeviation)*w,base=baseline(x),unconstrainedValue=base+base*u,unconstrainedGuideValue=base+base*unconstrainedGuideDeviation,lim=limits(base,unconstrainedGuideValue,gate),value=apply(unconstrainedValue,lim),guideValue=apply(unconstrainedGuideValue,lim),deviation=c.floor==='none'&&c.ceilingMargin===null?u:(value-base)/base,guideDeviation=c.floor==='none'&&c.ceilingMargin===null?unconstrainedGuideDeviation:(guideValue-base)/base,positiveMultiplier=Math.exp(.55*Math.tanh(deviation));
+ return Object.freeze({x,value,base,score,guideScore,rawDeviation,guideDeviation,guideValue,stabilizationWeight:w,deviation,multiplier:1+deviation,activity:.5+.5*Math.tanh(deviation),positiveMultiplier,positiveValue:base*positiveMultiplier,gate,unconstrainedValue,unconstrainedDeviation:u,unconstrainedGuideValue,unconstrainedGuideDeviation,...lim,constraintApplied:value!==unconstrainedValue});
+ }
  function sample(x){coordinate(x);let score=0,guideScore=0;if(x>100){const u=x-100;for(const r of ridges){score+=noise(r.phase+u*r.slope,r.channel)/FEATURES;guideScore+=noise(r.guidePhase+u*r.guideSlope,r.channel)/FEATURES;}}return result(x,score,guideScore);}
  function at(x,h){coordinate(x);const latent=vector(h);let score=0,guideScore=0;if(x>100){const u=x-100;for(const r of ridges){const projection=dot(r.direction,latent);score+=noise(r.basePhase+projection+u/r.scale,r.channel)/FEATURES;guideScore+=noise(r.basePhase+projection/32+u/(32*r.scale),r.channel)/FEATURES;}}return result(x,score,guideScore);}
  function location(x){coordinate(x);const t=Math.max(0,x-100)/100;return Object.freeze(c.latent.map((h,i)=>h+t*c.velocity[i]));}
  function inspect(x){coordinate(x);if(x<=100)return Object.freeze([]);const u=x-100;return Object.freeze(ridges.map(r=>{const p=r.phase+u*r.slope;return Object.freeze({index:r.index,scale:r.scale,coordinate:p,cell:Math.floor(p),contribution:noise(p,r.channel)/FEATURES,guideContribution:noise(r.guidePhase+u*r.guideSlope,r.channel)/FEATURES});}).sort((a,b)=>Math.abs(b.contribution)-Math.abs(a.contribution)));}
  const envelope=(2.2*(1-smooth5(c.stabilizer))+.25*smooth5(c.stabilizer))*c.strength;
- const bounds=Object.freeze({score:Object.freeze([-1,1]),deviation:Object.freeze([-envelope,envelope]),multiplier:Object.freeze([1-envelope,1+envelope]),activity:Object.freeze([0,1]),positiveMultiplier:Object.freeze([Math.exp(-.55),Math.exp(.55)])});
+ const lower=c.floor==='none'?-envelope:c.floor==='zero'?-1:c.floor==='baseline'?0:-.25*c.strength;
+ const upper=c.ceilingMargin===null?envelope:(c.floor==='baseline'?0:.25*c.strength)+c.ceilingMargin;
+ const bounds=Object.freeze({score:Object.freeze([-1,1]),deviation:Object.freeze([lower,upper]),multiplier:Object.freeze([1+lower,1+upper]),activity:Object.freeze([0,1]),positiveMultiplier:Object.freeze([Math.exp(-.55),Math.exp(.55)])});
  return Object.freeze({algorithm:ALGORITHM,config,bounds,sample,at,location,inspect,ridges:()=>Object.freeze(ridges.slice())});
 }
 
-function restore(snapshot){if(!snapshot||typeof snapshot!=='object')throw new TypeError('Snapshot required');if(snapshot.algorithm===ALGORITHM)return create(snapshot.config);if(snapshot.algorithm==='vixen-hyperfield-c2/1'){if(Object.hasOwn(snapshot.config||{},'stabilizer'))throw new TypeError('Old snapshots cannot contain stabilizer');return create({...snapshot.config,stabilizer:0});}throw new Error('Algorithm mismatch: use the matching archived sampler');}
+function restore(snapshot){
+ if(!snapshot||typeof snapshot!=='object'||!snapshot.config||typeof snapshot.config!=='object'||Array.isArray(snapshot.config))throw new TypeError('Snapshot with configuration required');
+ if(snapshot.algorithm===ALGORITHM)return create(snapshot.config);
+ if(['vixen-hyperfield-c2/1','vixen-hyperfield-c2/2'].includes(snapshot.algorithm)){
+  if(['floor','ceilingMargin','boundarySoftness'].some(k=>Object.hasOwn(snapshot.config,k)))throw new TypeError('Old snapshots cannot contain constraints');
+  if(snapshot.algorithm==='vixen-hyperfield-c2/1'&&Object.hasOwn(snapshot.config,'stabilizer'))throw new TypeError('Old snapshots cannot contain stabilizer');
+  return create({...snapshot.config,floor:'none',ceilingMargin:null});
+ }
+ throw new Error('Algorithm mismatch: use the matching archived sampler');
+}
 
 let configDirty=false;
 const $=id=>document.getElementById(id),zero=()=>Array(16).fill(0);
 let instrument=create(),comparison=create({seed:'bench'}),anchor=zero(),pathVelocity=zero(),planeIndex=0,basis=navigationBasis(0),suffix=0,customPath=false;
 const number=v=>Math.abs(v)>=1e6?v.toExponential(4):v.toLocaleString('en-US',{maximumFractionDigits:4});
 function latent(){return anchor.map((h,i)=>h+Number($('u').value)*basis.u[i]+Number($('v').value)*basis.v[i]);}
-function readConfig(){const seed=$('seedType').value==='number'?Number($('seed').value):$('seed').value;return {seed,stabilizer:Number($('stabilizer').value),strength:Number($('strength').value),ramp:Number($('ramp').value),tempo:Number($('tempo').value),contrast:Number($('contrast').value),latent:latent(),velocity:pathVelocity.slice()};}
+function readConfig(){const seed=$('seedType').value==='number'?Number($('seed').value):$('seed').value;return {seed,floor:$('floor').value,ceilingMargin:$('ceilingEnabled').checked?Number($('ceilingMargin').value):null,boundarySoftness:Number($('boundarySoftness').value),stabilizer:Number($('stabilizer').value),strength:Number($('strength').value),ramp:Number($('ramp').value),tempo:Number($('tempo').value),contrast:Number($('contrast').value),latent:latent(),velocity:pathVelocity.slice()};}
 function updatePoint(x){try{const p=instrument.sample(x);$('point').textContent=JSON.stringify({...p,latent:instrument.location(x)},null,2);$('outputs').replaceChildren();for(const [label,key] of [['Raw value','value'],['Signed deviation','deviation'],['Signed multiplier','multiplier'],['Positive multiplier','positiveMultiplier'],['Positive growing value','positiveValue'],['Activity · not probability','activity']]){const d=document.createElement('div');d.className='output';const strong=document.createElement('strong');strong.textContent=number(p[key]);const span=document.createElement('span');span.textContent=label;d.append(strong,span);$('outputs').append(d);}$('ridges').textContent=JSON.stringify(instrument.inspect(x).slice(0,8),null,2);$('hover').textContent=`x ${x.toFixed(3)} · raw ${number(p.value)} · deviation ${number(p.deviation)}`;$('vector').textContent=JSON.stringify(instrument.config.latent,null,2);$('error').textContent='';queueMap();}catch(e){$('error').textContent=e.message;}}
 function plot(id,end,calm=false){
  const c=$(id),ctx=c.getContext('2d'),width=Math.max(260,c.clientWidth),height=calm?220:340,dpr=Math.min(2,window.devicePixelRatio||1);c.width=Math.round(width*dpr);c.height=Math.round(height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,width,height);const L=width<500?53:64,R=15,T=27,D=32,key=calm?'value':$('output').value,kind=calm?'continuous':$('render').value,withCompare=!calm&&$('compare').value==='yes';const useLog=!calm&&$('scale').value==='symlog',factor=['value','positiveValue'].includes(key)?50:1;
  const trans=y=>useLog?Math.sign(y)*Math.log1p(Math.abs(y)/factor):y,inv=y=>useLog?Math.sign(y)*factor*Math.expm1(Math.abs(y)):y;
  const dense=[],other=[],ints=[];const steps=Math.ceil((end-1)/.25);for(let i=0;i<=steps;i++){const x=1+(end-1)*i/steps;dense.push([x,instrument.sample(x)[key]]);if(withCompare)other.push([x,comparison.sample(x)[key]]);}for(let x=1;x<=end;x++)ints.push([x,instrument.sample(x)[key]]);
- const shown=kind==='integer'?ints:dense;let lo=Infinity,hi=-Infinity;for(const p of [...shown,...other]){lo=Math.min(lo,trans(p[1]));hi=Math.max(hi,trans(p[1]));}if(['value','positiveValue'].includes(key))for(const z of shown){for(const value of (instrument.config.stabilizer>0?[baseline(z[0]),instrument.sample(z[0]).guideValue]:[baseline(z[0])])){const b=trans(value);lo=Math.min(lo,b);hi=Math.max(hi,b);}}let neutral=key==='activity'?.5:['multiplier','positiveMultiplier'].includes(key)?1:0;lo=Math.min(lo,trans(neutral));hi=Math.max(hi,trans(neutral));const pad=Math.max((hi-lo)*.12,1e-3);lo-=pad;hi+=pad;const X=x=>L+(x-1)/(end-1)*(width-L-R),Y=y=>T+(hi-trans(y))/(hi-lo)*(height-T-D);
+ const shown=kind==='integer'?ints:dense;let lo=Infinity,hi=-Infinity;for(const p of [...shown,...other]){lo=Math.min(lo,trans(p[1]));hi=Math.max(hi,trans(p[1]));}if(['value','positiveValue'].includes(key))for(const z of shown){for(const value of [baseline(z[0]),instrument.sample(z[0]).guideValue,...(!calm&&key==='value'?[instrument.sample(z[0]).floorValue,instrument.sample(z[0]).ceilingValue].filter(v=>v!==null):[])].filter(Number.isFinite)){const b=trans(value);lo=Math.min(lo,b);hi=Math.max(hi,b);}}let neutral=key==='activity'?.5:['multiplier','positiveMultiplier'].includes(key)?1:0;lo=Math.min(lo,trans(neutral));hi=Math.max(hi,trans(neutral));const pad=Math.max((hi-lo)*.12,1e-3);lo-=pad;hi+=pad;const X=x=>L+(x-1)/(end-1)*(width-L-R),Y=y=>T+(hi-trans(y))/(hi-lo)*(height-T-D);
  ctx.font='11px system-ui';ctx.fillStyle='#a9b4c4';for(let i=0;i<=4;i++){const y=lo+(hi-lo)*i/4,v=inv(y);ctx.strokeStyle='#2e3a4b';ctx.beginPath();ctx.moveTo(L,T+(hi-y)/(hi-lo)*(height-T-D));ctx.lineTo(width-R,T+(hi-y)/(hi-lo)*(height-T-D));ctx.stroke();const text=Math.abs(v)>9999?v.toExponential(0):Math.abs(v)>10?v.toFixed(0):v.toFixed(2);ctx.fillText(text,2,Y(v)+3);}ctx.strokeStyle='#64718a';ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(L,Y(neutral));ctx.lineTo(width-R,Y(neutral));ctx.stroke();ctx.setLineDash([]);
  for(let i=0;i<=4;i++){const x=1+(end-1)*i/4;ctx.fillStyle='#a9b4c4';ctx.fillText(x.toFixed(0),Math.min(width-28,X(x)-8),height-8);}
  function line(data,color,dash=false){ctx.strokeStyle=color;ctx.lineWidth=1.7;ctx.setLineDash(dash?[5,5]:[]);ctx.beginPath();data.forEach((p,i)=>i?ctx.lineTo(X(p[0]),Y(p[1])):ctx.moveTo(X(p[0]),Y(p[1])));ctx.stroke();ctx.setLineDash([]);}
- if(['value','positiveValue'].includes(key))line(shown.map(p=>[p[0],baseline(p[0])]),'#71839b',true);if(!calm&&key==='value'&&instrument.config.stabilizer>0)line(shown.map(p=>[p[0],instrument.sample(p[0]).guideValue]),'#80cee4',true);if(withCompare)line(other,'#b5a7ed',true);line(shown.filter(p=>p[0]<=100),'#a3d0b5');if(!calm){line(shown.filter(p=>p[0]>=100),'#f5b778');ctx.strokeStyle='#735c44';ctx.beginPath();ctx.moveTo(X(100),T);ctx.lineTo(X(100),height-D);ctx.stroke();ctx.fillStyle='#f5b778';ctx.fillText('100',X(100)+4,T-9);if(kind!=='continuous'){for(const p of ints){ctx.fillStyle=p[0]<=100?'#a3d0b5':'#f5b778';ctx.beginPath();ctx.arc(X(p[0]),Y(p[1]),1.8,0,2*Math.PI);ctx.fill();}}}
+ if(['value','positiveValue'].includes(key))line(shown.map(p=>[p[0],baseline(p[0])]),'#71839b',true);if(!calm&&key==='value'&&(instrument.config.stabilizer>0||instrument.config.floor!=='none'||instrument.config.ceilingMargin!==null))line(shown.map(p=>[p[0],instrument.sample(p[0]).guideValue]),'#80cee4',true);if(!calm&&key==='value'){for(const [bound,color] of [['floorValue','#b6db95'],['ceilingValue','#f3dc8b']])if(instrument.sample(end)[bound]!==null)line(shown.map(p=>[p[0],instrument.sample(p[0])[bound]]),color,true);}
+ if(withCompare)line(other,'#b5a7ed',true);line(shown.filter(p=>p[0]<=100),'#a3d0b5');if(!calm){line(shown.filter(p=>p[0]>=100),'#f5b778');ctx.strokeStyle='#735c44';ctx.beginPath();ctx.moveTo(X(100),T);ctx.lineTo(X(100),height-D);ctx.stroke();ctx.fillStyle='#f5b778';ctx.fillText('100',X(100)+4,T-9);if(kind!=='continuous'){for(const p of ints){ctx.fillStyle=p[0]<=100?'#a3d0b5':'#f5b778';ctx.beginPath();ctx.arc(X(p[0]),Y(p[1]),1.8,0,2*Math.PI);ctx.fill();}}}
  const image=ctx.getImageData(0,0,c.width,c.height);function cursor(x){ctx.putImageData(image,0,0);if(!Number.isFinite(x)||x<1||x>end)return;const y=instrument.sample(x)[key];ctx.strokeStyle='#eae5d8';ctx.setLineDash([2,5]);ctx.beginPath();ctx.moveTo(X(x),T);ctx.lineTo(X(x),height-D);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#fff4d8';ctx.beginPath();ctx.arc(X(x),Y(y),4,0,2*Math.PI);ctx.fill();}window.vixenCursors=window.vixenCursors||{};window.vixenCursors[id]=cursor;cursor(Number($('inspectX').value));
  c.onpointermove=c.onpointerdown=ev=>{const rect=c.getBoundingClientRect();let x=1+((ev.clientX-rect.left)/rect.width*width-L)/(width-L-R)*(end-1);x=Math.max(1,Math.min(end,x));if(kind==='integer')x=Math.round(x);$('inspectX').value=x.toFixed(3);updatePoint(x);cursor(x);};return ints;
 }
@@ -662,17 +688,17 @@ let mapPending=false;function queueMap(){if(mapPending)return;mapPending=true;re
 let redrawPending=false;function queueRedraw(){if(redrawPending)return;redrawPending=true;requestAnimationFrame(()=>{redrawPending=false;redraw();});}
 function fft(real,imag){const n=real.length;for(let i=1,j=0;i<n;i++){let bit=n>>1;for(;j&bit;bit>>=1)j^=bit;j^=bit;if(i<j){[real[i],real[j]]=[real[j],real[i]];[imag[i],imag[j]]=[imag[j],imag[i]];}}for(let len=2;len<=n;len<<=1){const a=-2*Math.PI/len,wr=Math.cos(a),wi=Math.sin(a);for(let i=0;i<n;i+=len){let ur=1,ui=0;for(let j=0;j<len/2;j++){const k=i+j,l=k+len/2,tr=ur*real[l]-ui*imag[l],ti=ur*imag[l]+ui*real[l];real[l]=real[k]-tr;imag[l]=imag[k]-ti;real[k]+=tr;imag[k]+=ti;const z=ur*wr-ui*wi;ui=ur*wi+ui*wr;ur=z;}}}}
 function drawSpectrum(){const n=1024,real=new Float64Array(n),imag=new Float64Array(n),energy=[];let mean=0;for(let i=0;i<n;i++){const d=instrument.sample(180+i).deviation;energy.push(d*d);mean+=d*d/n;}for(let i=0;i<n;i++)real[i]=(energy[i]-mean)*(.5-.5*Math.cos(2*Math.PI*i/(n-1)));fft(real,imag);const power=Array.from({length:n/2+1},(_,i)=>real[i]*real[i]+imag[i]*imag[i]),total=power.slice(1).reduce((a,b)=>a+b,0),k=Math.round(n/12),band=power.slice(k-1,k+2).reduce((a,b)=>a+b,0);const c=$('spectrum'),ctx=c.getContext('2d'),w=Math.max(260,c.clientWidth),h=220,dpr=Math.min(2,devicePixelRatio||1);c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);const L=38,R=14,T=12,B=30,X=f=>L+f/.5*(w-L-R),Y=db=>T+(0-db)/90*(h-T-B);ctx.font='11px system-ui';ctx.fillStyle='#aab8c9';for(const db of [-90,-60,-30,0]){ctx.strokeStyle='#334457';ctx.beginPath();ctx.moveTo(L,Y(db));ctx.lineTo(w-R,Y(db));ctx.stroke();ctx.fillText(db+'',2,Y(db)+3);}for(const f of [0,.125,.25,.375,.5])ctx.fillText(f.toFixed(3),X(f)-12,h-8);if(total>1e-24){ctx.strokeStyle='#bcabed';ctx.lineWidth=1.5;ctx.beginPath();for(let i=1;i<power.length;i++){const db=Math.max(-90,10*Math.log10(Math.max(1e-30,power[i]/total)));if(i===1)ctx.moveTo(X(i/n),Y(db));else ctx.lineTo(X(i/n),Y(db));}ctx.stroke();}ctx.strokeStyle='#f3b878';ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(X(1/12),T);ctx.lineTo(X(1/12),h-B);ctx.stroke();ctx.setLineDash([]);$('spectralStats').textContent=total>1e-24?`Former-clock band: ${(100*band/total).toFixed(3)}% of this slice's energy-spectrum power · x-frequency, cycles/unit · display floor −90 dB`:'Flat deviation: no nonzero spectrum to analyze.';window.vixenSpectrum={power,total,clockBandFraction:total>1e-24?band/total:0};}
-function redraw(){try{instrument=create(readConfig());comparison=create({...instrument.config,seed:$('compareSeed').value});for(const id of ['stabilizer','strength','ramp','tempo','contrast','extent','u','v'])$(id+'V').textContent=Number($(id).value).toFixed(id==='extent'?0:2);$('travelV').textContent=customPath?'preserved vector':Number($('travel').value).toFixed(2);const samples=plot('plot',Number($('extent').value));plot('calm',100,true);const raw=Array.from({length:Number($('extent').value)-100},(_,i)=>instrument.sample(101+i)),ys=raw.map(p=>p.value);let turns=0,run=0,maxRun=0;for(let i=1;i<ys.length;i++){run=ys[i]>ys[i-1]?run+1:0;maxRun=Math.max(maxRun,run);if(i<ys.length-1&&(ys[i]-ys[i-1])*(ys[i+1]-ys[i])<0)turns++;}$('stats').textContent=`Early dips: 2 · raw negative integer samples: ${raw.filter(p=>p.value<0).length} · raw turns: ${turns} · longest rising run: ${maxRun} steps`;$('axes').textContent='x: progression · y: '+$('output').selectedOptions[0].textContent+' · '+$('scale').selectedOptions[0].textContent+' display.';if(!configDirty)$('config').value=JSON.stringify({algorithm:ALGORITHM,config:instrument.config},null,2);updatePoint(Number($('inspectX').value));drawSpectrum();const body=$('waves');body.replaceChildren();for(const x of [25,50,75,100,120,140,160,180,200,240,300]){const authored=10+.4*x,m=instrument.sample(x).positiveMultiplier,tr=document.createElement('tr');for(const v of [x,authored.toFixed(1),m.toFixed(3),Math.max(1,Math.round(authored*m))]){const td=document.createElement('td');td.textContent=v;tr.append(td);}body.append(tr);}window.vixenInstrument=instrument;window.vixenNavigation={anchor:anchor.slice(),basis,planeIndex};}catch(e){$('error').textContent=e.message;}}
-for(const id of ['seed','seedType','compareSeed','stabilizer','strength','ramp','tempo','contrast','extent','output','render','scale','compare','u','v'])$(id).addEventListener('input',queueRedraw);
+function redraw(){try{$('ceilingMargin').disabled=!$('ceilingEnabled').checked;instrument=create(readConfig());comparison=create({...instrument.config,seed:$('compareSeed').value});for(const id of ['boundarySoftness','ceilingMargin','stabilizer','strength','ramp','tempo','contrast','extent','u','v'])$(id+'V').textContent=Number($(id).value).toFixed(id==='extent'?0:2);$('travelV').textContent=customPath?'preserved vector':Number($('travel').value).toFixed(2);const samples=plot('plot',Number($('extent').value));plot('calm',100,true);const raw=Array.from({length:Number($('extent').value)-100},(_,i)=>instrument.sample(101+i)),ys=raw.map(p=>p.value);let turns=0,run=0,maxRun=0;for(let i=1;i<ys.length;i++){run=ys[i]>ys[i-1]?run+1:0;maxRun=Math.max(maxRun,run);if(i<ys.length-1&&(ys[i]-ys[i-1])*(ys[i+1]-ys[i])<0)turns++;}$('stats').textContent=`Early dips: 2 · raw negative integer samples: ${raw.filter(p=>p.value<0).length} · raw turns: ${turns} · longest rising run: ${maxRun} steps`;$('axes').textContent='x: progression · y: '+$('output').selectedOptions[0].textContent+' · '+$('scale').selectedOptions[0].textContent+' display.';if(!configDirty)$('config').value=JSON.stringify({algorithm:ALGORITHM,config:instrument.config},null,2);updatePoint(Number($('inspectX').value));drawSpectrum();const body=$('waves');body.replaceChildren();for(const x of [25,50,75,100,120,140,160,180,200,240,300]){const authored=10+.4*x,m=instrument.sample(x).positiveMultiplier,tr=document.createElement('tr');for(const v of [x,authored.toFixed(1),m.toFixed(3),Math.max(1,Math.round(authored*m))]){const td=document.createElement('td');td.textContent=v;tr.append(td);}body.append(tr);}window.vixenInstrument=instrument;window.vixenNavigation={anchor:anchor.slice(),basis,planeIndex};}catch(e){$('error').textContent=e.message;}}
+for(const id of ['floor','ceilingEnabled','ceilingMargin','boundarySoftness','seed','seedType','compareSeed','stabilizer','strength','ramp','tempo','contrast','extent','output','render','scale','compare','u','v'])$(id).addEventListener('input',queueRedraw);
 $('travel').addEventListener('input',()=>{pathVelocity=basis.v.map(v=>v*Number($('travel').value));customPath=false;queueRedraw();});
 $('inspectX').addEventListener('input',()=>{const x=Number($('inspectX').value);updatePoint(x);if(x>=1&&x<=50000)for(const f of Object.values(window.vixenCursors||{}))f(x);});
 $('rotatePlane').addEventListener('click',()=>{anchor=latent();planeIndex++;basis=navigationBasis(planeIndex);$('u').value=0;$('v').value=0;customPath=pathVelocity.some(v=>v!==0);redraw();});
 $('origin').addEventListener('click',()=>{anchor=zero();pathVelocity=zero();customPath=false;for(const id of ['u','v','travel'])$(id).value=0;redraw();});
-$('reset').addEventListener('click',()=>{anchor=zero();pathVelocity=zero();planeIndex=0;basis=navigationBasis(0);customPath=false;for(const id of ['seed','stabilizer','strength','ramp','tempo','contrast'])$(id).value=DEFAULTS[id];for(const id of ['u','v','travel'])$(id).value=0;$('seedType').value='text';$('compareSeed').value='bench';$('extent').value=300;$('output').value='value';$('render').value='both';$('scale').value='linear';$('compare').value='yes';redraw();});
+$('reset').addEventListener('click',()=>{anchor=zero();pathVelocity=zero();planeIndex=0;basis=navigationBasis(0);customPath=false;for(const id of ['floor','boundarySoftness','seed','stabilizer','strength','ramp','tempo','contrast'])$(id).value=DEFAULTS[id];$('ceilingEnabled').checked=false;$('ceilingMargin').value=.5;for(const id of ['u','v','travel'])$(id).value=0;$('seedType').value='text';$('compareSeed').value='bench';$('extent').value=300;$('output').value='value';$('render').value='both';$('scale').value='linear';$('compare').value='yes';redraw();});
 $('nextSeed').addEventListener('click',()=>{$('seedType').value='text';$('seed').value='vixen:'+ ++suffix;redraw();});
 $('config').addEventListener('input',()=>{configDirty=true;});
-$('applyConfig').addEventListener('click',()=>{try{const snap=JSON.parse($('config').value);const f=restore(snap);configDirty=false;anchor=f.config.latent.slice();pathVelocity=f.config.velocity.slice();customPath=pathVelocity.some(v=>v!==0);planeIndex=0;basis=navigationBasis(0);for(const id of ['seed','stabilizer','strength','ramp','tempo','contrast'])$(id).value=f.config[id];for(const id of ['u','v','travel'])$(id).value=0;$('seedType').value=typeof f.config.seed==='number'?'number':'text';redraw();}catch(e){$('error').textContent=e.message;}});
-$('csv').addEventListener('click',()=>{const keys=['x','value','base','guideValue','stabilizationWeight','deviation','multiplier','activity','positiveMultiplier','positiveValue','score','gate'],rows=[[...keys,...Array.from({length:16},(_,i)=>'h'+i)].join(',')];for(let x=1;x<=Number($('extent').value);x++){const p=instrument.sample(x);rows.push([...keys.map(k=>p[k]),...instrument.location(x)].join(','));}$('csvText').value=rows.join('\n');$('csvText').focus();$('csvText').select();});
+$('applyConfig').addEventListener('click',()=>{try{const snap=JSON.parse($('config').value);const f=restore(snap);configDirty=false;anchor=f.config.latent.slice();pathVelocity=f.config.velocity.slice();customPath=pathVelocity.some(v=>v!==0);planeIndex=0;basis=navigationBasis(0);for(const id of ['floor','boundarySoftness','seed','stabilizer','strength','ramp','tempo','contrast'])$(id).value=f.config[id];$('ceilingEnabled').checked=f.config.ceilingMargin!==null;$('ceilingMargin').value=f.config.ceilingMargin??.5;for(const id of ['u','v','travel'])$(id).value=0;$('seedType').value=typeof f.config.seed==='number'?'number':'text';redraw();}catch(e){$('error').textContent=e.message;}});
+$('csv').addEventListener('click',()=>{const keys=['unconstrainedValue','unconstrainedGuideValue','floorValue','ceilingValue','boundaryWidth','constraintApplied','x','value','base','guideValue','stabilizationWeight','deviation','multiplier','activity','positiveMultiplier','positiveValue','score','gate'],rows=[[...keys,...Array.from({length:16},(_,i)=>'h'+i)].join(',')];for(let x=1;x<=Number($('extent').value);x++){const p=instrument.sample(x);rows.push([...keys.map(k=>p[k]),...instrument.location(x)].join(','));}$('csvText').value=rows.join('\n');$('csvText').focus();$('csvText').select();});
 let touchDragging=false;function moveOnMap(ev){const rect=$('map').getBoundingClientRect(),w=Math.max(120,$('map').clientWidth),h=$('map').vixenMapHeight||280,px=(ev.clientX-rect.left)/rect.width*w,py=(ev.clientY-rect.top)/rect.height*h;$('u').value=Math.max(-6,Math.min(6,-6+12*(px-26)/(w-38)));$('v').value=Math.max(-6,Math.min(6,6-12*(py-12)/(h-37)));queueRedraw();}
 $('map').addEventListener('pointerdown',ev=>{if(!ev.isPrimary||ev.button!==0)return;touchDragging=ev.pointerType==='touch';try{$('map').setPointerCapture(ev.pointerId);}catch{}moveOnMap(ev);});$('map').addEventListener('pointermove',ev=>{if(!ev.isPrimary)return;if((ev.buttons&1)||(touchDragging&&ev.pointerType==='touch'))moveOnMap(ev);});for(const name of ['pointerup','pointercancel','lostpointercapture'])$('map').addEventListener(name,()=>{touchDragging=false;});
 let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(redraw,120);});redraw();

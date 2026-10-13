@@ -4,11 +4,13 @@
 
 Vixen is a pure sampler, not a simulation. A configuration builds a fixed collection of seeded ridge features. Sampling any valid progression coordinate produces the same result without advancing RNG state or replaying previous samples.
 
-There are three layers:
+There are four layers:
 
 1. **Authored baseline:** exponential growth with two Gaussian notches. It is independent of seed and coordinates.
 2. **Seeded field:** 48 normalized random projection directions in 16 dimensions, each sampling a counter-addressed C2 lattice-noise channel at its own scale and phase.
 3. **Adapters and stabilization:** a broad, gentle version of that field provides a seeded trajectory target; output adapters expose raw signed growth, bounded activity and positive multipliers.
+
+4. **Boundary policies:** optional floor and ceiling maps constrain raw value, with C2 transition buffers or explicit hard mode. Derived adapters use the final signal. See [CONSTRAINTS.md](reference/CONSTRAINTS.md).
 
 The equations and component evidence live in [CONSTRUCTION.md](reference/CONSTRUCTION.md). Configuration domains and output fields are authoritative in [API.md](reference/API.md).
 
@@ -52,9 +54,9 @@ This does not imply pointwise deviation from the baseline shrinks, strict monoto
 
 ## Compatibility
 
-Save the algorithm identifier and full resolved configuration. The current identifier is `vixen-hyperfield-c2/2`; it is independent of package semantic version.
+Save the algorithm identifier and full resolved configuration. The current identifier is `vixen-hyperfield-c2/3`; it is independent of package semantic version.
 
-`restore` accepts that identifier and maps prior `vixen-hyperfield-c2/1` snapshots without a stabilizer field to stabilization zero. Unrelated identifiers are rejected rather than silently normalized. Legacy source remains separate.
+`restore` accepts that identifier and maps v2 snapshots with constraints disabled. Old identifiers containing constraint keys are rejected. It also maps prior `vixen-hyperfield-c2/1` snapshots without a stabilizer field to stabilization zero. Unrelated identifiers are rejected rather than silently normalized. Legacy source remains separate.
 
 Counter hashes must match exactly across JavaScript and Python. Floating evaluation uses explicit scaled tolerance: exp, tanh and projection arithmetic are not promised bitwise-identical across language runtimes or machines. Integer rewards and lockstep protocols need their own host contract.
 
@@ -85,3 +87,9 @@ GitHub CI verifies runtime tests, declarations, cross-port behavior, instrument 
 Build the instrument once per configuration; `sample` uses cached projections while `at` computes explicit-coordinate projections. Both evaluate fine and broad noise. Measure the intended host workload before treating it as per-pixel or audio-rate infrastructure.
 
 Changing the gate, counter mixing, feature construction, scale constants, adapters or evaluation order is a compatibility-sensitive change. Test both language implementations, rerun numerical audits, decide algorithm identity deliberately, and preserve or explicitly reject old snapshots. Packaging improvements should not casually become mathematical redesign.
+
+## Constrained stabilization
+
+The boundary map applies after the unrestricted stabilized signal and to its guide. Full stabilization reaches that mapped guide. Monotone motion between mapped endpoints survives, but the unrestricted exact linear distance factor generally does not. Debug fields preserve unconstrained values. Positive softness joins boundaries C2; zero softness may introduce corners. The gate-scaled width preserves the exact opening; zero strength stays authored growth.
+
+Run `python tools/verify.py` for current acceptance and `node tests/browser.mjs` for the local browser contract (requires an installed Chromium-family browser, or BROWSER_EXE). Browser/libm comparisons use the same explicit numeric tolerance as cross-language checks.
