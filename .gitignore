@@ -1,0 +1,13 @@
+node_modules/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.smoke/
+dist/
+build/
+*.tgz
+.env*
+research/diagnostic-data.json
+*grant*.json
+research/*audit-data*.json

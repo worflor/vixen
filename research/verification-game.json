@@ -1,0 +1,86 @@
+{
+  "algorithm": "vixen-hyperfield-c2/2",
+  "node_tests": 18,
+  "cross_port": {
+    "cases": 2400,
+    "max_scaled_error": 6.30328289449802e-14,
+    "acceptance_tolerance": 1e-10,
+    "hash_parity": "exact",
+    "navigation_basis_parity_tolerance": 1e-12,
+    "seed_types": 10
+  },
+  "spectral_scope": "Finite-window numerical diagnostics; not proof of chaos, independence, or no periodicity",
+  "rhythm_windows": [
+    [
+      180,
+      1203.5
+    ],
+    [
+      2300,
+      3323.5
+    ],
+    [
+      6000,
+      7023.5
+    ]
+  ],
+  "rhythm_seeds": 25,
+  "sensitivity": [
+    {
+      "seed": "vixen",
+      "local_rank": 16,
+      "condition_number": 5.125656259865751,
+      "participation_ratio": 9.706281650742316,
+      "largest_variance_fraction": 0.19681240825754553
+    },
+    {
+      "seed": "vixen",
+      "local_rank": 16,
+      "condition_number": 4.71267669393819,
+      "participation_ratio": 8.89588065283264,
+      "largest_variance_fraction": 0.20548318163491516
+    },
+    {
+      "seed": "bench",
+      "local_rank": 16,
+      "condition_number": 4.5288302788852,
+      "participation_ratio": 9.483445649615563,
+      "largest_variance_fraction": 0.17796885720006517
+    },
+    {
+      "seed": "bench",
+      "local_rank": 16,
+      "condition_number": 4.661093636866366,
+      "participation_ratio": 8.64981509716989,
+      "largest_variance_fraction": 0.19999650663692023
+    },
+    {
+      "seed": 42,
+      "local_rank": 16,
+      "condition_number": 6.386568837454661,
+      "participation_ratio": 8.145655365300327,
+      "largest_variance_fraction": 0.2374515060200811
+    },
+    {
+      "seed": 42,
+      "local_rank": 16,
+      "condition_number": 5.159343746368507,
+      "participation_ratio": 8.62342264116714,
+      "largest_variance_fraction": 0.2050137433240069
+    }
+  ],
+  "acceptance": [
+    "first100 unchanged",
+    "random-access replay",
+    "latent/path equivalence",
+    "bounds and domains",
+    "all axes locally active",
+    "numerical C2 joins",
+    "less former-clock phase coherence than legacy full-seed in every audited window"
+  ],
+  "limitations": [
+    "This is not a proof of dynamical chaos or universal lack of rhythm.",
+    "Numerical local rank is not a global independence theorem.",
+    "Float curves are not cross-platform bitwise lockstep."
+  ]
+}

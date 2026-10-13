@@ -1,0 +1,303 @@
+{
+  "scope": "Finite-window numerical diagnostics; not proof of chaos, independence, or no periodicity",
+  "hyperfield_reference_config": {
+    "seed": "vixen",
+    "stabilizer": 0,
+    "strength": 1,
+    "ramp": 16,
+    "tempo": 0.8,
+    "contrast": 10,
+    "latent": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "velocity": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "seeds": 25,
+  "windows": [
+    [
+      180,
+      1203.5
+    ],
+    [
+      2300,
+      3323.5
+    ],
+    [
+      6000,
+      7023.5
+    ]
+  ],
+  "models": {
+    "legacy-default": [
+      {
+        "mean_abs_reference_correlation": 0.6893759447039524,
+        "mean_signed_reference_correlation": 0.6893759447039524,
+        "former_clock_harmonics": [
+          {
+            "frequency": 0.08333333333333333,
+            "cross_seed_phase_coherence": 0.9919015034035953,
+            "median_three_bin_power_fraction": 0.14851459789665022
+          },
+          {
+            "frequency": 0.16666666666666666,
+            "cross_seed_phase_coherence": 0.9764433296653767,
+            "median_three_bin_power_fraction": 0.05711822307183924
+          },
+          {
+            "frequency": 0.25,
+            "cross_seed_phase_coherence": 0.9062967078024095,
+            "median_three_bin_power_fraction": 0.013544734509587297
+          }
+        ]
+      },
+      {
+        "mean_abs_reference_correlation": 0.6781067225327071,
+        "mean_signed_reference_correlation": 0.6781067225327071,
+        "former_clock_harmonics": [
+          {
+            "frequency": 0.08333333333333333,
+            "cross_seed_phase_coherence": 0.9913360052608949,
+            "median_three_bin_power_fraction": 0.15325019234403023
+          },
+          {
+            "frequency": 0.16666666666666666,
+            "cross_seed_phase_coherence": 0.9751044333575213,
+            "median_three_bin_power_fraction": 0.043722635133661474
+          },
+          {
+            "frequency": 0.25,
+            "cross_seed_phase_coherence": 0.8319983043397576,
+            "median_three_bin_power_fraction": 0.007097189831516897
+          }
+        ]
+      },
+      {
+        "mean_abs_reference_correlation": 0.6660657268416108,
+        "mean_signed_reference_correlation": 0.6660657268416108,
+        "former_clock_harmonics": [
+          {
+            "frequency": 0.08333333333333333,
+            "cross_seed_phase_coherence": 0.9918630150669684,
+            "median_three_bin_power_fraction": 0.1556003994299199
+          },
+          {
+            "frequency": 0.16666666666666666,
+            "cross_seed_phase_coherence": 0.977637253823632,
+            "median_three_bin_power_fraction": 0.04672263974736092
+          },
+          {
+            "frequency": 0.25,
+            "cross_seed_phase_coherence": 0.8681323045735195,
+            "median_three_bin_power_fraction": 0.009045993070579851
+          }
+        ]
+      }
+    ],
+    "legacy-full-seed": [
+      {
+        "mean_abs_reference_correlation": 0.04169198148747858,
+        "mean_signed_reference_correlation": 0.010706478072613358,
+        "former_clock_harmonics": [
+          {
+            "frequency": 0.08333333333333333,
+            "cross_seed_phase_coherence": 0.9915292460570767,
+            "median_three_bin_power_fraction": 0.17566194943460375
+          },
+          {
+            "frequency": 0.16666666666666666,
+            "cross_seed_phase_coherence": 0.8751341608084857,
+            "median_three_bin_power_fraction": 0.018713896287331694
+          },
+          {
+            "frequency": 0.25,
+            "cross_seed_phase_coherence": 0.7436204102800731,
+            "median_three_bin_power_fraction": 0.007147807995388355
+          }
+        ]
+      },
+      {
+        "mean_abs_reference_correlation": 0.04362004015142954,
+        "mean_signed_reference_correlation": -0.016961690947207553,
+        "former_clock_harmonics": [
+          {
+            "frequency": 0.08333333333333333,
+            "cross_seed_phase_coherence": 0.9903891224580526,
+            "median_three_bin_power_fraction": 0.1727707118705623
+          },
+          {
+            "frequency": 0.16666666666666666,
+            "cross_seed_phase_coherence": 0.8711630543529316,
+            "median_three_bin_power_fraction": 0.017805203352180457
+          },
+          {
+            "frequency": 0.25,
+            "cross_seed_phase_coherence": 0.6856104369488805,
+            "median_three_bin_power_fraction": 0.00870919388818259
+          }
+        ]
+      },
+      {
+        "mean_abs_reference_correlation": 0.06524713216539475,
+        "mean_signed_reference_correlation": -0.013401646153408844,
+        "former_clock_harmonics": [
+          {
+            "frequency": 0.08333333333333333,
+            "cross_seed_phase_coherence": 0.9883936994224999,
+            "median_three_bin_power_fraction": 0.17304536423553993
+          },
+          {
+            "frequency": 0.16666666666666666,
+            "cross_seed_phase_coherence": 0.8099850990401604,
+            "median_three_bin_power_fraction": 0.014871282671666692
+          },
+          {
+            "frequency": 0.25,
+            "cross_seed_phase_coherence": 0.7492428162673813,
+            "median_three_bin_power_fraction": 0.007852724923888233
+          }
+        ]
+      }
+    ],
+    "hyperfield": [
+      {
+        "mean_abs_reference_correlation": 0.12163895113132549,
+        "mean_signed_reference_correlation": -0.0010503016427334533,
+        "former_clock_harmonics": [
+          {
+            "frequency": 0.08333333333333333,
+            "cross_seed_phase_coherence": 0.16300645943059075,
+            "median_three_bin_power_fraction": 0.0025063123831918564
+          },
+          {
+            "frequency": 0.16666666666666666,
+            "cross_seed_phase_coherence": 0.2292020673375256,
+            "median_three_bin_power_fraction": 0.0001784881999083448
+          },
+          {
+            "frequency": 0.25,
+            "cross_seed_phase_coherence": 0.1855006905566523,
+            "median_three_bin_power_fraction": 1.581065697876927e-05
+          }
+        ]
+      },
+      {
+        "mean_abs_reference_correlation": 0.15844722967219257,
+        "mean_signed_reference_correlation": 0.04468200075958092,
+        "former_clock_harmonics": [
+          {
+            "frequency": 0.08333333333333333,
+            "cross_seed_phase_coherence": 0.1538054964403281,
+            "median_three_bin_power_fraction": 0.0020061706357258078
+          },
+          {
+            "frequency": 0.16666666666666666,
+            "cross_seed_phase_coherence": 0.08288906813364218,
+            "median_three_bin_power_fraction": 0.00024939392837218364
+          },
+          {
+            "frequency": 0.25,
+            "cross_seed_phase_coherence": 0.18427893364123418,
+            "median_three_bin_power_fraction": 1.7103392899577272e-05
+          }
+        ]
+      },
+      {
+        "mean_abs_reference_correlation": 0.11715213154763975,
+        "mean_signed_reference_correlation": 0.011251811050518085,
+        "former_clock_harmonics": [
+          {
+            "frequency": 0.08333333333333333,
+            "cross_seed_phase_coherence": 0.0233330338558554,
+            "median_three_bin_power_fraction": 0.004956918678931849
+          },
+          {
+            "frequency": 0.16666666666666666,
+            "cross_seed_phase_coherence": 0.269052951864589,
+            "median_three_bin_power_fraction": 0.00019970976724435784
+          },
+          {
+            "frequency": 0.25,
+            "cross_seed_phase_coherence": 0.24295084158090385,
+            "median_three_bin_power_fraction": 1.5394254040827944e-05
+          }
+        ]
+      }
+    ]
+  },
+  "sensitivity": [
+    {
+      "seed": "vixen",
+      "local_rank": 16,
+      "condition_number": 5.125656259865751,
+      "participation_ratio": 9.706281650742316,
+      "largest_variance_fraction": 0.19681240825754553
+    },
+    {
+      "seed": "vixen",
+      "local_rank": 16,
+      "condition_number": 4.71267669393819,
+      "participation_ratio": 8.89588065283264,
+      "largest_variance_fraction": 0.20548318163491516
+    },
+    {
+      "seed": "bench",
+      "local_rank": 16,
+      "condition_number": 4.5288302788852,
+      "participation_ratio": 9.483445649615563,
+      "largest_variance_fraction": 0.17796885720006517
+    },
+    {
+      "seed": "bench",
+      "local_rank": 16,
+      "condition_number": 4.661093636866366,
+      "participation_ratio": 8.64981509716989,
+      "largest_variance_fraction": 0.19999650663692023
+    },
+    {
+      "seed": 42,
+      "local_rank": 16,
+      "condition_number": 6.386568837454661,
+      "participation_ratio": 8.145655365300327,
+      "largest_variance_fraction": 0.2374515060200811
+    },
+    {
+      "seed": 42,
+      "local_rank": 16,
+      "condition_number": 5.159343746368507,
+      "participation_ratio": 8.62342264116714,
+      "largest_variance_fraction": 0.2050137433240069
+    }
+  ]
+}

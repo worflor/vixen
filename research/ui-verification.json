@@ -1,0 +1,32 @@
+{
+  "served": false,
+  "viewports": [
+    {
+      "width": 1200,
+      "negative": 8,
+      "pointerNavigation": true,
+      "rotationPreservesCurve": true,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "negative": 8,
+      "pointerNavigation": true,
+      "rotationPreservesCurve": true,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "negative": 8,
+      "pointerNavigation": true,
+      "rotationPreservesCurve": true,
+      "overflow": false
+    }
+  ],
+  "preciseReplay": true,
+  "outputModes": 6,
+  "csvColumns": 28,
+  "csvRows": 301,
+  "oldAlgorithmRefused": true,
+  "pageErrors": []
+}
