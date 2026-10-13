@@ -25,7 +25,7 @@ class PythonSurface(unittest.TestCase):
     def test_old_snapshot_and_domain_validation(self):
         curve = Vixen(seed='old')
         # Construct the actual v1 schema, not a newer configuration retagged as v1.
-        config = {k:v for k,v in curve.config.items() if k not in ('stabilizer','floor','ceilingMargin','boundarySoftness')}
+        config = {k:v for k,v in curve.config.items() if k not in ('stabilizer','floor','ceilingMargin','boundarySoftness','openingEndpoint','introVariation')}
         replay = restore({'algorithm': 'vixen-hyperfield-c2/1', 'config': config})
         self.assertEqual(curve.sample(233), replay.sample(233))
         for config in [{'stabilizer': -1}, {'seed': True}, {'strength': float('nan')}]:

@@ -1,10 +1,10 @@
 # Status and known boundaries
 
-The shipped scope is a dependency-free sampler, matching JavaScript/Python implementations, a trajectory stabilizer and an offline instrument. Applications in README are integration ideas, not evidence of production adoption.
+The shipped scope is a dependency-free sampler, matching JavaScript/Python implementations, a trajectory stabilizer, configurable seeded openings, immutable timeline forks and an offline instrument. Applications in README are integration ideas, not evidence of production adoption.
 
 ## Before any public release
 
-- Owner chooses an explicit redistribution license, or deliberately leaves source visible without granting one.
+- MIT is selected and recorded in LICENSE and both package metadata formats. The repository remains private; public visibility is a separate owner decision.
 - Review the tracked tree and history, package contents, evidence provenance and documentation links.
 - Any change to privacy, registries, releases or hosted demos requires explicit owner approval.
 

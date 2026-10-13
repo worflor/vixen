@@ -14,15 +14,16 @@ def run(args):
         raise SystemExit(p.returncode)
     return p.stdout
 
-files=['test-hyperfield.mjs','test-kernel.mjs','test-stabilizer.mjs','test-constraints.mjs','test-examples.mjs']
+files=['test-hyperfield.mjs','test-kernel.mjs','test-stabilizer.mjs','test-constraints.mjs','test-examples.mjs','test-opening-endpoint.mjs','test-fork.mjs','test-timeline-safety.mjs','test-fork-collisions.mjs']
 xml=run(['node','--test','--test-reporter=junit']+['tests/'+f for f in files])
 tree=ET.fromstring(xml)
 assert not list(tree.iter('failure')) and not list(tree.iter('error'))
 count=len(list(tree.iter('testcase')))
 print(run([sys.executable,'tests/test_python.py']))
+print(run([sys.executable,'tests/test_python_new_features.py']))
 print(run([sys.executable,'tests/cross_port.py']))
 report={
- 'algorithm':'vixen-hyperfield-c2/3',
+ 'algorithm':'vixen-hyperfield-c2/4',
  'node_tests':count,
  'cross_port':json.loads((ROOT/'research/hyper-parity.json').read_text()),
  'constraints':{'floors':['none','zero','baseline','backbone'],'ceiling':'nullable baseline-scaled margin','softness':'0 hard; positive C2 boundary kernel'},

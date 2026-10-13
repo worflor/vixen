@@ -18,6 +18,7 @@ jobs:
       - run: npm test
       - run: npm run typecheck
       - run: python tests/test_python.py
+      - run: python tests/test_python_new_features.py
       - run: python tests/cross_port.py
       - run: python tools/build_instrument.py
       - run: npm pack

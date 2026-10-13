@@ -1,10 +1,10 @@
 {
   "name": "@worflor/vixen",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Deterministic seeded 16-dimensional game curves with a controllable trajectory backbone.",
   "type": "module",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "engines": {
     "node": ">=20"
   },
@@ -26,6 +26,7 @@
     "AGENTS.md",
     "legacy",
     "research/constraints-evidence.json",
+    "research/timelines-evidence.json",
     "research/evidence.json",
     "research/verification-game.json",
     "research/rhythm-audit.json",
@@ -33,8 +34,9 @@
     "examples"
   ],
   "scripts": {
-    "test": "node --test tests/test-hyperfield.mjs tests/test-kernel.mjs tests/test-stabilizer.mjs tests/test-constraints.mjs tests/test-examples.mjs",
+    "test": "node --test tests/test-hyperfield.mjs tests/test-kernel.mjs tests/test-stabilizer.mjs tests/test-constraints.mjs tests/test-examples.mjs tests/test-opening-endpoint.mjs tests/test-fork.mjs tests/test-timeline-safety.mjs tests/test-fork-collisions.mjs",
     "test:parity": "python tests/cross_port.py",
+    "test:new": "python tests/test_python_new_features.py",
     "typecheck": "tsc --noEmit --strict --module NodeNext --moduleResolution NodeNext --target ES2022 examples/types.mts",
     "build:instrument": "python tools/build_instrument.py",
     "build:illustration": "node tools/build_illustration.mjs",

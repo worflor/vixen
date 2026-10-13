@@ -47,6 +47,12 @@ A mathematically valid curve can still be a poor game curve. Balance, payout exp
 
 No cryptographic randomness, semantic coordinate labels, strict monotonicity, universal seed independence, guaranteed balance, or production adoption is claimed. C2 continuity is not band limitation or an antialiasing guarantee.
 
+## Timeline extension
+
+Changing a seed is discontinuous; forking a history need not be. An immutable parent plus a compact quintic transition gives exact inherited history and matching endpoint jets before settling into an operation-derived leaf future. Convex blending of actual values and their bounds preserves admissibility. The active position/path is inherited, not rerolled. Intro variation interpolates two notch parameter triples instead of overlaying four notches; a bounded fade returns to the original continuation.
+
+[Timing and branch semantics](reference/TIMELINES.md) states the contract and positive-baseline argument. `research/timelines-evidence.json` records exact component findings, rigorous exponential enclosures, a convex-positivity certificate, rechecked claims and a matrix-inverse refusal/wish. The full program is still not certified. Operation tokens are deterministic seed material, not interpreted physics; uint32 collisions remain possible.
+
 ## Useful next questions
 
 Let real integrations choose the next work:

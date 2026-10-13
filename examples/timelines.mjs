@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {create,restore} from '../vixen.mjs';
+const root=create({seed:'timeline-example',openingEndpoint:160,introVariation:1,floor:'zero'});
+const door=root.fork({at:240,operation:'opened-left-door',handoffWidth:24});
+const key=door.fork({at:320,operation:'took-key'});
+const replay=restore(JSON.parse(JSON.stringify(key.snapshot())));
+for(const x of [1,42,160,239,240])assert.deepEqual(root.sample(x),door.sample(x));
+for(const x of [241,270,319,320])assert.deepEqual(door.sample(x),key.sample(x));
+for(const x of [1,240,250,320,330,500])assert.deepEqual(key.sample(x),replay.sample(x));
+console.log(JSON.stringify({lineage:key.lineage,position:key.location(320),futureActivity:key.sample(500).activity,history:'exact',replay:'exact'},null,2));

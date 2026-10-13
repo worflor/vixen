@@ -1,9 +1,11 @@
-export const ALGORITHM: 'vixen-hyperfield-c2/3';
+export const ALGORITHM: 'vixen-hyperfield-c2/4';
 export const DIMENSIONS: 16;
 export const FEATURES: 48;
 export type Vector = readonly number[] | Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array | Float64Array;
 export type Floor = 'none' | 'zero' | 'baseline' | 'backbone';
 export interface Config {
+  openingEndpoint?: number;
+  introVariation?: number;
   floor?: Floor;
   ceilingMargin?: number | null;
   boundarySoftness?: number;
@@ -17,6 +19,8 @@ export interface Config {
   velocity?: Vector;
 }
 export interface ResolvedConfig {
+  readonly openingEndpoint: number;
+  readonly introVariation: number;
   readonly floor: Floor;
   readonly ceilingMargin: number | null;
   readonly boundarySoftness: number;
@@ -67,6 +71,7 @@ export interface Ridge {
   readonly channel: number;
 }
 export interface Contribution {
+  readonly sourceSeed?: string | number;
   readonly index: number;
   readonly scale: number;
   readonly coordinate: number;
@@ -85,13 +90,19 @@ export interface Instrument {
   readonly algorithm: typeof ALGORITHM;
   readonly config: ResolvedConfig;
   readonly bounds: Bounds;
+  readonly domain: readonly [number, number];
+  readonly dips: readonly Readonly<{center:number;width:number;depth:number}>[];
+  readonly lineage: readonly (ForkOptions & {readonly seed:number})[];
+  fork(options: ForkOptions): Instrument;
+  snapshot(): Snapshot;
   sample(x: number): Sample;
   at(x: number, coordinates: Vector): Sample;
   location(x: number): readonly number[];
   inspect(x: number): readonly Contribution[];
   ridges(): readonly Ridge[];
 }
-export interface Snapshot { readonly algorithm: string; readonly config: Config; }
+export interface ForkOptions { readonly at:number; readonly operation:string; readonly handoffWidth?:number; }
+export interface Snapshot { readonly algorithm: string; readonly config: Config; readonly lineage?:readonly ForkOptions[]; }
 export function create(options?: Config): Instrument;
 export function restore(snapshot: Snapshot): Instrument;
 export function seed32(seed: string | number): number;

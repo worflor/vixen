@@ -1,8 +1,12 @@
 {
+  "algorithm": "vixen-hyperfield-c2/4",
   "cases": 2400,
-  "max_scaled_error": 6.30328289449802e-14,
+  "fork_cases": 1600,
+  "nested_fork_cases": 800,
+  "max_scaled_error": 5.4211649649668276e-14,
   "acceptance_tolerance": 1e-10,
   "hash_parity": "exact",
+  "branch_seed_parity": "exact",
   "navigation_basis_parity_tolerance": 1e-12,
   "seed_types": 10
 }

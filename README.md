@@ -2,7 +2,7 @@
 
 **A seeded landscape with teeth.** A small JavaScript/Python library for progression curves that start gently, become irregular, and can settle onto a trajectory without losing their identity.
 
-![One seed, three stabilization settings, sampled from the actual engine](docs/media/stabilization.svg)
+![Six real seeds: the same authored opening, different continuations, and three stabilization settings](docs/media/seed-gallery.gif)
 
 ## Why this exists
 
@@ -43,7 +43,7 @@ Open [instrument/vixen.html](instrument/vixen.html) directly in a browser. No se
 4. Try stabilization **0.5**, **0.85**, and **1**. The cyan backbone shows what the curve is approaching.
 5. Change the seed to choose another landscape. Export configuration and CSV when you find something useful.
 
-The first hundred stays unchanged. Full stabilization remains gently variable and positive, not necessarily strictly monotonic.
+At default timing and intro variation, the first hundred stays unchanged. Full stabilization remains gently variable and positive, not necessarily strictly monotonic.
 
 ## Drop it into a project
 
@@ -106,6 +106,22 @@ Zero floor prevents negative raw values. Baseline/backbone floors prevent underc
 
 Run `node examples/constraints.mjs`, or use the instrument's Allowed range panel.
 
+## Move the opening. Fork the future.
+
+```js
+const root = create({
+  seed: 'my-world', openingEndpoint: 160, introVariation: 1
+});
+const door = root.fork({at: 240, operation: 'opened-left-door', handoffWidth: 24});
+const key = door.fork({at: 320, operation: 'took-key'});
+```
+
+`openingEndpoint` moves and stretches the default first-hundred progression. `introVariation` seeds the two dips' centers, widths and depths; zero retains the old opening exactly. The continuation beyond the opening keeps its original baseline.
+
+A fork preserves every historical sample through its decision point, including the current coordinates. It matches incoming value, slope and curvature, then blends into a deterministic new future derived from the operation token. Nested forks inherit their **actual parent's** history. They do not mutate the parent or simulate the meaning of a decision.
+
+Use `key.snapshot()` to save the complete lineage. `config` alone describes its latest future leaf and **cannot preserve branch history**. Read [`domain`](docs/reference/TIMELINES.md#translate-the-opening) before choosing sample coordinates: a shortened opening also shortens the supported caller domain. Hard clipping still permits corners; hashes are not collision-free. [Timing, branching and the mathematics](docs/reference/TIMELINES.md).
+
 ## Tinker
 
 ```sh
@@ -120,15 +136,15 @@ node examples/sweep.mjs my-world 0.85 300 0.25 > samples.csv
 
 The sweep's seed argument is **text**, even when it looks numeric. The API separately accepts numeric uint32 seeds. Play with seed, latent coordinates, velocity, strength, tempo, contrast and stabilizer before editing the construction itself.
 
-Save the **algorithm and full configuration**, not only the seed:
+Save the **complete timeline snapshot**, not only its future seed or configuration:
 
 ```js
 import {restore} from '@worflor/vixen';
-const snapshot = {algorithm: curve.algorithm, config: curve.config};
+const snapshot = curve.snapshot();
 const replay = restore(JSON.parse(JSON.stringify(snapshot)));
 ```
 
-Prior hyperfield `/1` snapshots restore explicitly with stabilization zero. Other old algorithms require their matching [archived sampler](legacy/). Hashes match across the two languages; floating curves use tolerances, not cross-platform bitwise guarantees.
+Valid prior hyperfield `/1`, `/2` and `/3` snapshots restore explicitly. Other old algorithms require their matching [archived sampler](legacy/). Hashes match across the two languages; floating curves use tolerances, not cross-platform bitwise guarantees.
 
 ## Where Scryer fits
 
@@ -150,4 +166,4 @@ python tools/build_instrument.py
 - [AGENTS.md](AGENTS.md): repository map and contributor orientation.
 - [Status](docs/STATUS.md): known limitations and release decisions.
 
-Private for now, all rights reserved. No public redistribution license has been granted. The package is marked `private: true` to prevent accidental npm-registry publication; authenticated Git installation and local tarballs still work.
+Licensed under [MIT](LICENSE). The GitHub repository remains private for now; licensing and visibility are separate choices. The package is marked `private: true` to prevent accidental npm-registry publication; authenticated Git installation and local tarballs still work.

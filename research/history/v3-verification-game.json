@@ -1,0 +1,38 @@
+{
+  "algorithm": "vixen-hyperfield-c2/3",
+  "node_tests": 26,
+  "cross_port": {
+    "cases": 2400,
+    "max_scaled_error": 6.30328289449802e-14,
+    "acceptance_tolerance": 1e-10,
+    "hash_parity": "exact",
+    "navigation_basis_parity_tolerance": 1e-12,
+    "seed_types": 10
+  },
+  "constraints": {
+    "floors": [
+      "none",
+      "zero",
+      "baseline",
+      "backbone"
+    ],
+    "ceiling": "nullable baseline-scaled margin",
+    "softness": "0 hard; positive C2 boundary kernel"
+  },
+  "acceptance": [
+    "unchanged calm prefix",
+    "unrestricted legacy replay",
+    "feasible floor/ceiling band",
+    "zero-width collapse",
+    "constrained stabilization endpoint",
+    "derived adapters agree with constrained signal",
+    "numerical C2 kernel joins"
+  ],
+  "component_evidence": "research/constraints-evidence.json",
+  "limitations": [
+    "Component evidence is not a whole-program certificate.",
+    "Hard boundaries may introduce corners.",
+    "Nonlinear boundaries do not preserve the unrestricted linear contraction factor.",
+    "Float curves are not cross-platform bitwise lockstep."
+  ]
+}
