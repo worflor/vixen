@@ -1,93 +1,108 @@
-# Construction and evidence
+# Mathematical construction
 
-This explains the shipped mechanism. It is not a whole-program certificate. The recorded Scryer component findings are in [research/evidence.json](../../research/evidence.json), with their original provenance and scope.
+Vixen composes scalar progression, seeded fields, trajectory controls, immutable history and external guides. The sampler is a pure random-access evaluation of those ingredients, not a stateful simulation.
 
-## 1. Keep an authored opening
+## Coordinates and authored progression
 
-For valid progression x:
+Let `x` be the caller's progression coordinate, `E=openingEndpoint`, and `t` the canonical clock:
 
 ```text
-B(x) = x exp(x/100)
-     - 25 exp(-(x-42)^2/32)
-     - 38 exp(-(x-71)^2/28)
+t(x) = 1 + (x-1)*99/(E-1)
+u = max(0, t-100)
+h(x) = latent + u*velocity/100
 ```
 
-The two Gaussian notches are authored, not seed-generated. B is positive on the supported domain, but the notches mean it is not strictly increasing everywhere. The recorded positivity argument splits the domain into intervals and combines bounds on the tails with exact sign checks.
+At the default E=100, `t=x`. `at(x,h)` supplies a location directly; `sample(x)` follows the configured path. Accepted coordinates are bounded by the [API domain](API.md).
 
-## 2. Join without visible corners
-
-A joining polynomial must start at 0, end at 1, and have zero first and second derivatives at both ends. The zero conditions at the start leave:
+The fixed baseline in canonical units is:
 
 ```text
-S(t) = a t^3 + b t^4 + c t^5
-
-a+b+c = 1
-3a+4b+5c = 0
-6a+12b+20c = 0
+B0(t) = t*exp(t/100)
+      - 25*exp(-(t-42)^2/32)
+      - 38*exp(-(t-71)^2/28)
 ```
 
-Scryer returned a=10, b=-15, c=6. Thus:
+It is positive on the supported domain but not strictly increasing: the two Gaussian dips are intentional. `introVariation` interpolates dip centers, widths and depths toward counter-addressed seed parameters. A quintic fade on canonical [90,100] returns the varied opening to B0; at and beyond 100 the baseline is B0, including its Gaussian tails. [Parameter boxes and positivity argument](TIMELINES.md).
+
+## Smooth joining kernel
+
+Use the clipped quintic gate:
 
 ```text
-S(t) = 6t^5 - 15t^4 + 10t^3
-S'(t) = 30t^2(1-t)^2
-1-S(t) = (1-t)^3(1+3t+6t^2)
+S(z) = 0                         when z <= 0
+     = 10*z^3 - 15*z^4 + 6*z^5   when 0 < z < 1
+     = 1                         when z >= 1
+
+S'(z) = 30*z^2*(1-z)^2           inside [0,1]
 ```
 
-Recorded engine findings check range/monotonicity and the derivative bound 15/8 on [0,1], and provide the nonnegative complement witness. Outside that interval the implementation clips S to its endpoint value. The zero endpoint derivatives make the joins C2.
+Its value changes from zero to one; first and second derivatives vanish at both ends. Range and monotonicity follow from exact polynomial identities and sign checks. This provides C2 contact for valid smooth compositions. It is distinct from the boundary kernel that joins a flat limit to an identity map.
 
-## 3. Turn a seed into a field
+## Seeded ridge field
 
-The seed builds 48 features. Each has a normalized 16-D direction d, a scale a=(4+76*r)*tempo, a phase phi, and a separate counter channel. The deterministic mixer maps seed, integer lattice index and channel to two neighboring values in [-1,1]. S interpolates them.
-
-For x>100, let u=x-100 and h be the selected latent coordinate:
+A seed selects 48 normalized directions in sixteen-dimensional coordinate space, with feature-specific scales, phases and counter channels. Each feature projects the location onto its direction and reads a one-dimensional lattice interpolation:
 
 ```text
-Q(x,h) = mean_i noise_i(phi_i + dot(d_i,h) + u/a_i)
+noise(p) = a + (b-a)*S(p-floor(p))
 ```
 
-This is a scalar ridge field over a coordinate space, not sixteen independent signals. Feature scales/phases differ by seed, removing the old globally scheduled pulse centers. It is still finite-counter, non-cryptographic structured variation.
-
-A configured path uses h=latent+u*velocity/100. Explicit `at` calls supply h directly.
-
-## 4. Bring the continuation in gradually
+Here a and b are deterministic neighboring counter values in [-1,1]. No random-number stream is advanced. For the continuation, with ridge direction d_i, scale A_i and phase phi_i:
 
 ```text
-G(x) = S((x-100)/ramp)
-dFine = strength * G(x) * 2.2 * tanh(contrast*Q)
-F0 = B(x) * (1+dFine)
+Q(x,h) = mean_i noise_i(phi_i + dot(d_i,h) + u/A_i)
+R(x,h) = mean_i noise_i(phi_i + (dot(d_i,h) + u/A_i)/32)
 ```
 
-G is zero through 100. Both the opening and its C2 entrance survive arbitrary valid seeds and coordinates. Fine modulation can make the raw curve negative; that is deliberate, not a reward-system guarantee.
+R reads the same channels at a broader coordinate scale. Averaging ridges produces a scalar field, not sixteen independent signals. Seed-specific scales and phases diversify its shape; the finite hash does not establish statistical independence or cryptographic unpredictability.
 
-## 5. Stabilize onto this seed's trajectory
+## Native modulation and stabilization
 
-The broad field uses the same channels and geometry at a 32-times-broader coordinate scale:
+The entrance gate uses caller units:
 
 ```text
-Qguide = mean_i noise_i(phi_i + (dot(d_i,h) + u/a_i)/32)
-dGuide = strength * G(x) * 0.25 * tanh(2*Qguide)
-T = B(x) * (1+dGuide)
-w = S(stabilizer)
-Fs = (1-w)*F0 + w*T
+G(x) = S((x-E)/ramp)
+dFine = strength*G*2.2*tanh(contrast*Q)
+dBroad = strength*G*0.25*tanh(2*R)
+F0 = B*(1+dFine)
+T = B*(1+dBroad)
+W = S(stabilizer)
+Fs = (1-W)*F0 + W*T
 ```
 
-At zero, the existing hyperfield is preserved exactly in the same JavaScript runtime. At one, the guide remains seeded and gently varying. Maximum strength is 2, so the guide lies conservatively within [0.5B,1.5B]. It cannot make a positive B negative.
+Without a foreign influence, G preserves the configured opening and introduces continuation gradually. Fine modulation can make raw values negative. The seeded broad backbone is positive under the allowed amplitude range.
 
-Since w is in [0,1], each point lies between F0 and T, and its distance from T is scaled by 1-w. This is an algebraic composition argument using the gate's established bounds, not a claim of a newly replayed whole-object proof.
+Stabilization contracts distance to T by `1-W` in the unrestricted exact-real model. It changes the attraction target, rather than merely weakening modulation around B. Full stabilization is not strict monotonicity or a universal roughness guarantee.
 
-## 6. Adapt the output
+## Immutable temporal composition
+
+A fork keeps the actual parent P through its attachment coordinate and derives another future Q from typed seed, operation token and exact fork-coordinate bits. During the handoff:
 
 ```text
+w = S((x-at)/handoffWidth)
+F = (1-w)*P + w*Q
+```
+
+Endpoint contact matches value, slope and curvature wherever the inputs are C2. Historical samples delegate directly to the parent. The operation is an address for seed derivation, not an interpreted physical action. [Lineage and replay](TIMELINES.md).
+
+A foreign scalar guide A uses the weight `amount*S((x-at)/handoffWidth)` to pull the current unrestricted value toward A. Its guide data can represent a polynomial, a finite Taylor expansion or shared endpoint jets; a trusted callback can be captured into the latter. Later forks retain influences. [Guide construction, capture limits and replay](GUIDES.md).
+
+## Boundaries and adapters
+
+Output policies map the unrestricted signal into an admissible band. Their smooth kernel joins a flat boundary to an identity map; hard clipping can introduce corners. Native boundary width depends on the entrance/amplitude controls. Influence activation contributes its own width while respecting the inherited buffer and available band. [Boundary semantics](CONSTRAINTS.md), [influence composition](GUIDES.md).
+
+After constraints, normalized deviation and adapters are:
+
+```text
+deviation = (value-B)/B
 activity = 0.5 + 0.5*tanh(deviation)
 positiveMultiplier = exp(0.55*tanh(deviation))
-positiveValue = B(x)*positiveMultiplier
+positiveValue = B*positiveMultiplier
 ```
 
-The positive multiplier is conservatively bounded by exp(-0.55) and exp(0.55). These adapters are not clamps on raw data and do not guarantee any payout expectation.
+The positive multiplier is bounded by exp(-0.55) and exp(0.55). It is an adapter of constrained deviation, not a clamp on raw data or a promise about rewards. Foreign guides do not replace the positive authored baseline or the meaning of underlying ridge diagnostics.
 
-## What the evidence does not establish
+## Evidence and numerical scope
 
-Invocation IDs identify recorded findings; they are not proof DAGs. The archived rational proof example concerns an old pulse, not this field. Whole-sampler formal verification, universal seed independence, strict monotonicity and cross-platform float lockstep are not claimed.
+[Sensitivity and conditioning](CONDITIONING.md) distinguishes continuity from derivative size. Narrow transitions can be sharp despite C2 contact. Floating implementations evaluate an exact-real construction approximately; port tolerances and bitwise within-backend regression have separate contracts.
 
-See [RDD.md](../RDD.md) for measured rhythm and sensitivity scope, and [TDD.md](../TDD.md) for executable implementation checks. Scryer helped supply exact constraints and inspectable evidence; it is not needed to run Vixen.
+The [research design](../RDD.md) separates component findings, independently replayed certificates, implementation tests and sampled audits. Evidence records include [field components](../../research/evidence.json), [boundaries](../../research/constraints-evidence.json), [timelines](../../research/timelines-evidence.json) and [influence](../../research/influence-evidence.json). Provenance is not itself a proof. No whole-program certificate, universal seed independence, strict monotonicity, band limitation or float lockstep is claimed. Scryer is not required at runtime.

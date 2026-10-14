@@ -31,20 +31,24 @@ Unknown configuration keys and invalid values are rejected. Numeric 42 and text 
 - `domain`: actual caller-coordinate limits; short openings can reduce the upper limit.
 - `dips`: the two active Gaussian parameter triples in canonical units.
 - `fork({at, operation, handoffWidth?})`: a new immutable timeline with exact inherited history and a C2 handoff.
-- `snapshot()`: replayable root configuration plus branch lineage.
+- `influence(guideOrCallback, options)`: attach an external scalar guide while preserving history.
+- `influences`, `influenceAt(x)`: guided-timeline recipes and following diagnostics. See [function guides](GUIDES.md).
+- `snapshot()`: complete replay construction, including branches and nested influence data.
 - `lineage`: read-only decision and derived-seed metadata. See [timing and branch semantics](TIMELINES.md).
 
 `x` must be finite inside `domain` (default [1,50000]). Samples contain `value`, `base`, `score`, `guideScore`, `rawDeviation`, `guideDeviation`, `guideValue`, `stabilizationWeight`, `deviation`, `multiplier`, `activity`, `positiveMultiplier`, `positiveValue`, `gate`, and `x`.
 
-`restore(snapshot)` supports the current algorithm and valid prior hyperfield /1, /2 and /3 schemas. Newer fields cannot be retagged as old snapshots. Save `snapshot()`, not just `config`, to preserve a fork history. Unrelated algorithm identifiers are rejected.
+`restore(snapshot)` supports core timelines, nested guided compositions and valid historical hyperfield `/1`, `/2` and `/3` schemas. Newer fields cannot be retagged as old snapshots. Save `snapshot()`, not just `config`, to preserve a fork history. Unrelated algorithm identifiers are rejected.
 
-Exports also include `ALGORITHM`, `DEFAULTS`, `DIMENSIONS`, `FEATURES`, `seed32`, `hash32`, `baseline`, `smooth5`, `bump`, and `navigationBasis`. Low-level helpers are construction tools; use the sampler's domain validation for game inputs.
+Guide exports are `polynomialGuide`, `taylorGuide`, `sampledGuide`, `captureGuide`, `compileGuide` and `evaluateGuide`, with snake_case Python counterparts. [Guide representations and domains](GUIDES.md).
+
+Construction exports include `INFLUENCE_ALGORITHM`, `boundaryRamp` (Python `boundary_ramp`), `ALGORITHM`, `DEFAULTS`, `DIMENSIONS`, `FEATURES`, `seed32`, `hash32`, `baseline`, `smooth5`, `bump`, and `navigationBasis`. Low-level helpers are construction tools; use the sampler's domain validation for game inputs.
 
 ## Python
 
 `Vixen(**config)` provides `sample`, `at`, `location`, `inspect`, and `ridges`. Public instances and their configuration are immutable by the supported API; underscore-prefixed implementation objects (including `_leaf`) are not a hard security sandbox and must not be mutated. `config` and `bounds` are read-only mapping views, with tuple vectors; they are not callable and are not plain JSON dictionaries. Construct a new instance to change configuration. Samples are dictionaries. Python coordinates accept lists or tuples. Navigation is `navigation_basis(index)`.
 
-Python uses the module-level algorithm identifier, and converts the configuration view before JSON serialization:
+Use the instance snapshot to select the appropriate replay schema; it supplies ordinary JSON data rather than requiring manual serialization of read-only views:
 
 ```python
 import json
@@ -66,6 +70,8 @@ At full stabilization and maximum strength, the target lies conservatively betwe
 
 `floor`: none (default), zero, baseline, backbone. `ceilingMargin`: null (default) or finite [0,16], in baseline units above the chosen trajectory. `boundarySoftness`: finite [0,1], default 0.1. The upper anchor is baseline for baseline floor, original backbone otherwise. [Full boundary semantics](CONSTRAINTS.md).
 
-Current sampling adds unconstrainedValue, unconstrainedDeviation, unconstrainedGuideValue, unconstrainedGuideDeviation, nullable floorValue/ceilingValue, boundaryWidth, and constraintApplied. The guideValue/guideDeviation pair describes the constrained guide. Existing game adapters derive from constrained deviation. `boundaryRamp(t)` / Python `boundary_ramp(t)` expose the validated finite-coordinate C2 join (zero below 0, quintic in [0,1], identity above 1).
+Samples also contain unconstrainedValue, unconstrainedDeviation, unconstrainedGuideValue, unconstrainedGuideDeviation, nullable floorValue/ceilingValue, boundaryWidth, and constraintApplied. The guideValue/guideDeviation pair describes the constrained guide. Existing game adapters derive from constrained deviation. `boundaryRamp(t)` / Python `boundary_ramp(t)` expose the validated finite-coordinate C2 join (zero below 0, quintic in [0,1], identity above 1).
 
-Algorithm vixen-hyperfield-c2/4 adds timing, intro variation and lineages. It explicitly restores valid /1, /2 and /3 configurations without silently reinterpreting newer schemas. Constraints remain disabled by default.
+## Replay schemas
+
+`vixen-hyperfield-c2/4` describes the core and fork lineage. `vixen-influence-c2/1` describes a guided composition containing its underlying snapshot, numeric guide data and attachment controls. Valid historical `/1`, `/2` and `/3` schemas remain supported; inconsistent fields and unrelated identifiers are rejected. Save the whole snapshot, not a manually retagged configuration. Constraints remain disabled by default.

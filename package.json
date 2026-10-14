@@ -1,7 +1,7 @@
 {
   "name": "@worflor/vixen",
   "version": "1.4.0",
-  "description": "Deterministic seeded 16-dimensional game curves with a controllable trajectory backbone.",
+  "description": "Deterministic, navigable progression fields with replayable timelines and function guides. JavaScript and Python; no runtime dependencies.",
   "type": "module",
   "private": true,
   "license": "MIT",
@@ -60,5 +60,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/worflor/vixen.git"
-  }
+  },
+  "keywords": [
+    "deterministic",
+    "procedural-generation",
+    "trajectory-generation",
+    "seeded-randomness",
+    "interpolation",
+    "numerical-methods",
+    "javascript",
+    "python"
+  ]
 }

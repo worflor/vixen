@@ -1,42 +1,47 @@
 # Vixen: contributor map
 
-A small deterministic JavaScript/Python sampler with an offline instrument. Keep the narrow identity: an authored opening, irregular seeded continuation, continuous coordinate exploration, and a seeded trajectory stabilizer. It is not an AI product or a general noise framework.
+A deterministic procedural trajectory engine: progression and sixteen-dimensional seeded fields, stabilization, admissible outputs, immutable forks and external function guides. Keep runtime evaluation dependency-free and random-access. Mathematical meaning belongs to explicit contracts, not imagined semantics for dimensions or operation tokens.
 
-## Where to look
+## Source and documentation
 
-- README.md: user-facing purpose, applications, installation and play.
-- docs/TDD.md: canonical technical model, compatibility and verification.
-- docs/RDD.md: canonical research intent, methodology, taste and uncertainty.
-- docs/reference/API.md: accepted configuration domains and output contract.
-- docs/reference/CONSTRUCTION.md: equations and component-evidence explanation.
-- docs/STATUS.md: known limitations and release decisions.
-- vixen.mjs / vixen.py / vixen.d.ts: runtime and declarations.
-- instrument/: source template/UI and generated offline HTML.
-- examples/: runnable integration sketches and CSV sweep.
-- tests/: acceptance and cross-language checks.
-- research/: numerical audits and scoped evidence, including historical component records.
-- tools/: instrument building and installed-distribution smoke checks.
-- legacy/: explicit historical replay/comparison, not automatic fallback.
+- `README.md`: purpose, exploration, installation, integration and reference index.
+- `docs/TDD.md`, `docs/RDD.md`: technical contracts and research methodology.
+- `docs/reference/`: API, construction, boundaries, timelines, conditioning and guides.
+- `docs/STATUS.md`: limitations and release policy.
+- `vixen.mjs`, `vixen.py`: core field and fork runtime.
+- `vixen-guide.mjs`, `vixen_guide.py`: numeric guide representation, compilation and capture.
+- `vixen-influence.mjs`, `vixen_influence.py`: immutable guided compositions and replay.
+- `vixen.d.ts`: public TypeScript surface.
+- `instrument/`: template, UI and generated offline instrument with bundled SDK exports.
+- `examples/`, `tests/`, `tools/`: runnable integration, acceptance and reproducible builds.
+- `research/`, `legacy/`: scoped evidence and historical comparison sources, not automatic current guarantees.
 
-## Work and verification
+## Verification
 
 ```sh
 npm ci
 npm test
 npm run typecheck
-python tests/cross_port.py
+python tools/verify.py
+node tests/fuzz.mjs
+python tools/mutation_probe.py
 python tools/build_instrument.py
+node tests/browser.mjs
 npm pack
 uv build --wheel
 python tools/install_smoke.py
 ```
 
-Research audits additionally need NumPy; `npm run audit` runs them. Use an equivalent pip wheel build if uv is unavailable. Check the offline UI after UI changes.
+Keep only one intended current tarball and wheel in the install-smoke input locations; preserve older generated distributions in disposable archival directories when needed. Research audits require their optional dependencies. Exercise both standalone and served UI paths when their integration changes.
 
-## Invariants and judgment
+## Invariants
 
-Preserve typed seeds, full-config replay, algorithm identity, domains, the exact calm prefix, bounded adapters and exact prior hyperfield replay at stabilization zero. Keep runtime dependencies empty. Mathematical changes require both implementations, tests, appropriate audits, and an explicit compatibility decision.
+Preserve typed seeds, numerical domains, random-access determinism, default opening replay, exact inherited history and truthful derived adapters. Optional opening variation and explicit influences have their own contracts; do not impose the default prefix guarantee on them. Save full snapshots, including nested guide data. Keep arithmetic order pinned during optimization and make compatibility decisions explicit.
 
-Distinguish implementation reality, intended design, measured behavior and mathematical evidence. Historical JSON is not automatically current proof. Keep durable reasoning in the design documents, supporting lookup in reference, and bounded investigations in docs/briefs/ only when they earn a file.
+Math changes require matching runtime implementations, discriminating tests and appropriate evidence. A callback capture is a sampled approximation, not a proof about arbitrary source code. Private implementation attributes are not a security sandbox. Unknown replay fields, cycles, excessive depth and invalid numeric data must fail closed.
 
-Package hygiene and installed behavior matter more than a plausible source-tree demo. No credentials, access grants, machine paths, dependency trees or smoke environments in tracked content. Keep the repository private until the owner explicitly approves otherwise; do not publish to registries or add a public license on your own.
+## Presentation and delivery
+
+Describe the object as it exists. Keep README and references free of development narration, release-by-release interjections and conversational asides. Preserve necessary replay identifiers; put historical observations under research/history or legacy. Use comments only for non-obvious invariants, not line-by-line narration; concise does not mean minified.
+
+Verify packaged installs rather than assuming source-tree success. Do not track credentials, viewer grants, machine-specific paths, dependency trees or disposable environments. MIT licensing does not authorize changes to repository visibility, registry publication or hosted access. Preserve owner-selected settings and request approval for external release changes.

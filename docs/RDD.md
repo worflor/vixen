@@ -2,7 +2,7 @@
 
 ## Objective
 
-Construct deterministic progression with a legible opening, smooth irregular continuation, navigable seed-local variation and controllable coherence. The object should expose reproducible math, not imply balance, semantics or dynamical chaos.
+Construct composable deterministic trajectories with a legible opening, smooth seeded variation, navigable coordinate fields, controllable coherence, admissible outputs and replayable authored direction. The object should expose reproducible math, not imply balance, semantics or dynamical chaos.
 
 ## Separate questions
 
@@ -12,6 +12,8 @@ Construct deterministic progression with a legible opening, smooth irregular con
 - **Coherence:** does stabilization approach its actual seeded guide rather than a generic exponential?
 - **Admissibility:** do output policies satisfy their selected bounds without changing exports or adapters?
 - **Branch composition:** are history, coordinates, contact order and lineage preserved independently of future shape?
+- **Guide fidelity:** how do knot spacing, supplied derivatives and interpolation conditioning affect approximation over a stated domain?
+- **Guided replay:** do layered influences and later forks preserve construction and inherited history without executing callback source?
 - **Conditioning:** how do timing, contrast, velocity and handoff width affect derivative bounds and numeric resolution?
 
 ## Method

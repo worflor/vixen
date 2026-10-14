@@ -5,7 +5,8 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "vixen-curves"
 version = "1.4.0"
-description = "Deterministic seeded game curves with a controllable trajectory backbone"
+description = "Deterministic, navigable progression fields with replayable timelines and function guides. JavaScript and Python; no runtime dependencies."
+keywords = ["deterministic", "procedural-generation", "trajectory-generation", "seeded-randomness", "interpolation", "numerical-methods", "javascript", "python"]
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"

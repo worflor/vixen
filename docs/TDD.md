@@ -14,7 +14,7 @@ Optional guide/compiler and influence modules leave root numerical evaluation un
 
 A fork retains its parent object and creates an operation-derived future leaf. History delegates directly to the parent. Within the handoff, the quintic gate blends actual values, references and diagnostics. Only source fields are blended; dependent adapters are recomputed. Coordinate vectors are normalized at the public boundary and passed through private evaluation without repeated allocation.
 
-A complete snapshot contains algorithm, root configuration and ordered lineage. Leaf configuration alone cannot reconstruct history. Envelope fields are validated consistently before version dispatch. Depth and data ranges bound replay work. Supported historical schemas remain explicit; malformed or wrongly retagged snapshots fail closed.
+A complete snapshot describes its replay schema and composition: core configuration and fork lineage, or a guided envelope containing the underlying snapshot, numeric guide data and attachment controls. Leaf configuration alone cannot reconstruct history. Envelope fields are validated consistently before version dispatch. Depth and data ranges bound replay work. Supported historical schemas remain explicit; malformed or wrongly retagged snapshots fail closed.
 
 ## Contracts
 

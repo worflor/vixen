@@ -1,26 +1,33 @@
 # Vixen
 
-**A seeded landscape with teeth.** Deterministic progression curves for JavaScript and Python, with a navigable 16-dimensional field, trajectory stabilization, output boundaries and immutable timeline branches.
+**A seeded landscape with teeth.** A deterministic, navigable family of smooth trajectories with history-preserving branches and authored function guides. JavaScript and Python; no runtime dependencies.
 
 ![Six seeds with fixed axes and three stabilization settings](docs/media/seed-gallery.gif)
 
-## Purpose
+## What it is
 
-An exponential gives predictable growth. Independent rolls give discontinuous variation. Periodic modulation can put every seed on the same timetable. Vixen combines an authored opening with smooth, counter-addressed variation and a seed-specific broad backbone.
+Vixen evaluates one scalar value from a progression coordinate and a location in sixteen-dimensional space. A seed selects the field. A fixed location or a moving path through that field selects a trajectory. Evaluation is random-access: sampling order does not consume or change a random-number stream.
 
-The seed selects a landscape; coordinates select a location; velocity selects a path. Stabilization controls attraction to the backbone rather than reducing all variation toward a generic curve. Evaluation is random-access and requires no mutable RNG state.
+The object composes distinct ingredients:
 
-Useful applications include encounter intensity, difficulty experiments, procedural families, environmental controls and reproducible stress fixtures. Host projects own calibration, rewards and decisions. Vixen is not cryptographic randomness, a physics simulator, a universal noise framework or a band-limited audio generator.
+- **Progression:** a positive authored baseline with configurable timing and two opening dips.
+- **Variation:** counter-addressed noise averaged across seeded ridge directions, scales and phases.
+- **Coherence:** stabilization toward the seed's broader, gentler backbone.
+- **Admissibility:** optional floors, ceilings and smooth boundary transitions.
+- **History:** immutable forks with exact inherited prefixes and deterministic future seeds.
+- **Direction:** external polynomial, Taylor, derivative-jet or captured-function guides.
 
-## Explore
+The dimensions are continuous controls, not independent outputs or predefined semantic labels. Vixen is a procedural trajectory engine, not a physics simulator, an intelligent agent, cryptographic randomness or a proof of dynamical chaos.
 
-Open [instrument/vixen.html](instrument/vixen.html) directly in a browser. Adjust the seed, opening, stabilization and bounds; explore the coordinate map; inspect a position and fork it. Export the complete replay snapshot or actual sampled CSV.
+## Explore the object
 
-Root controls lock after branching to prevent edits from erasing history. Display controls remain available. Reset starts a new root.
+Download [the offline instrument](instrument/vixen.html) and open it in a browser. Adjust the seed and progression controls, navigate a coordinate slice, attach a function guide, inspect a position and fork the timeline. Export complete replay data, actual sampled CSV or self-contained JavaScript/Python SDK code.
+
+Root controls lock after a fork or influence to protect history. Display controls remain available. Reset explicitly starts a new root. The README animation uses actual samples and fixed continuation axes; it cuts between seeds rather than interpolating hypothetical seeds.
 
 ## Install
 
-Authenticate for private Git access.
+Git installation requires access to this repository:
 
 ```sh
 npm install git+https://github.com/worflor/vixen.git
@@ -28,97 +35,96 @@ python -m pip install "vixen-curves @ git+https://github.com/worflor/vixen.git"
 ```
 
 ```js
-import {create, restore} from '@worflor/vixen';
-const curve = create({seed: 'my-world', stabilizer: 0.85});
-const {activity, positiveMultiplier} = curve.sample(300);
+import {create, captureGuide, restore} from '@worflor/vixen';
+
+const root = create({seed: 'my-world', stabilizer: 0.3});
+const guide = captureGuide(x => 80*Math.sin(x/23) + .3*x,
+  {domain: [100, 500], count: 129});
+const guided = root.influence(guide,
+  {at: 120, amount: 0.7, handoffWidth: 24});
+const future = guided.fork({at: 180, operation: 'take-key'});
+const replay = restore(JSON.parse(JSON.stringify(future.snapshot())));
+const value = replay.sample(300).value;
 ```
 
 ```python
-from vixen import Vixen, restore
-curve = Vixen(seed="my-world", stabilizer=0.85)
-activity = curve.sample(300)["activity"]
+import json, math
+from vixen import Vixen, capture_guide, restore
+
+root = Vixen(seed='my-world', stabilizer=0.3)
+guide = capture_guide(lambda x: 80*math.sin(x/23) + .3*x,
+                      domain=[100, 500], count=129)
+guided = root.influence(guide, at=120, amount=0.7, handoffWidth=24)
+future = guided.fork(at=180, operation='take-key')
+replay = restore(json.loads(json.dumps(future.snapshot())))
+value = replay.sample(300)['value']
 ```
 
-Alternatively vendor [vixen.mjs](vixen.mjs) and [its declarations](vixen.d.ts), or [vixen.py](vixen.py). ESM/Node 20+ or modern browsers; Python 3.10+. Both runtimes are dependency-free. No AI model, Scryer connection, server or viewer is required.
+ESM/Node 20+ or modern browsers; Python 3.10+. No AI model, Scryer connection, server or viewer is required at runtime.
 
-## Choose an output
+**Vendoring:** keep `vixen.mjs`, `vixen-guide.mjs` and `vixen-influence.mjs` together, plus `vixen.d.ts` for TypeScript. Python needs `vixen.py`, `vixen_guide.py` and `vixen_influence.py`. The instrument's SDK exports bundle those modules into a single file for each language.
 
-- `activity`: bounded control signal in [0,1], not a calibrated probability.
-- `positiveMultiplier`: bounded positive tuning factor.
-- `positiveValue`: positive authored growth scaled by that factor.
-- `value`: signed progression, potentially negative and very large.
+## Choose a trajectory and output
 
-Every adapter derives from the actual constrained signal. Unconstrained diagnostics remain available. Floating curves use declared tolerances across numeric backends; hashes and branch-seed derivation match exactly across ports.
+- `sample(x)` follows the configured path.
+- `at(x, coordinates)` reads the same field at an explicit sixteen-dimensional location.
+- `location(x)` exposes the configured path position.
+- `value` is the signed, constrained progression value; it can be negative or very large.
+- `activity` is a bounded control signal in [0,1], not a calibrated probability.
+- `positiveMultiplier` is a bounded positive tuning factor.
+- `positiveValue` scales the positive authored baseline by that factor, not by the raw guide value.
 
-## Configure the object
+Adapters derive from the actual constrained deviation. Unrestricted diagnostics and underlying-field inspection remain available. Read `domain` before sampling: progression timing and finite guide domains can reduce the upper limit.
 
-```js
-const root = create({
-  seed: 'my-world',
-  openingEndpoint: 160,
-  introVariation: 1,
-  stabilizer: 0.3,
-  floor: 'backbone',
-  ceilingMargin: 0.35,
-  boundarySoftness: 0.1
-});
-```
+## Shape without conflating controls
 
-`openingEndpoint` rescales the progression clock. `introVariation` varies the two opening dips' centers, widths and depths; zero selects the fixed authored opening. Read `root.domain` before sampling: a shortened opening reduces the supported caller domain.
+`openingEndpoint` rescales the authored clock. `introVariation` varies the two dip parameter sets; zero selects the fixed opening. `strength` controls native modulation amplitude, `contrast` its response, and `tempo` its spatial/progression scale.
 
-Floors are `none`, `zero`, `baseline` and `backbone`. The nullable ceiling margin is measured in baseline units. Positive softness supplies a smooth boundary transition; zero selects hard clipping. Limits are never permission to cross a boundary. A collapsed trajectory band intentionally removes variation. Full stabilization need not be strictly monotonic.
+**Stabilization** blends fine variation toward the seed's broad backbone. **Influence** pulls the unrestricted value toward a foreign scalar guide. They have different targets and separate controls. Full influence follows the stored guide after handoff wherever output policies permit it.
 
-## Branch and replay
+Guide inputs can directly represent finite polynomials and Taylor expansions, interpolate supplied value/slope/curvature jets, or capture a trusted developer callback. Capture creates a smooth approximation: it can miss behavior between knots, overshoot, and does not establish Taylor convergence or source-function fidelity. Snapshots contain numeric guide data, never executable callback source. [Guide contracts](docs/reference/GUIDES.md).
 
-```js
-const door = root.fork({at: 240, operation: 'opened-left-door', handoffWidth: 24});
-const key = door.fork({at: 320, operation: 'took-key'});
-const replay = restore(JSON.parse(JSON.stringify(key.snapshot())));
-```
+Floors are `none`, `zero`, `baseline` and `backbone`. The nullable ceiling margin uses baseline units. Softness controls the admissible boundary buffer, not permission to cross the limit. Hard clipping can introduce corners; a collapsed band deliberately removes variation. Stabilization is not a guarantee of strict monotonicity. [Boundary contracts](docs/reference/CONSTRAINTS.md).
 
-A fork preserves its actual parent's history and world coordinates through the decision point. The handoff matches value, slope and curvature wherever the parent curves are C2, then approaches a decision-derived future. Narrow handoffs can still produce large derivatives. Hard clipping can still introduce corners.
+## Preserve history and replay
 
-The operation is seed material, not an interpreted physical command. Finite hashes can collide. Nested branches inherit their parent's history, not an independently reconstructed root.
+Forks preserve the actual parent's samples and world coordinates through the decision point. Their smooth handoff matches value, slope and curvature wherever the participating curves are C2. Influences also preserve the parent prefix, and later forks retain their guides.
 
-Save `snapshot()`, which contains root configuration and ordered lineage. `config` describes the latest future leaf and is insufficient to reconstruct history.
+Operations are deterministic decision tokens, not interpreted physical commands. Finite seed hashes can collide, and full influence can make different seeds follow the same scalar curve. Narrow handoffs can be sharp even when smooth.
 
-## Develop
+Save the complete `snapshot()`. Latest-leaf `config` alone cannot recover branches or nested guides. Integer hash/seed derivation matches exactly across ports; floating evaluation uses declared tolerances rather than cross-backend bitwise lockstep. [Timing and replay](docs/reference/TIMELINES.md), [conditioning](docs/reference/CONDITIONING.md).
+
+## Applications and experiments
+
+Use Vixen for reproducible control trajectories: encounter intensity, progression experiments, procedural environment parameters, families of related curves, guided modulation and stress fixtures. Explore coordinate paths, compare seeds under fixed axes, or mix authored envelopes with seed-specific variation.
+
+Host projects own calibration, rewards, authorization and domain semantics. Smoothness is not band limitation; bounded activity is not fairness or a payout expectation.
+
+Runnable examples: [basic sampling](examples/basic.mjs), [encounters](examples/encounters.mjs), [coordinate orbit](examples/orbit.mjs), [sweeps](examples/sweep.mjs), [constraints](examples/constraints.mjs), [timelines](examples/timelines.mjs), [guides](examples/guides.mjs) and [Python guides](examples/guides.py).
+
+## Develop and verify
 
 ```sh
 npm ci
 npm test
 npm run typecheck
-python -m unittest discover -s tests -p 'test_python*.py'
-python tests/cross_port.py
+python tools/verify.py
 node tests/fuzz.mjs
+python tools/mutation_probe.py
 node tools/benchmark.mjs
 python tools/build_instrument.py
+node tests/browser.mjs
 ```
 
-Examples: [encounters](examples/encounters.mjs), [coordinate orbit](examples/orbit.mjs), [sweeps](examples/sweep.mjs), [constraints](examples/constraints.mjs), [timelines](examples/timelines.mjs).
+See [technical design](docs/TDD.md) for distribution checks, self-contained exports and media regeneration; [research design](docs/RDD.md) for measurement and evidence rules; [contributor map](AGENTS.md) for source ownership and invariants.
 
-## Function influence
+## Mathematical reference
 
-A line, finite Taylor polynomial, supplied derivative jets or a captured procedural function can guide the same object. Attachment preserves history; later forks retain the guide. Capture stores a smooth approximation, never executable callback source. [Guide API and mathematical scope](docs/reference/GUIDES.md).
+- [Construction](docs/reference/CONSTRUCTION.md): field, progression and composition.
+- [API](docs/reference/API.md): accepted inputs, outputs and replay schemas.
+- [Function guides](docs/reference/GUIDES.md), [boundaries](docs/reference/CONSTRAINTS.md), [timelines](docs/reference/TIMELINES.md), [conditioning](docs/reference/CONDITIONING.md).
+- [Limitations and release policy](docs/STATUS.md).
 
-```js
-import {create, captureGuide} from "@worflor/vixen";
-const root = create({seed:"world"});
-const guide = captureGuide(x => 80*Math.sin(x/23)+.3*x,
-  {domain:[100,500], count:129});
-const guided = root.influence(guide, {at:120, amount:.7, handoffWidth:24});
-```
+Exact component findings, replayed certificates, implementation regressions and sampled audits establish different kinds of evidence. Scryer is a derivation instrument, not a runtime dependency or a whole-program certificate. Historical observations remain separate from current API contracts.
 
-## Reference
-
-- [Function guides](docs/reference/GUIDES.md)
-- [API reference](docs/reference/API.md)
-- [Construction](docs/reference/CONSTRUCTION.md)
-- [Boundary policies](docs/reference/CONSTRAINTS.md)
-- [Timing and timelines](docs/reference/TIMELINES.md)
-- [Conditioning](docs/reference/CONDITIONING.md)
-- [Technical design](docs/TDD.md), [research design](docs/RDD.md), [repository map](AGENTS.md)
-
-Scryer supplies exact component findings and replayable certificates where available. Those results, executable regressions and sampled audits have separate scopes. No whole-program certificate or proof of dynamical chaos is claimed. Compatibility belongs to the replay contract; historical observations remain in `research/history/`.
-
-Licensed under [MIT](LICENSE). npm-registry publication is disabled by `private: true`.
+Licensed under [MIT](LICENSE). Licensing, repository access and publication are independent controls; npm-registry publication is disabled by `private: true`.

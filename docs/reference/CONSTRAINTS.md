@@ -24,9 +24,11 @@ Scryer derived the coefficients by exact augmented-matrix nullspace, proved uniq
 
 Let `a=strength*entranceGate*boundarySoftness`. For a single boundary, e=B*a. With both boundaries and positive normalized gap d=(C-L)/B, use `e=B*a*d/(d+2a)`. This smooth rational expression gives `0<2e<C-L`, rather than a kink-producing minimum between widths. The lower and upper transition strips cannot overlap. Zero gap returns the reference; zero a uses hard boundaries.
 
-Width vanishes with the entrance gate and strength. The configured authored opening remains unchanged, and zero strength remains authored growth for every policy. Where a transition reaches the opening, the correction has the entrance gate's cubic vanishing factor, preserving its first two derivatives in the exact construction.
+For native sampling, width vanishes with the entrance gate and strength. The configured authored opening remains unchanged, and zero strength remains authored growth for every policy. Where a transition reaches the opening, the correction has the entrance gate's cubic vanishing factor, preserving its first two derivatives in the exact construction.
 
-## Honest semantics
+Foreign influence contributes its own activation-dependent width, preserves inherited buffers and applies policies after the pull. Zero native strength does not disable a foreign guide or its soft boundary transition. [Guide composition](GUIDES.md).
+
+## Semantics
 
 - Softness is transition width, not permission to violate a boundary.
 - Soft rules reshape admissible values inside their buffer; outside it they are exact identity. Forbidden excursions necessarily flatten to their boundary.
