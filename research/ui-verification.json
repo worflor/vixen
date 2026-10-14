@@ -13,6 +13,10 @@
       "branchCSV": true,
       "rootLocked": true,
       "shortDomain": true,
+      "guideAttachment": true,
+      "guideFork": true,
+      "guideReplay": true,
+      "proceduralCapture": true,
       "columns": 34,
       "overflow": false,
       "pageErrors": []
@@ -29,6 +33,10 @@
       "branchCSV": true,
       "rootLocked": true,
       "shortDomain": true,
+      "guideAttachment": true,
+      "guideFork": true,
+      "guideReplay": true,
+      "proceduralCapture": true,
       "columns": 34,
       "overflow": false,
       "pageErrors": []
@@ -45,6 +53,10 @@
       "branchCSV": true,
       "rootLocked": true,
       "shortDomain": true,
+      "guideAttachment": true,
+      "guideFork": true,
+      "guideReplay": true,
+      "proceduralCapture": true,
       "columns": 34,
       "overflow": false,
       "pageErrors": []

@@ -1,4 +1,7 @@
 /** Deterministic progression fields and immutable timelines. */
+import {withInfluence,restoreInfluence,INFLUENCE_ALGORITHM} from './vixen-influence.mjs';
+export {INFLUENCE_ALGORITHM};
+export {polynomialGuide,taylorGuide,sampledGuide,captureGuide,compileGuide,evaluateGuide} from './vixen-guide.mjs';
 export const ALGORITHM='vixen-hyperfield-c2/4';
 export const DIMENSIONS=16,FEATURES=48;
 export const DEFAULTS=Object.freeze({seed:'vixen',openingEndpoint:100,introVariation:0,floor:'none',ceilingMargin:null,boundarySoftness:.1,stabilizer:0,strength:1,ramp:16,tempo:.8,contrast:10,latent:Object.freeze(Array(16).fill(0)),velocity:Object.freeze(Array(16).fill(0))});
@@ -92,10 +95,11 @@ function timeline(leaf,rootConfig=leaf.config,lineage=Object.freeze([]),parent=n
   const seed=forkSeed(leaf.config.seed,operation,at),entry=Object.freeze({at,operation,handoffWidth,seed}),future=createLeaf({...leaf.config,seed});
   return timeline(future,rootConfig,Object.freeze([...lineage,entry]),api,entry,evaluate);
  }
- const api=Object.freeze({...leaf,lineage,sample:x=>evaluate(x),at:(x,h)=>evaluate(x,vector(h)),inspect,fork,snapshot});return api;
+ const api=Object.freeze({...leaf,lineage,sample:x=>evaluate(x),at:(x,h)=>evaluate(x,vector(h)),inspect,fork,snapshot,influence:(target,options)=>withInfluence(api,target,options)});return api;
 }
 export function create(options={}){return timeline(createLeaf(options));}
 export function restore(snapshot){
+ if(snapshot&&typeof snapshot==='object'&&Object.hasOwn(snapshot,'algorithm')&&snapshot.algorithm===INFLUENCE_ALGORITHM)return restoreInfluence(snapshot,restore);
  if(!snapshot||typeof snapshot!=='object'||Array.isArray(snapshot)||!Object.hasOwn(snapshot,'algorithm')||!Object.hasOwn(snapshot,'config')||!snapshot.config||typeof snapshot.config!=='object'||Array.isArray(snapshot.config))throw new TypeError('Snapshot with configuration required');
  if(Reflect.ownKeys(snapshot).some(k=>typeof k!=='string'||!['algorithm','config','lineage'].includes(k)))throw new TypeError('Unknown snapshot field');
  if(snapshot.algorithm===ALGORITHM){

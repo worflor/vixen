@@ -1,6 +1,8 @@
 """Vixen hyperfield reference port; standard library, no RNG state."""
 import math
 from types import MappingProxyType
+from vixen_guide import polynomial_guide,taylor_guide,sampled_guide,capture_guide,compile_guide,evaluate_guide
+from vixen_influence import with_influence,restore_influence,INFLUENCE_ALGORITHM
 ALGORITHM='vixen-hyperfield-c2/4'
 DIMENSIONS=16
 FEATURES=48
@@ -191,6 +193,7 @@ class Vixen:
   return sorted([{**r,'sourceSeed':r.get('sourceSeed',source_seed),'contribution':r['contribution']*factor,'guideContribution':r['guideContribution']*factor} for rows,factor,source_seed in [(self._parent.inspect(x),1-w,self._parent.config['seed']),(self._leaf.inspect(x),w,self.config['seed'])] for r in rows],key=lambda r:abs(r['contribution']),reverse=True)
  def snapshot(self):
   return {'algorithm':ALGORITHM,'config':{k:list(v) if isinstance(v,tuple) else v for k,v in self._root_config.items()},'lineage':[{k:n[k] for k in ('at','operation','handoffWidth')} for n in self._lineage]}
+ def influence(self,target,**options):return with_influence(self,target,**options)
  def fork(self,*,at,operation,handoffWidth=None):
   self._leaf._check(at)
   if not isinstance(operation,str) or not operation:raise TypeError('A nonempty operation string is required')
@@ -203,6 +206,7 @@ class Vixen:
   result=object.__new__(Vixen);result._initialize(future,self._root_config,(*self._lineage,entry),self,entry);return result
 
 def restore(snapshot):
+ if isinstance(snapshot,dict) and snapshot.get('algorithm')==INFLUENCE_ALGORITHM:return restore_influence(snapshot,restore)
  if not isinstance(snapshot,dict) or not isinstance(snapshot.get('config'),(dict,MappingProxyType)):raise ValueError('Snapshot with configuration required')
  if set(snapshot)-{'algorithm','config','lineage'}:raise ValueError('Unknown snapshot field')
  cfg=snapshot['config'];algorithm=snapshot.get('algorithm')

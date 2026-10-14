@@ -88,12 +88,15 @@ export interface Bounds {
   readonly positiveMultiplier: readonly [number, number];
 }
 export interface Instrument {
-  readonly algorithm: typeof ALGORITHM;
+  readonly algorithm: typeof ALGORITHM | typeof INFLUENCE_ALGORITHM;
   readonly config: ResolvedConfig;
   readonly bounds: Bounds;
   readonly domain: readonly [number, number];
   readonly dips: readonly Readonly<{center:number;width:number;depth:number}>[];
   readonly lineage: readonly (ForkOptions & {readonly seed:number})[];
+  readonly influences?:readonly InfluenceEntry[];
+  influence(target:Guide|((x:number)=>number),options?:InfluenceOptions):Instrument;
+  influenceAt?(x:number):Readonly<{weight:number;targetValue:number|null;sourceValue:number;followingError:number|null}>;
   fork(options: ForkOptions): Instrument;
   snapshot(): Snapshot;
   sample(x: number): Sample;
@@ -103,7 +106,24 @@ export interface Instrument {
   ridges(): readonly Ridge[];
 }
 export interface ForkOptions { readonly at:number; readonly operation:string; readonly handoffWidth?:number; }
-export interface Snapshot { readonly algorithm: string; readonly config: Config; readonly lineage?:readonly ForkOptions[]; }
+export interface BaseSnapshot { readonly algorithm: string; readonly config: Config; readonly lineage?:readonly ForkOptions[]; }
+export type Snapshot=BaseSnapshot|InfluenceSnapshot;
+export const INFLUENCE_ALGORITHM: 'vixen-influence-c2/1';
+export interface PolynomialGuide {readonly format:'vixen-guide/1';readonly kind:'polynomial';readonly coefficients:readonly number[];readonly center:number;readonly scale:number;readonly domain:readonly [number,number];}
+export interface GuideJet {readonly x:number;readonly y:number;readonly d1:number;readonly d2:number;}
+export interface SampledGuide {readonly format:'vixen-guide/1';readonly kind:'quintic';readonly knots:readonly GuideJet[];}
+export type Guide=PolynomialGuide|SampledGuide;
+export interface InfluenceOptions {readonly at?:number;readonly amount?:number;readonly handoffWidth?:number;readonly count?:number;}
+export interface InfluenceEntry {readonly at:number;readonly amount:number;readonly handoffWidth:number;readonly guide:Guide;}
+export interface InfluenceSnapshot extends InfluenceEntry {readonly algorithm:typeof INFLUENCE_ALGORITHM;readonly curve:Snapshot;}
+export interface CompiledGuide {readonly spec:Guide;readonly domain:readonly [number,number];evaluate(x:number):number;}
+export function polynomialGuide(coefficients:readonly number[],options?:{center?:number;scale?:number;domain?:readonly [number,number]}):PolynomialGuide;
+export function taylorGuide(derivatives:readonly number[],options?:{center?:number;domain?:readonly [number,number]}):PolynomialGuide;
+export function sampledGuide(knots:readonly GuideJet[]):SampledGuide;
+export function captureGuide(fn:(x:number)=>number,options?:{domain?:readonly [number,number];count?:number;derivative?:(x:number)=>number;curvature?:(x:number)=>number}):SampledGuide;
+export function compileGuide(guide:Guide):CompiledGuide;
+export function evaluateGuide(guide:Guide,x:number):number;
+
 export function create(options?: Config): Instrument;
 export function restore(snapshot: Snapshot): Instrument;
 export function seed32(seed: string | number): number;

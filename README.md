@@ -97,9 +97,22 @@ python tools/build_instrument.py
 
 Examples: [encounters](examples/encounters.mjs), [coordinate orbit](examples/orbit.mjs), [sweeps](examples/sweep.mjs), [constraints](examples/constraints.mjs), [timelines](examples/timelines.mjs).
 
+## Function influence
+
+A line, finite Taylor polynomial, supplied derivative jets or a captured procedural function can guide the same object. Attachment preserves history; later forks retain the guide. Capture stores a smooth approximation, never executable callback source. [Guide API and mathematical scope](docs/reference/GUIDES.md).
+
+```js
+import {create, captureGuide} from "@worflor/vixen";
+const root = create({seed:"world"});
+const guide = captureGuide(x => 80*Math.sin(x/23)+.3*x,
+  {domain:[100,500], count:129});
+const guided = root.influence(guide, {at:120, amount:.7, handoffWidth:24});
+```
+
 ## Reference
 
-- [API](docs/reference/API.md)
+- [Function guides](docs/reference/GUIDES.md)
+- [API reference](docs/reference/API.md)
 - [Construction](docs/reference/CONSTRUCTION.md)
 - [Boundary policies](docs/reference/CONSTRAINTS.md)
 - [Timing and timelines](docs/reference/TIMELINES.md)

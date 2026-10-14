@@ -1,0 +1,94 @@
+{
+  "scope": "component relations and producer-rechecked certificates, not a whole-program or arbitrary callback fidelity proof",
+  "hermite": {
+    "subject": "a+b+c=u; 3*a+4*b+5*c=v; 6*a+12*b+20*c=w",
+    "route": "system",
+    "invocation": "7d6bfca0-1d7c-4caf-af53-b1ab3df4b2f7",
+    "relations": [
+      "a=10u-4v+w/2",
+      "b=-15u+7v-w",
+      "c=6u-3v+w/2"
+    ],
+    "interpretation": "u,v,w are endpoint residual parameters; fixed parameters yield the Hermite high-order coefficients"
+  },
+  "blend_lower": {
+    "subject": "handelman a*(10*t^3-15*t^4+6*t^5) on a>=0,1-a>=0,t>=0,1-t>=0",
+    "invocation": "8c07f833-98df-4e5f-ad1a-77edb5ba9544",
+    "terms": [
+      {
+        "coefficient": "1",
+        "exponents": [
+          1,
+          0,
+          3,
+          0
+        ]
+      },
+      {
+        "coefficient": "3",
+        "exponents": [
+          1,
+          0,
+          3,
+          1
+        ]
+      },
+      {
+        "coefficient": "6",
+        "exponents": [
+          1,
+          0,
+          3,
+          2
+        ]
+      }
+    ]
+  },
+  "blend_upper": {
+    "subject": "handelman 1-a*(10*t^3-15*t^4+6*t^5) on a>=0,1-a>=0,t>=0,1-t>=0",
+    "invocation": "3983a3c1-df39-420c-a740-a98c85c1f4e2",
+    "terms": [
+      {
+        "coefficient": "1",
+        "exponents": [
+          0,
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "coefficient": "1",
+        "exponents": [
+          1,
+          0,
+          0,
+          3
+        ]
+      },
+      {
+        "coefficient": "3",
+        "exponents": [
+          1,
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "coefficient": "6",
+        "exponents": [
+          1,
+          0,
+          2,
+          3
+        ]
+      }
+    ]
+  },
+  "refusal": {
+    "route": "reals",
+    "invocation": "f8547d16-caa2-4162-82b2-71faa005bf86",
+    "reason": "multivariable quantified inequality not decided; use the explicit positivity certificates rather than relabeling this refusal as success"
+  }
+}

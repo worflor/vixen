@@ -6,6 +6,10 @@
 
 Leaf evaluation averages counter-addressed C2 ridge interpolation and a broader guide field. The opening clock drives baseline, projections and configured travel. Stabilization blends fine and broad deviation; boundaries act on the resulting scalar signal. Adapters derive from the actual constrained value and baseline.
 
+## Function guides
+
+Optional guide/compiler and influence modules leave root numerical evaluation unchanged. Polynomial and finite Taylor guides represent supplied coefficients; captured callbacks become immutable shared-jet quintic data. Influences compose unrestricted values, then apply output policy and recompute dependent adapters. Guided snapshots store the underlying timeline plus data and controls; no callback is replayed. The instrument bundles these modules into self-contained JavaScript and Python exports. See [guide contracts](reference/GUIDES.md).
+
 ## Timelines
 
 A fork retains its parent object and creates an operation-derived future leaf. History delegates directly to the parent. Within the handoff, the quintic gate blends actual values, references and diagnostics. Only source fields are blended; dependent adapters are recomputed. Coordinate vectors are normalized at the public boundary and passed through private evaluation without repeated allocation.

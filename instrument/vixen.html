@@ -7,7 +7,7 @@
 <section class="panel"><h2>Give the landscape boundaries</h2><p>Choose zero, authored growth, or the seeded backbone as a floor. An optional ceiling adds an upper envelope. The quintic q(t)=6t³−8t⁴+3t⁵ blends the boundary into the untouched curve with matching first and second derivatives. Softness controls a transition band, never permission to violate the limit. Boundary policies leave the configured opening unchanged.</p><p class="note">Constrained values drive every game adapter and CSV export. Unconstrained diagnostic fields preserve the source signal. Under limits, full stabilization follows the constrained guide; the unrestricted linear distance law does not extend through a nonlinear boundary map.</p><h2>Stabilize onto a trajectory</h2><p>0 preserves the hyperfield exactly. Moving toward 1 pulls excursions onto a slow seeded backbone: broader field coordinates and gentler modulation. At 1 the curve is a positive, smoothly evolving growth trajectory, still shaped by the seed and hypervector. It is not guaranteed strictly monotone under every possible travel path.</p><pre>w = S(stabilizer)
 T = B(x) · (1 + strength · G(x) · 0.25 · tanh(2 · broadScore))
 F = (1−w) · F_unstabilized + w · T</pre><p class="note">The broad field samples progression and latent coordinates at 1/32 scale. Distance to T contracts by 1−w in real arithmetic. Strength affects both field and backbone; stabilizer changes their blend. Stabilization leaves the configured opening unchanged.</p></section><section class="panel"><h2>The configured opening</h2><canvas id="calm" width="960" height="220" aria-label="The preserved opening with two dips"></canvas><p class="note">Default timing and zero intro variation retain the original two dips. Seeded variation changes their center, width and depth; opening timing rescales their positions. Forking during the opening composes parent and future trajectories.</p></section>
-<section class="panel"><h2>Fork this timeline</h2><div class="controls"><label>Decision token<input id="operation" type="text" maxlength="1024" value="choose-left"></label><label>Handoff width (x units)<input id="handoffWidth" type="number" min="0" step="any" value="16"></label></div><div class="actions"><button id="forkTimeline" type="button">Fork at inspected x</button><button id="viewSnapshot" type="button">View replay snapshot</button><button id="newRoot" type="button">Start new root</button></div><p id="timelineStatus" class="note" role="status"></p><ul class="note"><li>History through this position is inherited exactly. Value, slope and curvature meet smoothly.</li><li>The token derives a new future; it does not simulate the action.</li><li>Root settings and navigation lock after a fork. Inspect history, change display, or fork onward.</li><li>Copy the complete replay snapshot before starting a new root. Hard clipping may still introduce corners.</li></ul></section><section class="panel"><h2>Inspect a coordinate</h2><label>Input x<input id="inspectX" type="number" min="1" max="50000" step="any" value="144"></label><div class="outputs" id="outputs"></div><pre id="point"></pre><details><summary>Which fields are contributing?</summary><pre id="ridges"></pre><p class="note">These are fine-field contributions and their broad backbone counterparts, before nonlinear transforms; they are not additive final-output weights or scheduled events. There is no shared pulse clock anymore.</p></details></section>
+<section class="panel"><h2>Influence this timeline</h2><div class="controls"><label>Guide form<select id="guideKind"><option value="polynomial">Polynomial coefficients</option><option value="taylor">Taylor derivatives</option><option value="wave">Captured procedural wave</option><option value="data">Guide JSON</option></select></label><label>Numbers / guide JSON<textarea id="guideInput" rows="3">[3,2]</textarea></label><label>Expansion center<input id="guideCenter" type="number" value="0" step="any"></label><label>Influence amount<input id="guideAmount" type="number" min="0" max="1" value="0.7" step="any"></label><label>Guide domain end<input id="guideEnd" type="number" value="500" step="any"></label><label>Capture knots<input id="guideCount" type="number" min="2" max="2049" value="129"></label></div><div class="actions"><button id="attachGuide" type="button">Attach at inspected x</button></div><p class="note">Coefficients use ascending powers: [b,m] represents y=mx+b. Taylor numbers are derivatives at the center. Procedural capture stores a C2 approximation, not executable code. Amount 1 follows the stored guide after handoff unless output boundaries intervene. SDK callbacks can describe arbitrary finite functions.</p><h2>Fork this timeline</h2><div class="controls"><label>Decision token<input id="operation" type="text" maxlength="1024" value="choose-left"></label><label>Handoff width (x units)<input id="handoffWidth" type="number" min="0" step="any" value="16"></label></div><div class="actions"><button id="forkTimeline" type="button">Fork at inspected x</button><button id="viewSnapshot" type="button">View replay snapshot</button><button id="newRoot" type="button">Start new root</button></div><p id="timelineStatus" class="note" role="status"></p><ul class="note"><li>History through this position is inherited exactly. Value, slope and curvature meet smoothly.</li><li>The token derives a new future; it does not simulate the action.</li><li>Root settings and navigation lock after a fork. Inspect history, change display, or fork onward.</li><li>Copy the complete replay snapshot before starting a new root. Hard clipping may still introduce corners.</li></ul></section><section class="panel"><h2>Inspect a coordinate</h2><label>Input x<input id="inspectX" type="number" min="1" max="50000" step="any" value="144"></label><div class="outputs" id="outputs"></div><pre id="point"></pre><details><summary>Which fields are contributing?</summary><pre id="ridges"></pre><p class="note">These are fine-field contributions and their broad backbone counterparts, before nonlinear transforms; they are not additive final-output weights or scheduled events. There is no shared pulse clock anymore.</p></details></section>
 <section class="panel"><h2>Listen for a hidden clock</h2><canvas id="spectrum" width="960" height="220" aria-label="Fourier power spectrum of normalized deviation energy"></canvas><p id="spectralStats" class="stat"></p><p class="note">Live spectrum of centered deviation energy D² at 1,024 integer positions, x=180–1203, with a Hann window. The vertical marker is the former 1/12 cell clock. Low-frequency power is expected in a smooth field; neither a flat spectrum nor zero autocorrelation is the goal. This finite, sampled diagnostic is not a randomness proof.</p><details><summary>Recorded cross-seed rhythm audit</summary><pre>{
   &quot;scope&quot;: &quot;Finite-window numerical diagnostics; not proof of chaos, independence, or no periodicity&quot;,
   &quot;hyperfield_reference_config&quot;: {
@@ -348,7 +348,7 @@ O(48) work per configured-path sample; no prior samples needed.</pre><details><s
 }
 </pre><p>This is procedural disorder, not proven dynamical chaos. Source-bound component mathematics and implementation tests have different scopes. Finite-window spectral improvement does not establish universal absence of rhythm. The 16-axis sensitivity audit is local and numerical; all directions need not have equal strength.</p></details><details><summary>Verification ledger</summary><pre>{
   &quot;algorithm&quot;: &quot;vixen-hyperfield-c2/4&quot;,
-  &quot;node_tests&quot;: 37,
+  &quot;node_tests&quot;: 46,
   &quot;cross_port&quot;: {
     &quot;algorithm&quot;: &quot;vixen-hyperfield-c2/4&quot;,
     &quot;cases&quot;: 2400,
@@ -356,6 +356,7 @@ O(48) work per configured-path sample; no prior samples needed.</pre><details><s
     &quot;nested_fork_cases&quot;: 800,
     &quot;max_scaled_error&quot;: 5.4211649649668276e-14,
     &quot;acceptance_tolerance&quot;: 1e-10,
+    &quot;sensitivity_parity&quot;: &quot;exact&quot;,
     &quot;hash_parity&quot;: &quot;exact&quot;,
     &quot;branch_seed_parity&quot;: &quot;exact&quot;,
     &quot;navigation_basis_parity_tolerance&quot;: 1e-12,
@@ -402,6 +403,10 @@ O(48) work per configured-path sample; no prior samples needed.</pre><details><s
         &quot;branchCSV&quot;: true,
         &quot;rootLocked&quot;: true,
         &quot;shortDomain&quot;: true,
+        &quot;guideAttachment&quot;: true,
+        &quot;guideFork&quot;: true,
+        &quot;guideReplay&quot;: true,
+        &quot;proceduralCapture&quot;: true,
         &quot;columns&quot;: 34,
         &quot;overflow&quot;: false,
         &quot;pageErrors&quot;: []
@@ -418,6 +423,10 @@ O(48) work per configured-path sample; no prior samples needed.</pre><details><s
         &quot;branchCSV&quot;: true,
         &quot;rootLocked&quot;: true,
         &quot;shortDomain&quot;: true,
+        &quot;guideAttachment&quot;: true,
+        &quot;guideFork&quot;: true,
+        &quot;guideReplay&quot;: true,
+        &quot;proceduralCapture&quot;: true,
         &quot;columns&quot;: 34,
         &quot;overflow&quot;: false,
         &quot;pageErrors&quot;: []
@@ -434,6 +443,10 @@ O(48) work per configured-path sample; no prior samples needed.</pre><details><s
         &quot;branchCSV&quot;: true,
         &quot;rootLocked&quot;: true,
         &quot;shortDomain&quot;: true,
+        &quot;guideAttachment&quot;: true,
+        &quot;guideFork&quot;: true,
+        &quot;guideReplay&quot;: true,
+        &quot;proceduralCapture&quot;: true,
         &quot;columns&quot;: 34,
         &quot;overflow&quot;: false,
         &quot;pageErrors&quot;: []
@@ -441,7 +454,55 @@ O(48) work per configured-path sample; no prior samples needed.</pre><details><s
     ]
   }
 }</pre></details></section>
-<section class="panel"><h2>Take the landscape with you</h2><label>Replay configuration<textarea id="config" rows="12" spellcheck="false"></textarea></label><div class="actions"><button id="applyConfig" type="button">Apply configuration</button><button id="csv" type="button">Generate integer CSV</button></div><label>Current samples<textarea id="csvText" rows="7" spellcheck="false" readonly></textarea></label><details><summary>JavaScript engine · no dependencies</summary><textarea id="jsSource" rows="20" spellcheck="false" readonly>/** Deterministic progression fields and immutable timelines. */
+<section class="panel"><h2>Take the landscape with you</h2><label>Replay configuration<textarea id="config" rows="12" spellcheck="false"></textarea></label><div class="actions"><button id="applyConfig" type="button">Apply configuration</button><button id="csv" type="button">Generate integer CSV</button></div><label>Current samples<textarea id="csvText" rows="7" spellcheck="false" readonly></textarea></label><details><summary>JavaScript engine · no dependencies</summary><textarea id="jsSource" rows="20" spellcheck="false" readonly>const {polynomialGuide,taylorGuide,sampledGuide,captureGuide,compileGuide,evaluateGuide}=(()=&gt;{
+const GUIDE_FORMAT=&#x27;vixen-guide/1&#x27;;
+function guideNumber(v,lo=-1e250,hi=1e250){if(typeof v!==&#x27;number&#x27;||!Number.isFinite(v)||v&lt;lo||v&gt;hi)throw new RangeError(&#x27;Guide number outside finite bounds&#x27;);return v;}
+function guideRecord(v,keys){if(!v||typeof v!==&#x27;object&#x27;||Array.isArray(v)||Reflect.ownKeys(v).some(k=&gt;!keys.includes(k)))throw new TypeError(&#x27;Invalid guide record fields&#x27;);}
+function guideDomain(v){if(!Array.isArray(v)||v.length!==2)throw new TypeError(&#x27;Guide domain requires two endpoints&#x27;);const a=guideNumber(v[0],-1e6,1e6),b=guideNumber(v[1],-1e6,1e6);if(a&gt;=b)throw new RangeError(&#x27;Guide domain must increase&#x27;);return Object.freeze([a,b]);}
+function polynomialGuide(coefficients,options={}){guideRecord(options,[&#x27;center&#x27;,&#x27;scale&#x27;,&#x27;domain&#x27;]);if(!Array.isArray(coefficients)||coefficients.length&lt;1||coefficients.length&gt;65)throw new RangeError(&#x27;Polynomial requires 1..65 coefficients&#x27;);const c=Object.freeze(Array.from(coefficients,v=&gt;guideNumber(v))),center=guideNumber(options.center===undefined?0:options.center,-1e6,1e6),scale=guideNumber(options.scale===undefined?1:options.scale,1e-6,1e6),domain=guideDomain(options.domain===undefined?[1,50000]:options.domain);return Object.freeze({format:GUIDE_FORMAT,kind:&#x27;polynomial&#x27;,coefficients:c,center,scale,domain});}
+function compileGuide(data){if(data?.kind===&#x27;quintic&#x27;)return compileQuintic(data);guideRecord(data,[&#x27;format&#x27;,&#x27;kind&#x27;,&#x27;coefficients&#x27;,&#x27;center&#x27;,&#x27;scale&#x27;,&#x27;domain&#x27;]);if(data.format!==GUIDE_FORMAT||data.kind!==&#x27;polynomial&#x27;||[&#x27;format&#x27;,&#x27;kind&#x27;,&#x27;coefficients&#x27;,&#x27;center&#x27;,&#x27;scale&#x27;,&#x27;domain&#x27;].some(k=&gt;!Object.hasOwn(data,k)))throw new TypeError(&#x27;Invalid polynomial guide&#x27;);const spec=polynomialGuide(data.coefficients,{center:guideNumber(data.center,-1e6,1e6),scale:guideNumber(data.scale,1e-6,1e6),domain:guideDomain(data.domain)});const qMax=Math.max(...spec.domain.map(x=&gt;Math.abs((x-spec.center)/spec.scale)));let bound=0;for(let i=spec.coefficients.length-1;i&gt;=0;i--)bound=bound*qMax+Math.abs(spec.coefficients[i]);guideNumber(bound,0,1e250);return Object.freeze({spec,domain:spec.domain,evaluate:x=&gt;{guideNumber(x,...spec.domain);const z=(x-spec.center)/spec.scale;let y=0;for(let i=spec.coefficients.length-1;i&gt;=0;i--)y=y*z+spec.coefficients[i];return guideNumber(y);}});}
+function taylorGuide(derivatives,options={}){guideRecord(options,[&#x27;center&#x27;,&#x27;domain&#x27;]);const p=polynomialGuide(derivatives,options);let factorial=1;return polynomialGuide(p.coefficients.map((d,i)=&gt;{if(i)factorial*=i;return d/factorial;}),options);}
+function sampledGuide(knots){if(!Array.isArray(knots)||knots.length&lt;2||knots.length&gt;2049)throw new RangeError(&#x27;Sampled guide requires 2..2049 jets&#x27;);let previous=-Infinity;const out=Array.from(knots,p=&gt;{guideRecord(p,[&#x27;x&#x27;,&#x27;y&#x27;,&#x27;d1&#x27;,&#x27;d2&#x27;]);if([&#x27;x&#x27;,&#x27;y&#x27;,&#x27;d1&#x27;,&#x27;d2&#x27;].some(k=&gt;!Object.hasOwn(p,k)))throw new TypeError(&#x27;Complete knot jets required&#x27;);const x=guideNumber(p.x,-1e6,1e6);if(x&lt;=previous)throw new RangeError(&#x27;Knots must strictly increase&#x27;);previous=x;return Object.freeze({x,y:guideNumber(p.y),d1:guideNumber(p.d1),d2:guideNumber(p.d2)});});return Object.freeze({format:GUIDE_FORMAT,kind:&#x27;quintic&#x27;,knots:Object.freeze(out)});}
+function compileQuintic(data){guideRecord(data,[&#x27;format&#x27;,&#x27;kind&#x27;,&#x27;knots&#x27;]);if(data.format!==GUIDE_FORMAT||[&#x27;format&#x27;,&#x27;kind&#x27;,&#x27;knots&#x27;].some(k=&gt;!Object.hasOwn(data,k)))throw new TypeError(&#x27;Invalid quintic guide&#x27;);const spec=sampledGuide(data.knots),k=spec.knots,domain=Object.freeze([k[0].x,k.at(-1).x]),segments=[];for(let i=0;i&lt;k.length-1;i++){const a=k[i],b=k[i+1],h=b.x-a.x,A=a.y,B=h*a.d1,C=h*h*a.d2/2,U=b.y-(A+B+C),V=h*b.d1-(B+2*C),W=h*h*b.d2-2*C,c=[A,B,C,10*U-4*V+W/2,-15*U+7*V-W,6*U-3*V+W/2];for(const v of c)guideNumber(v,-1e280,1e280);guideNumber(c.reduce((sum,v)=&gt;sum+Math.abs(v),0),0,1e250);segments.push(c);}return Object.freeze({spec,domain,evaluate:x=&gt;{guideNumber(x,...domain);let lo=0,hi=k.length-1;while(lo&lt;hi){const m=Math.ceil((lo+hi)/2);if(k[m].x&lt;=x)lo=m;else hi=m-1;}if(x===k[lo].x)return k[lo].y;const t=(x-k[lo].x)/(k[lo+1].x-k[lo].x),c=segments[lo];let y=0;for(let j=5;j&gt;=0;j--)y=y*t+c[j];return guideNumber(y);}});}
+function captureGuide(fn,options={}){guideRecord(options,[&#x27;domain&#x27;,&#x27;count&#x27;,&#x27;derivative&#x27;,&#x27;curvature&#x27;]);if(typeof fn!==&#x27;function&#x27;||[&#x27;derivative&#x27;,&#x27;curvature&#x27;].some(k=&gt;options[k]!==undefined&amp;&amp;typeof options[k]!==&#x27;function&#x27;))throw new TypeError(&#x27;Trusted numeric callbacks required&#x27;);const domain=guideDomain(options.domain===undefined?[1,50000]:options.domain),n=options.count===undefined?129:options.count;if(!Number.isInteger(n)||n&lt;2||n&gt;2049)throw new RangeError(&#x27;Capture count must be 2..2049&#x27;);const knots=[];for(let i=0;i&lt;n;i++){const x=i===n-1?domain[1]:domain[0]+(domain[1]-domain[0])*i/(n-1);if(i&amp;&amp;x&lt;=knots[i-1].x)throw new RangeError(&#x27;Capture grid is not representable&#x27;);knots.push({x,y:guideNumber(fn(x)),d1:0,d2:0});}for(let i=0;i&lt;n;i++){let d1,d2;if(n===2){d1=(knots[1].y-knots[0].y)/(knots[1].x-knots[0].x);d2=0;}else{const j=Math.max(0,Math.min(n-3,i-1)),a=knots[j],b=knots[j+1],c=knots[j+2],q0=(b.y-a.y)/(b.x-a.x),q1=(c.y-b.y)/(c.x-b.x),q2=(q1-q0)/(c.x-a.x);d1=q0+q2*((knots[i].x-a.x)+(knots[i].x-b.x));d2=2*q2;}knots[i].d1=guideNumber(options.derivative?options.derivative(knots[i].x):d1);knots[i].d2=guideNumber(options.curvature?options.curvature(knots[i].x):d2);}const spec=sampledGuide(knots);compileGuide(spec);return spec;}
+function evaluateGuide(spec,x){return compileGuide(spec).evaluate(x);}
+
+return {polynomialGuide,taylorGuide,sampledGuide,captureGuide,compileGuide,evaluateGuide};})();
+const {withInfluence,restoreInfluence,INFLUENCE_ALGORITHM}=(()=&gt;{
+const INFLUENCE_ALGORITHM=&#x27;vixen-influence-c2/1&#x27;;
+const gate=t=&gt;t&lt;=0?0:t&gt;=1?1:t*t*t*(10+t*(-15+6*t));
+function finite(x,lo,hi){if(typeof x!==&#x27;number&#x27;||!Number.isFinite(x)||x&lt;lo||x&gt;hi)throw new RangeError(&#x27;Influence number outside its finite domain&#x27;);}
+function ramp(t){return t&lt;=0?0:t&gt;=1?t:t*t*t*(6+t*(-8+3*t));}
+function policy(y,p){const {floorValue:lo,ceilingValue:hi,boundaryWidth:e}=p;if(lo!==null&amp;&amp;hi!==null&amp;&amp;hi&lt;=lo)return lo;if(lo!==null){if(y&lt;=lo)y=lo;else if(e&gt;0&amp;&amp;y&lt;lo+e)y=lo+e*ramp((y-lo)/e);}if(hi!==null){if(y&gt;=hi)y=hi;else if(e&gt;0&amp;&amp;y&gt;hi-e)y=hi-e*ramp((hi-y)/e);}return y;}
+function affected(p,target,a,cfg){if(a===0)return p;const extra=p.base*a*cfg.boundarySoftness,lo=p.floorValue,hi=p.ceilingValue;let width=p.boundaryWidth;if(lo!==null&amp;&amp;hi!==null){const room=Math.max(0,(hi-lo)/2-width);if(extra&gt;0&amp;&amp;room&gt;0)width+=extra*room/(room+extra);}else if(lo!==null||hi!==null)width+=extra;p={...p,boundaryWidth:width};const u=a===1?target:(1-a)*p.unconstrainedValue+a*target,value=policy(u,p),deviation=(value-p.base)/p.base,positiveMultiplier=Math.exp(.55*Math.tanh(deviation));const guideValue=policy(p.unconstrainedGuideValue,p);return Object.freeze({...p,guideValue,guideDeviation:(guideValue-p.base)/p.base,value,unconstrainedValue:u,unconstrainedDeviation:(u-p.base)/p.base,deviation,multiplier:1+deviation,activity:.5+.5*Math.tanh(deviation),positiveMultiplier,positiveValue:p.base*positiveMultiplier,constraintApplied:value!==u});}
+function latest(curve){return Math.max(1,...curve.lineage.map(n=&gt;n.at),...(curve.influences??[]).map(n=&gt;n.at));}
+function makeInfluence(curve,target,options={},carried=false){
+ if(!options||typeof options!==&#x27;object&#x27;||Array.isArray(options)||Reflect.ownKeys(options).some(k=&gt;![&#x27;at&#x27;,&#x27;amount&#x27;,&#x27;handoffWidth&#x27;,&#x27;count&#x27;].includes(k)))throw new TypeError(&#x27;Influence options: at, amount, handoffWidth, count&#x27;);
+ if(curve.lineage.length+(curve.influences?.length??0)&gt;=32)throw new RangeError(&#x27;Maximum timeline composition depth: 32&#x27;);
+ const at=options.at===undefined?Math.max(curve.config.openingEndpoint,latest(curve)):options.at,amount=options.amount===undefined?.5:options.amount;finite(at,curve.domain[0],curve.domain[1]);finite(amount,0,1);if(!carried&amp;&amp;at&lt;latest(curve))throw new RangeError(&#x27;Influence cannot precede existing timeline events&#x27;);
+ if(typeof target===&#x27;function&#x27;)target=captureGuide(target,{domain:[at,curve.domain[1]],count:options.count===undefined?129:options.count});else if(options.count!==undefined)throw new TypeError(&#x27;count applies only to callback capture&#x27;);
+ const compiled=compileGuide(target),end=Math.min(curve.domain[1],compiled.domain[1]),domain=Object.freeze([curve.domain[0],end]),handoffWidth=options.handoffWidth===undefined?Math.min(16,end-at):options.handoffWidth;
+ finite(handoffWidth,Number.MIN_VALUE,50000);if(compiled.domain[0]&gt;at||at+handoffWidth&lt;=at||at+handoffWidth&gt;end)throw new RangeError(&#x27;Guide must cover a representable handoff inside the domain&#x27;);
+ const entry=Object.freeze({at,amount,handoffWidth,guide:compiled.spec}),influences=Object.freeze([...(curve.influences??[]),entry]);
+ function check(x){finite(x,domain[0],domain[1]);}
+ function sample(x,h){check(x);const p=h===undefined?curve.sample(x):curve.at(x,h),a=amount*gate((x-at)/handoffWidth);return a===0?p:affected(p,compiled.evaluate(x),a,curve.config);}
+ const cfg=curve.config,lower=cfg.floor===&#x27;none&#x27;?-1e280:cfg.floor===&#x27;zero&#x27;?-1:cfg.floor===&#x27;baseline&#x27;?0:-.25*cfg.strength,upper=cfg.ceilingMargin===null?1e280:(cfg.floor===&#x27;baseline&#x27;?0:.25*cfg.strength)+cfg.ceilingMargin,bounds=Object.freeze({...curve.bounds,deviation:Object.freeze([lower,upper]),multiplier:Object.freeze([1+lower,1+upper])});
+ const api=Object.freeze({...curve,algorithm:INFLUENCE_ALGORITHM,domain,bounds,influences,sample:x=&gt;sample(x),at:(x,h)=&gt;{check(x);const p=curve.at(x,h),a=amount*gate((x-at)/handoffWidth);return a===0?p:affected(p,compiled.evaluate(x),a,curve.config);},location:x=&gt;{check(x);return curve.location(x);},inspect:x=&gt;{check(x);return curve.inspect(x);},
+ influenceAt:x=&gt;{check(x);const weight=amount*gate((x-at)/handoffWidth),targetValue=weight===0?null:compiled.evaluate(x);return Object.freeze({weight,targetValue,sourceValue:curve.sample(x).value,followingError:targetValue===null?null:sample(x).value-targetValue});},
+ snapshot:()=&gt;Object.freeze({algorithm:INFLUENCE_ALGORITHM,curve:curve.snapshot(),guide:compiled.spec,at,amount,handoffWidth}),
+ fork:opts=&gt;{if(!opts||typeof opts!==&#x27;object&#x27;||Array.isArray(opts))throw new TypeError(&#x27;Fork options required&#x27;);finite(opts.at,Math.max(domain[0],latest(api)),domain[1]);const width=opts.handoffWidth??Math.min(16,domain[1]-opts.at);finite(width,Number.MIN_VALUE,50000);if(opts.at+width&gt;domain[1])throw new RangeError(&#x27;Fork exceeds guide domain&#x27;);return makeInfluence(curve.fork({...opts,handoffWidth:width}),compiled.spec,{at,amount,handoffWidth},true);},
+ influence:(g,o)=&gt;makeInfluence(api,g,o)});return api;
+}
+function withInfluence(curve,target,options){return makeInfluence(curve,target,options);}
+function restoreInfluence(snapshot,restore){
+ const frames=[],seen=new Set();let s=snapshot;
+ while(s?.algorithm===INFLUENCE_ALGORITHM){if(!s||typeof s!==&#x27;object&#x27;||Array.isArray(s)||seen.has(s)||frames.length&gt;=32)throw new TypeError(&#x27;Invalid influence composition&#x27;);seen.add(s);const keys=[&#x27;algorithm&#x27;,&#x27;curve&#x27;,&#x27;guide&#x27;,&#x27;at&#x27;,&#x27;amount&#x27;,&#x27;handoffWidth&#x27;];if(Reflect.ownKeys(s).some(k=&gt;!keys.includes(k))||keys.some(k=&gt;!Object.hasOwn(s,k)))throw new TypeError(&#x27;Invalid influence snapshot fields&#x27;);frames.push(s);s=s.curve;}
+ let result=restore(s);for(const f of frames.reverse())result=makeInfluence(result,f.guide,{at:f.at,amount:f.amount,handoffWidth:f.handoffWidth},true);return result;
+}
+
+return {withInfluence,restoreInfluence,INFLUENCE_ALGORITHM};})();
+/** Deterministic progression fields and immutable timelines. */
+export {INFLUENCE_ALGORITHM};
 export const ALGORITHM=&#x27;vixen-hyperfield-c2/4&#x27;;
 export const DIMENSIONS=16,FEATURES=48;
 export const DEFAULTS=Object.freeze({seed:&#x27;vixen&#x27;,openingEndpoint:100,introVariation:0,floor:&#x27;none&#x27;,ceilingMargin:null,boundarySoftness:.1,stabilizer:0,strength:1,ramp:16,tempo:.8,contrast:10,latent:Object.freeze(Array(16).fill(0)),velocity:Object.freeze(Array(16).fill(0))});
@@ -535,10 +596,11 @@ function timeline(leaf,rootConfig=leaf.config,lineage=Object.freeze([]),parent=n
   const seed=forkSeed(leaf.config.seed,operation,at),entry=Object.freeze({at,operation,handoffWidth,seed}),future=createLeaf({...leaf.config,seed});
   return timeline(future,rootConfig,Object.freeze([...lineage,entry]),api,entry,evaluate);
  }
- const api=Object.freeze({...leaf,lineage,sample:x=&gt;evaluate(x),at:(x,h)=&gt;evaluate(x,vector(h)),inspect,fork,snapshot});return api;
+ const api=Object.freeze({...leaf,lineage,sample:x=&gt;evaluate(x),at:(x,h)=&gt;evaluate(x,vector(h)),inspect,fork,snapshot,influence:(target,options)=&gt;withInfluence(api,target,options)});return api;
 }
 export function create(options={}){return timeline(createLeaf(options));}
 export function restore(snapshot){
+ if(snapshot&amp;&amp;typeof snapshot===&#x27;object&#x27;&amp;&amp;Object.hasOwn(snapshot,&#x27;algorithm&#x27;)&amp;&amp;snapshot.algorithm===INFLUENCE_ALGORITHM)return restoreInfluence(snapshot,restore);
  if(!snapshot||typeof snapshot!==&#x27;object&#x27;||Array.isArray(snapshot)||!Object.hasOwn(snapshot,&#x27;algorithm&#x27;)||!Object.hasOwn(snapshot,&#x27;config&#x27;)||!snapshot.config||typeof snapshot.config!==&#x27;object&#x27;||Array.isArray(snapshot.config))throw new TypeError(&#x27;Snapshot with configuration required&#x27;);
  if(Reflect.ownKeys(snapshot).some(k=&gt;typeof k!==&#x27;string&#x27;||![&#x27;algorithm&#x27;,&#x27;config&#x27;,&#x27;lineage&#x27;].includes(k)))throw new TypeError(&#x27;Unknown snapshot field&#x27;);
  if(snapshot.algorithm===ALGORITHM){
@@ -553,7 +615,195 @@ export function restore(snapshot){
  }
  throw new Error(&#x27;Algorithm mismatch: use the matching archived sampler&#x27;);
 }
-</textarea></details><details><summary>Python engine · standard library</summary><textarea id="pySource" rows="20" spellcheck="false" readonly>&quot;&quot;&quot;Vixen hyperfield reference port; standard library, no RNG state.&quot;&quot;&quot;
+
+export {polynomialGuide,taylorGuide,sampledGuide,captureGuide,compileGuide,evaluateGuide};
+</textarea></details><details><summary>Python engine · standard library</summary><textarea id="pySource" rows="20" spellcheck="false" readonly>def _guide_sdk_factory():
+ &quot;&quot;&quot;Finite replayable guide data.&quot;&quot;&quot;
+ import math
+ from types import MappingProxyType
+ GUIDE_FORMAT=&#x27;vixen-guide/1&#x27;
+ def _guide_number(v,lo=-1e250,hi=1e250):
+  if isinstance(v,bool) or not isinstance(v,(int,float)) or not lo&lt;=v&lt;=hi or not math.isfinite(v):raise ValueError(&#x27;Guide number outside finite bounds&#x27;)
+  return v
+ def _guide_record(v,keys):
+  if not hasattr(v,&#x27;items&#x27;) or set(v)-set(keys):raise TypeError(&#x27;Invalid guide record fields&#x27;)
+ def _guide_domain(v):
+  if not isinstance(v,(list,tuple)) or len(v)!=2:raise TypeError(&#x27;Guide domain requires two endpoints&#x27;)
+  a,b=(_guide_number(x,-1e6,1e6) for x in v)
+  if a&gt;=b:raise ValueError(&#x27;Guide domain must increase&#x27;)
+  return (a,b)
+ def polynomial_guide(coefficients,*,center=0,scale=1,domain=(1,50000)):
+  if not isinstance(coefficients,(list,tuple)) or not 1&lt;=len(coefficients)&lt;=65:raise ValueError(&#x27;Polynomial requires 1..65 coefficients&#x27;)
+  c=tuple(_guide_number(x) for x in coefficients);center=_guide_number(center,-1e6,1e6);scale=_guide_number(scale,1e-6,1e6);domain=_guide_domain(domain)
+  return MappingProxyType({&#x27;format&#x27;:GUIDE_FORMAT,&#x27;kind&#x27;:&#x27;polynomial&#x27;,&#x27;coefficients&#x27;:c,&#x27;center&#x27;:center,&#x27;scale&#x27;:scale,&#x27;domain&#x27;:domain})
+ class CompiledGuide:
+  __slots__=(&#x27;spec&#x27;,&#x27;domain&#x27;,&#x27;_evaluate&#x27;,&#x27;_sealed&#x27;)
+  def __setattr__(self,k,v):
+   if getattr(self,&#x27;_sealed&#x27;,False):raise AttributeError(&#x27;Compiled guides are immutable&#x27;)
+   object.__setattr__(self,k,v)
+  def __init__(self,spec,evaluate,domain=None):self.spec=spec;self.domain=spec[&#x27;domain&#x27;] if domain is None else domain;self._evaluate=evaluate;self._sealed=True
+  def evaluate(self,x):_guide_number(x,*self.domain);return _guide_number(self._evaluate(x))
+ def compile_guide(data):
+  if hasattr(data,&#x27;get&#x27;) and data.get(&#x27;kind&#x27;)==&#x27;quintic&#x27;:return _compile_quintic(data)
+  keys={&#x27;format&#x27;,&#x27;kind&#x27;,&#x27;coefficients&#x27;,&#x27;center&#x27;,&#x27;scale&#x27;,&#x27;domain&#x27;};_guide_record(data,keys)
+  if set(data)!=keys or data[&#x27;format&#x27;]!=GUIDE_FORMAT or data[&#x27;kind&#x27;]!=&#x27;polynomial&#x27;:raise TypeError(&#x27;Invalid polynomial guide&#x27;)
+  spec=polynomial_guide(data[&#x27;coefficients&#x27;],center=data[&#x27;center&#x27;],scale=data[&#x27;scale&#x27;],domain=data[&#x27;domain&#x27;])
+  def evaluate(x):
+   z=(x-spec[&#x27;center&#x27;])/spec[&#x27;scale&#x27;];y=0
+   for c in reversed(spec[&#x27;coefficients&#x27;]):y=y*z+c
+   return y
+  qmax=max(abs((x-spec[&#x27;center&#x27;])/spec[&#x27;scale&#x27;]) for x in spec[&#x27;domain&#x27;]);bound=0
+  for c in reversed(spec[&#x27;coefficients&#x27;]):bound=bound*qmax+abs(c)
+  _guide_number(bound,0,1e250)
+  return CompiledGuide(spec,evaluate)
+ def taylor_guide(derivatives,*,center=0,domain=(1,50000)):
+  p=polynomial_guide(derivatives,center=center,domain=domain);c=[];factorial=1
+  for i,d in enumerate(p[&#x27;coefficients&#x27;]):
+   if i:factorial*=i
+   c.append(d/factorial)
+  return polynomial_guide(c,center=center,domain=domain)
+ def sampled_guide(knots):
+  if not isinstance(knots,(list,tuple)) or not 2&lt;=len(knots)&lt;=2049:raise ValueError(&#x27;Sampled guide requires 2..2049 jets&#x27;)
+  out=[];previous=-math.inf
+  for p in knots:
+   _guide_record(p,{&#x27;x&#x27;,&#x27;y&#x27;,&#x27;d1&#x27;,&#x27;d2&#x27;})
+   if set(p)!={&#x27;x&#x27;,&#x27;y&#x27;,&#x27;d1&#x27;,&#x27;d2&#x27;}:raise TypeError(&#x27;Complete knot jets required&#x27;)
+   x=_guide_number(p[&#x27;x&#x27;],-1e6,1e6)
+   if x&lt;=previous:raise ValueError(&#x27;Knots must strictly increase&#x27;)
+   previous=x;out.append(MappingProxyType({&#x27;x&#x27;:x,&#x27;y&#x27;:_guide_number(p[&#x27;y&#x27;]),&#x27;d1&#x27;:_guide_number(p[&#x27;d1&#x27;]),&#x27;d2&#x27;:_guide_number(p[&#x27;d2&#x27;])}))
+  return MappingProxyType({&#x27;format&#x27;:GUIDE_FORMAT,&#x27;kind&#x27;:&#x27;quintic&#x27;,&#x27;knots&#x27;:tuple(out)})
+ def _compile_quintic(data):
+  _guide_record(data,{&#x27;format&#x27;,&#x27;kind&#x27;,&#x27;knots&#x27;})
+  if set(data)!={&#x27;format&#x27;,&#x27;kind&#x27;,&#x27;knots&#x27;} or data[&#x27;format&#x27;]!=GUIDE_FORMAT:raise TypeError(&#x27;Invalid quintic guide&#x27;)
+  spec=sampled_guide(data[&#x27;knots&#x27;]);k=spec[&#x27;knots&#x27;];segments=[]
+  for a,b in zip(k,k[1:]):
+   h=b[&#x27;x&#x27;]-a[&#x27;x&#x27;];A=a[&#x27;y&#x27;];B=h*a[&#x27;d1&#x27;];C=h*h*a[&#x27;d2&#x27;]/2;U=b[&#x27;y&#x27;]-(A+B+C);V=h*b[&#x27;d1&#x27;]-(B+2*C);W=h*h*b[&#x27;d2&#x27;]-2*C
+   c=[A,B,C,10*U-4*V+W/2,-15*U+7*V-W,6*U-3*V+W/2]
+   for v in c:_guide_number(v,-1e280,1e280)
+   _guide_number(sum(abs(v) for v in c),0,1e250)
+   segments.append(c)
+  def evaluate(x):
+   lo=0;hi=len(k)-1
+   while lo&lt;hi:
+    m=(lo+hi+1)//2
+    if k[m][&#x27;x&#x27;]&lt;=x:lo=m
+    else:hi=m-1
+   if x==k[lo][&#x27;x&#x27;]:return k[lo][&#x27;y&#x27;]
+   t=(x-k[lo][&#x27;x&#x27;])/(k[lo+1][&#x27;x&#x27;]-k[lo][&#x27;x&#x27;]);y=0
+   for c in reversed(segments[lo]):y=y*t+c
+   return y
+  return CompiledGuide(spec,evaluate,(k[0][&#x27;x&#x27;],k[-1][&#x27;x&#x27;]))
+ def capture_guide(fn,*,domain=(1,50000),count=129,derivative=None,curvature=None):
+  if not callable(fn) or any(f is not None and not callable(f) for f in (derivative,curvature)):raise TypeError(&#x27;Trusted numeric callbacks required&#x27;)
+  domain=_guide_domain(domain)
+  if isinstance(count,bool) or not isinstance(count,int) or not 2&lt;=count&lt;=2049:raise ValueError(&#x27;Capture count must be 2..2049&#x27;)
+  knots=[]
+  for i in range(count):
+   x=domain[1] if i==count-1 else domain[0]+(domain[1]-domain[0])*i/(count-1)
+   if i and x&lt;=knots[-1][&#x27;x&#x27;]:raise ValueError(&#x27;Capture grid is not representable&#x27;)
+   knots.append({&#x27;x&#x27;:x,&#x27;y&#x27;:_guide_number(fn(x)),&#x27;d1&#x27;:0,&#x27;d2&#x27;:0})
+  for i,p in enumerate(knots):
+   if count==2:d1=(knots[1][&#x27;y&#x27;]-knots[0][&#x27;y&#x27;])/(knots[1][&#x27;x&#x27;]-knots[0][&#x27;x&#x27;]);d2=0
+   else:
+    j=max(0,min(count-3,i-1));a,b,c=knots[j:j+3];q0=(b[&#x27;y&#x27;]-a[&#x27;y&#x27;])/(b[&#x27;x&#x27;]-a[&#x27;x&#x27;]);q1=(c[&#x27;y&#x27;]-b[&#x27;y&#x27;])/(c[&#x27;x&#x27;]-b[&#x27;x&#x27;]);q2=(q1-q0)/(c[&#x27;x&#x27;]-a[&#x27;x&#x27;]);d1=q0+q2*((p[&#x27;x&#x27;]-a[&#x27;x&#x27;])+(p[&#x27;x&#x27;]-b[&#x27;x&#x27;]));d2=2*q2
+   p[&#x27;d1&#x27;]=_guide_number(derivative(p[&#x27;x&#x27;]) if derivative is not None else d1);p[&#x27;d2&#x27;]=_guide_number(curvature(p[&#x27;x&#x27;]) if curvature is not None else d2)
+  spec=sampled_guide(knots);compile_guide(spec);return spec
+ def evaluate_guide(spec,x):return compile_guide(spec).evaluate(x)
+ return (polynomial_guide, taylor_guide, sampled_guide, capture_guide, compile_guide, evaluate_guide)
+polynomial_guide,taylor_guide,sampled_guide,capture_guide,compile_guide,evaluate_guide=_guide_sdk_factory()
+def _influence_sdk_factory():
+ &quot;&quot;&quot;Replayable external influences over a Vixen timeline.&quot;&quot;&quot;
+ import math
+ from types import MappingProxyType
+ INFLUENCE_ALGORITHM=&#x27;vixen-influence-c2/1&#x27;
+ def _finite(v,lo,hi):
+  if isinstance(v,bool) or not isinstance(v,(int,float)) or not lo&lt;=v&lt;=hi or not math.isfinite(v):raise ValueError(&#x27;Influence number outside its finite domain&#x27;)
+ def _gate(t):return 0 if t&lt;=0 else 1 if t&gt;=1 else t*t*t*(10+t*(-15+6*t))
+ def _ramp(t):return 0 if t&lt;=0 else t if t&gt;=1 else t*t*t*(6+t*(-8+3*t))
+ def _policy(y,p):
+  lo,hi,e=p[&#x27;floorValue&#x27;],p[&#x27;ceilingValue&#x27;],p[&#x27;boundaryWidth&#x27;]
+  if lo is not None and hi is not None and hi&lt;=lo:return lo
+  if lo is not None:
+   if y&lt;=lo:y=lo
+   elif e&gt;0 and y&lt;lo+e:y=lo+e*_ramp((y-lo)/e)
+  if hi is not None:
+   if y&gt;=hi:y=hi
+   elif e&gt;0 and y&gt;hi-e:y=hi-e*_ramp((hi-y)/e)
+  return y
+ def _affected(p,target,a,cfg):
+  if a==0:return p
+  extra=p[&#x27;base&#x27;]*a*cfg[&#x27;boundarySoftness&#x27;];lo=p[&#x27;floorValue&#x27;];hi=p[&#x27;ceilingValue&#x27;];width=p[&#x27;boundaryWidth&#x27;]
+  if lo is not None and hi is not None:
+   room=max(0,(hi-lo)/2-width)
+   if extra&gt;0 and room&gt;0:width+=extra*room/(room+extra)
+  elif lo is not None or hi is not None:width+=extra
+  p={**p,&#x27;boundaryWidth&#x27;:width};guide=_policy(p[&#x27;unconstrainedGuideValue&#x27;],p)
+  u=target if a==1 else (1-a)*p[&#x27;unconstrainedValue&#x27;]+a*target;value=_policy(u,p);d=(value-p[&#x27;base&#x27;])/p[&#x27;base&#x27;];positive=math.exp(.55*math.tanh(d))
+  return {**p,&#x27;guideValue&#x27;:guide,&#x27;guideDeviation&#x27;:(guide-p[&#x27;base&#x27;])/p[&#x27;base&#x27;],&#x27;value&#x27;:value,&#x27;unconstrainedValue&#x27;:u,&#x27;unconstrainedDeviation&#x27;:(u-p[&#x27;base&#x27;])/p[&#x27;base&#x27;],&#x27;deviation&#x27;:d,&#x27;multiplier&#x27;:1+d,&#x27;activity&#x27;:.5+.5*math.tanh(d),&#x27;positiveMultiplier&#x27;:positive,&#x27;positiveValue&#x27;:p[&#x27;base&#x27;]*positive,&#x27;constraintApplied&#x27;:value!=u}
+ def _latest(curve):return max([1,*[n[&#x27;at&#x27;] for n in curve.lineage],*[n[&#x27;at&#x27;] for n in getattr(curve,&#x27;influences&#x27;,())]])
+ def _plain(v):
+  if hasattr(v,&#x27;items&#x27;):return {k:_plain(x) for k,x in v.items()}
+  if isinstance(v,(list,tuple)):return [_plain(x) for x in v]
+  return v
+ class Influenced:
+  __slots__=(&#x27;_curve&#x27;,&#x27;_compiled&#x27;,&#x27;_entry&#x27;,&#x27;_domain&#x27;,&#x27;_influences&#x27;,&#x27;_bounds&#x27;,&#x27;_sealed&#x27;)
+  def __setattr__(self,k,v):
+   if getattr(self,&#x27;_sealed&#x27;,False):raise AttributeError(&#x27;Influence timelines are immutable&#x27;)
+   object.__setattr__(self,k,v)
+  def __init__(self,curve,target,options,carried=False):
+   if set(options)-{&#x27;at&#x27;,&#x27;amount&#x27;,&#x27;handoffWidth&#x27;,&#x27;count&#x27;}:raise TypeError(&#x27;Influence options: at, amount, handoffWidth, count&#x27;)
+   if len(curve.lineage)+len(getattr(curve,&#x27;influences&#x27;,()))&gt;=32:raise ValueError(&#x27;Maximum timeline composition depth: 32&#x27;)
+   at=options.get(&#x27;at&#x27;,max(curve.config[&#x27;openingEndpoint&#x27;],_latest(curve)));amount=options.get(&#x27;amount&#x27;,.5);_finite(at,*curve.domain);_finite(amount,0,1)
+   if not carried and at&lt;_latest(curve):raise ValueError(&#x27;Influence cannot precede existing timeline events&#x27;)
+   if callable(target):target=capture_guide(target,domain=[at,curve.domain[1]],count=options.get(&#x27;count&#x27;,129))
+   elif &#x27;count&#x27; in options:raise TypeError(&#x27;count applies only to callback capture&#x27;)
+   compiled=compile_guide(target);end=min(curve.domain[1],compiled.domain[1]);width=options.get(&#x27;handoffWidth&#x27;,min(16,end-at));_finite(width,0,50000)
+   if width&lt;=0 or compiled.domain[0]&gt;at or at+width&lt;=at or at+width&gt;end:raise ValueError(&#x27;Guide must cover a representable handoff inside the domain&#x27;)
+   self._curve=curve;self._compiled=compiled;self._domain=(curve.domain[0],end);self._entry=MappingProxyType({&#x27;at&#x27;:at,&#x27;amount&#x27;:amount,&#x27;handoffWidth&#x27;:width,&#x27;guide&#x27;:compiled.spec});self._influences=(*getattr(curve,&#x27;influences&#x27;,()),self._entry)
+   c=curve.config;lower=-1e280 if c[&#x27;floor&#x27;]==&#x27;none&#x27; else -1 if c[&#x27;floor&#x27;]==&#x27;zero&#x27; else 0 if c[&#x27;floor&#x27;]==&#x27;baseline&#x27; else -.25*c[&#x27;strength&#x27;];upper=1e280 if c[&#x27;ceilingMargin&#x27;] is None else (0 if c[&#x27;floor&#x27;]==&#x27;baseline&#x27; else .25*c[&#x27;strength&#x27;])+c[&#x27;ceilingMargin&#x27;];self._bounds=MappingProxyType({**curve.bounds,&#x27;deviation&#x27;:(lower,upper),&#x27;multiplier&#x27;:(1+lower,1+upper)});self._sealed=True
+  @property
+  def algorithm(self):return INFLUENCE_ALGORITHM
+  @property
+  def config(self):return self._curve.config
+  @property
+  def bounds(self):return self._bounds
+  @property
+  def domain(self):return self._domain
+  @property
+  def lineage(self):return self._curve.lineage
+  @property
+  def influences(self):return self._influences
+  @property
+  def dips(self):return self._curve.dips
+  def _weight(self,x):return self._entry[&#x27;amount&#x27;]*_gate((x-self._entry[&#x27;at&#x27;])/self._entry[&#x27;handoffWidth&#x27;])
+  def _adjust(self,p,x):
+   a=self._weight(x);return p if a==0 else _affected(p,self._compiled.evaluate(x),a,self.config)
+  def sample(self,x):_finite(x,*self.domain);return self._adjust(self._curve.sample(x),x)
+  def at(self,x,h):_finite(x,*self.domain);return self._adjust(self._curve.at(x,h),x)
+  def location(self,x):_finite(x,*self.domain);return self._curve.location(x)
+  def inspect(self,x):_finite(x,*self.domain);return self._curve.inspect(x)
+  def ridges(self):return self._curve.ridges()
+  def influence_at(self,x):
+   _finite(x,*self.domain);w=self._weight(x);target=None if w==0 else self._compiled.evaluate(x)
+   return {&#x27;weight&#x27;:w,&#x27;targetValue&#x27;:target,&#x27;sourceValue&#x27;:self._curve.sample(x)[&#x27;value&#x27;],&#x27;followingError&#x27;:None if target is None else self.sample(x)[&#x27;value&#x27;]-target}
+  def snapshot(self):return {&#x27;algorithm&#x27;:INFLUENCE_ALGORITHM,&#x27;curve&#x27;:self._curve.snapshot(),**_plain(self._entry)}
+  def fork(self,*,at,operation,handoffWidth=None):
+   _finite(at,max(self.domain[0],_latest(self)),self.domain[1]);width=min(16,self.domain[1]-at) if handoffWidth is None else handoffWidth;_finite(width,0,50000)
+   if width&lt;=0 or at+width&gt;self.domain[1]:raise ValueError(&#x27;Fork exceeds guide domain&#x27;)
+   parent=self._curve.fork(at=at,operation=operation,handoffWidth=width);return Influenced(parent,self._compiled.spec,{k:self._entry[k] for k in (&#x27;at&#x27;,&#x27;amount&#x27;,&#x27;handoffWidth&#x27;)},True)
+  def influence(self,target,**options):return Influenced(self,target,options)
+ def with_influence(curve,target,**options):return Influenced(curve,target,options)
+ def restore_influence(snapshot,restore):
+  frames=[];seen=set();s=snapshot
+  while isinstance(s,dict) and s.get(&#x27;algorithm&#x27;)==INFLUENCE_ALGORITHM:
+   if id(s) in seen or len(frames)&gt;=32 or set(s)!={&#x27;algorithm&#x27;,&#x27;curve&#x27;,&#x27;guide&#x27;,&#x27;at&#x27;,&#x27;amount&#x27;,&#x27;handoffWidth&#x27;}:raise ValueError(&#x27;Invalid influence snapshot fields or composition&#x27;)
+   seen.add(id(s));frames.append(s);s=s[&#x27;curve&#x27;]
+  result=restore(s)
+  for f in reversed(frames):result=Influenced(result,f[&#x27;guide&#x27;],{k:f[k] for k in (&#x27;at&#x27;,&#x27;amount&#x27;,&#x27;handoffWidth&#x27;)},True)
+  return result
+ return (with_influence, restore_influence, INFLUENCE_ALGORITHM)
+with_influence,restore_influence,INFLUENCE_ALGORITHM=_influence_sdk_factory()
+&quot;&quot;&quot;Vixen hyperfield reference port; standard library, no RNG state.&quot;&quot;&quot;
 import math
 from types import MappingProxyType
 ALGORITHM=&#x27;vixen-hyperfield-c2/4&#x27;
@@ -746,6 +996,7 @@ class Vixen:
   return sorted([{**r,&#x27;sourceSeed&#x27;:r.get(&#x27;sourceSeed&#x27;,source_seed),&#x27;contribution&#x27;:r[&#x27;contribution&#x27;]*factor,&#x27;guideContribution&#x27;:r[&#x27;guideContribution&#x27;]*factor} for rows,factor,source_seed in [(self._parent.inspect(x),1-w,self._parent.config[&#x27;seed&#x27;]),(self._leaf.inspect(x),w,self.config[&#x27;seed&#x27;])] for r in rows],key=lambda r:abs(r[&#x27;contribution&#x27;]),reverse=True)
  def snapshot(self):
   return {&#x27;algorithm&#x27;:ALGORITHM,&#x27;config&#x27;:{k:list(v) if isinstance(v,tuple) else v for k,v in self._root_config.items()},&#x27;lineage&#x27;:[{k:n[k] for k in (&#x27;at&#x27;,&#x27;operation&#x27;,&#x27;handoffWidth&#x27;)} for n in self._lineage]}
+ def influence(self,target,**options):return with_influence(self,target,**options)
  def fork(self,*,at,operation,handoffWidth=None):
   self._leaf._check(at)
   if not isinstance(operation,str) or not operation:raise TypeError(&#x27;A nonempty operation string is required&#x27;)
@@ -758,6 +1009,7 @@ class Vixen:
   result=object.__new__(Vixen);result._initialize(future,self._root_config,(*self._lineage,entry),self,entry);return result
 
 def restore(snapshot):
+ if isinstance(snapshot,dict) and snapshot.get(&#x27;algorithm&#x27;)==INFLUENCE_ALGORITHM:return restore_influence(snapshot,restore)
  if not isinstance(snapshot,dict) or not isinstance(snapshot.get(&#x27;config&#x27;),(dict,MappingProxyType)):raise ValueError(&#x27;Snapshot with configuration required&#x27;)
  if set(snapshot)-{&#x27;algorithm&#x27;,&#x27;config&#x27;,&#x27;lineage&#x27;}:raise ValueError(&#x27;Unknown snapshot field&#x27;)
  cfg=snapshot[&#x27;config&#x27;];algorithm=snapshot.get(&#x27;algorithm&#x27;)
@@ -777,6 +1029,53 @@ def restore(snapshot):
   return Vixen(**(cfg if algorithm==&#x27;vixen-hyperfield-c2/3&#x27; else {**cfg,&#x27;floor&#x27;:&#x27;none&#x27;,&#x27;ceilingMargin&#x27;:None}))
  raise ValueError(&#x27;Algorithm mismatch&#x27;)
 </textarea></details><p class="note">Save the complete snapshot: algorithm, root configuration and ordered branch lineage. A future seed or leaf configuration alone loses history. Valid older hyperfield snapshots are restored explicitly; their source remains archived. Default samples support x=1–50,000; short opening clocks reduce the domain. Floating curves are not cross-platform bitwise lockstep: bake shared samples or use a specified numeric backend for that requirement.</p></section><footer>Vixen remains the same public instrument. Its internal algorithm identifier exists to preserve an honest replay contract. The document runs locally after loading; exploration makes no network requests.</footer></main><script>
+const {polynomialGuide,taylorGuide,sampledGuide,captureGuide,compileGuide,evaluateGuide}=(()=>{
+const GUIDE_FORMAT='vixen-guide/1';
+function guideNumber(v,lo=-1e250,hi=1e250){if(typeof v!=='number'||!Number.isFinite(v)||v<lo||v>hi)throw new RangeError('Guide number outside finite bounds');return v;}
+function guideRecord(v,keys){if(!v||typeof v!=='object'||Array.isArray(v)||Reflect.ownKeys(v).some(k=>!keys.includes(k)))throw new TypeError('Invalid guide record fields');}
+function guideDomain(v){if(!Array.isArray(v)||v.length!==2)throw new TypeError('Guide domain requires two endpoints');const a=guideNumber(v[0],-1e6,1e6),b=guideNumber(v[1],-1e6,1e6);if(a>=b)throw new RangeError('Guide domain must increase');return Object.freeze([a,b]);}
+function polynomialGuide(coefficients,options={}){guideRecord(options,['center','scale','domain']);if(!Array.isArray(coefficients)||coefficients.length<1||coefficients.length>65)throw new RangeError('Polynomial requires 1..65 coefficients');const c=Object.freeze(Array.from(coefficients,v=>guideNumber(v))),center=guideNumber(options.center===undefined?0:options.center,-1e6,1e6),scale=guideNumber(options.scale===undefined?1:options.scale,1e-6,1e6),domain=guideDomain(options.domain===undefined?[1,50000]:options.domain);return Object.freeze({format:GUIDE_FORMAT,kind:'polynomial',coefficients:c,center,scale,domain});}
+function compileGuide(data){if(data?.kind==='quintic')return compileQuintic(data);guideRecord(data,['format','kind','coefficients','center','scale','domain']);if(data.format!==GUIDE_FORMAT||data.kind!=='polynomial'||['format','kind','coefficients','center','scale','domain'].some(k=>!Object.hasOwn(data,k)))throw new TypeError('Invalid polynomial guide');const spec=polynomialGuide(data.coefficients,{center:guideNumber(data.center,-1e6,1e6),scale:guideNumber(data.scale,1e-6,1e6),domain:guideDomain(data.domain)});const qMax=Math.max(...spec.domain.map(x=>Math.abs((x-spec.center)/spec.scale)));let bound=0;for(let i=spec.coefficients.length-1;i>=0;i--)bound=bound*qMax+Math.abs(spec.coefficients[i]);guideNumber(bound,0,1e250);return Object.freeze({spec,domain:spec.domain,evaluate:x=>{guideNumber(x,...spec.domain);const z=(x-spec.center)/spec.scale;let y=0;for(let i=spec.coefficients.length-1;i>=0;i--)y=y*z+spec.coefficients[i];return guideNumber(y);}});}
+function taylorGuide(derivatives,options={}){guideRecord(options,['center','domain']);const p=polynomialGuide(derivatives,options);let factorial=1;return polynomialGuide(p.coefficients.map((d,i)=>{if(i)factorial*=i;return d/factorial;}),options);}
+function sampledGuide(knots){if(!Array.isArray(knots)||knots.length<2||knots.length>2049)throw new RangeError('Sampled guide requires 2..2049 jets');let previous=-Infinity;const out=Array.from(knots,p=>{guideRecord(p,['x','y','d1','d2']);if(['x','y','d1','d2'].some(k=>!Object.hasOwn(p,k)))throw new TypeError('Complete knot jets required');const x=guideNumber(p.x,-1e6,1e6);if(x<=previous)throw new RangeError('Knots must strictly increase');previous=x;return Object.freeze({x,y:guideNumber(p.y),d1:guideNumber(p.d1),d2:guideNumber(p.d2)});});return Object.freeze({format:GUIDE_FORMAT,kind:'quintic',knots:Object.freeze(out)});}
+function compileQuintic(data){guideRecord(data,['format','kind','knots']);if(data.format!==GUIDE_FORMAT||['format','kind','knots'].some(k=>!Object.hasOwn(data,k)))throw new TypeError('Invalid quintic guide');const spec=sampledGuide(data.knots),k=spec.knots,domain=Object.freeze([k[0].x,k.at(-1).x]),segments=[];for(let i=0;i<k.length-1;i++){const a=k[i],b=k[i+1],h=b.x-a.x,A=a.y,B=h*a.d1,C=h*h*a.d2/2,U=b.y-(A+B+C),V=h*b.d1-(B+2*C),W=h*h*b.d2-2*C,c=[A,B,C,10*U-4*V+W/2,-15*U+7*V-W,6*U-3*V+W/2];for(const v of c)guideNumber(v,-1e280,1e280);guideNumber(c.reduce((sum,v)=>sum+Math.abs(v),0),0,1e250);segments.push(c);}return Object.freeze({spec,domain,evaluate:x=>{guideNumber(x,...domain);let lo=0,hi=k.length-1;while(lo<hi){const m=Math.ceil((lo+hi)/2);if(k[m].x<=x)lo=m;else hi=m-1;}if(x===k[lo].x)return k[lo].y;const t=(x-k[lo].x)/(k[lo+1].x-k[lo].x),c=segments[lo];let y=0;for(let j=5;j>=0;j--)y=y*t+c[j];return guideNumber(y);}});}
+function captureGuide(fn,options={}){guideRecord(options,['domain','count','derivative','curvature']);if(typeof fn!=='function'||['derivative','curvature'].some(k=>options[k]!==undefined&&typeof options[k]!=='function'))throw new TypeError('Trusted numeric callbacks required');const domain=guideDomain(options.domain===undefined?[1,50000]:options.domain),n=options.count===undefined?129:options.count;if(!Number.isInteger(n)||n<2||n>2049)throw new RangeError('Capture count must be 2..2049');const knots=[];for(let i=0;i<n;i++){const x=i===n-1?domain[1]:domain[0]+(domain[1]-domain[0])*i/(n-1);if(i&&x<=knots[i-1].x)throw new RangeError('Capture grid is not representable');knots.push({x,y:guideNumber(fn(x)),d1:0,d2:0});}for(let i=0;i<n;i++){let d1,d2;if(n===2){d1=(knots[1].y-knots[0].y)/(knots[1].x-knots[0].x);d2=0;}else{const j=Math.max(0,Math.min(n-3,i-1)),a=knots[j],b=knots[j+1],c=knots[j+2],q0=(b.y-a.y)/(b.x-a.x),q1=(c.y-b.y)/(c.x-b.x),q2=(q1-q0)/(c.x-a.x);d1=q0+q2*((knots[i].x-a.x)+(knots[i].x-b.x));d2=2*q2;}knots[i].d1=guideNumber(options.derivative?options.derivative(knots[i].x):d1);knots[i].d2=guideNumber(options.curvature?options.curvature(knots[i].x):d2);}const spec=sampledGuide(knots);compileGuide(spec);return spec;}
+function evaluateGuide(spec,x){return compileGuide(spec).evaluate(x);}
+
+return {polynomialGuide,taylorGuide,sampledGuide,captureGuide,compileGuide,evaluateGuide};})();
+const {withInfluence,restoreInfluence,INFLUENCE_ALGORITHM}=(()=>{
+const INFLUENCE_ALGORITHM='vixen-influence-c2/1';
+const gate=t=>t<=0?0:t>=1?1:t*t*t*(10+t*(-15+6*t));
+function finite(x,lo,hi){if(typeof x!=='number'||!Number.isFinite(x)||x<lo||x>hi)throw new RangeError('Influence number outside its finite domain');}
+function ramp(t){return t<=0?0:t>=1?t:t*t*t*(6+t*(-8+3*t));}
+function policy(y,p){const {floorValue:lo,ceilingValue:hi,boundaryWidth:e}=p;if(lo!==null&&hi!==null&&hi<=lo)return lo;if(lo!==null){if(y<=lo)y=lo;else if(e>0&&y<lo+e)y=lo+e*ramp((y-lo)/e);}if(hi!==null){if(y>=hi)y=hi;else if(e>0&&y>hi-e)y=hi-e*ramp((hi-y)/e);}return y;}
+function affected(p,target,a,cfg){if(a===0)return p;const extra=p.base*a*cfg.boundarySoftness,lo=p.floorValue,hi=p.ceilingValue;let width=p.boundaryWidth;if(lo!==null&&hi!==null){const room=Math.max(0,(hi-lo)/2-width);if(extra>0&&room>0)width+=extra*room/(room+extra);}else if(lo!==null||hi!==null)width+=extra;p={...p,boundaryWidth:width};const u=a===1?target:(1-a)*p.unconstrainedValue+a*target,value=policy(u,p),deviation=(value-p.base)/p.base,positiveMultiplier=Math.exp(.55*Math.tanh(deviation));const guideValue=policy(p.unconstrainedGuideValue,p);return Object.freeze({...p,guideValue,guideDeviation:(guideValue-p.base)/p.base,value,unconstrainedValue:u,unconstrainedDeviation:(u-p.base)/p.base,deviation,multiplier:1+deviation,activity:.5+.5*Math.tanh(deviation),positiveMultiplier,positiveValue:p.base*positiveMultiplier,constraintApplied:value!==u});}
+function latest(curve){return Math.max(1,...curve.lineage.map(n=>n.at),...(curve.influences??[]).map(n=>n.at));}
+function makeInfluence(curve,target,options={},carried=false){
+ if(!options||typeof options!=='object'||Array.isArray(options)||Reflect.ownKeys(options).some(k=>!['at','amount','handoffWidth','count'].includes(k)))throw new TypeError('Influence options: at, amount, handoffWidth, count');
+ if(curve.lineage.length+(curve.influences?.length??0)>=32)throw new RangeError('Maximum timeline composition depth: 32');
+ const at=options.at===undefined?Math.max(curve.config.openingEndpoint,latest(curve)):options.at,amount=options.amount===undefined?.5:options.amount;finite(at,curve.domain[0],curve.domain[1]);finite(amount,0,1);if(!carried&&at<latest(curve))throw new RangeError('Influence cannot precede existing timeline events');
+ if(typeof target==='function')target=captureGuide(target,{domain:[at,curve.domain[1]],count:options.count===undefined?129:options.count});else if(options.count!==undefined)throw new TypeError('count applies only to callback capture');
+ const compiled=compileGuide(target),end=Math.min(curve.domain[1],compiled.domain[1]),domain=Object.freeze([curve.domain[0],end]),handoffWidth=options.handoffWidth===undefined?Math.min(16,end-at):options.handoffWidth;
+ finite(handoffWidth,Number.MIN_VALUE,50000);if(compiled.domain[0]>at||at+handoffWidth<=at||at+handoffWidth>end)throw new RangeError('Guide must cover a representable handoff inside the domain');
+ const entry=Object.freeze({at,amount,handoffWidth,guide:compiled.spec}),influences=Object.freeze([...(curve.influences??[]),entry]);
+ function check(x){finite(x,domain[0],domain[1]);}
+ function sample(x,h){check(x);const p=h===undefined?curve.sample(x):curve.at(x,h),a=amount*gate((x-at)/handoffWidth);return a===0?p:affected(p,compiled.evaluate(x),a,curve.config);}
+ const cfg=curve.config,lower=cfg.floor==='none'?-1e280:cfg.floor==='zero'?-1:cfg.floor==='baseline'?0:-.25*cfg.strength,upper=cfg.ceilingMargin===null?1e280:(cfg.floor==='baseline'?0:.25*cfg.strength)+cfg.ceilingMargin,bounds=Object.freeze({...curve.bounds,deviation:Object.freeze([lower,upper]),multiplier:Object.freeze([1+lower,1+upper])});
+ const api=Object.freeze({...curve,algorithm:INFLUENCE_ALGORITHM,domain,bounds,influences,sample:x=>sample(x),at:(x,h)=>{check(x);const p=curve.at(x,h),a=amount*gate((x-at)/handoffWidth);return a===0?p:affected(p,compiled.evaluate(x),a,curve.config);},location:x=>{check(x);return curve.location(x);},inspect:x=>{check(x);return curve.inspect(x);},
+ influenceAt:x=>{check(x);const weight=amount*gate((x-at)/handoffWidth),targetValue=weight===0?null:compiled.evaluate(x);return Object.freeze({weight,targetValue,sourceValue:curve.sample(x).value,followingError:targetValue===null?null:sample(x).value-targetValue});},
+ snapshot:()=>Object.freeze({algorithm:INFLUENCE_ALGORITHM,curve:curve.snapshot(),guide:compiled.spec,at,amount,handoffWidth}),
+ fork:opts=>{if(!opts||typeof opts!=='object'||Array.isArray(opts))throw new TypeError('Fork options required');finite(opts.at,Math.max(domain[0],latest(api)),domain[1]);const width=opts.handoffWidth??Math.min(16,domain[1]-opts.at);finite(width,Number.MIN_VALUE,50000);if(opts.at+width>domain[1])throw new RangeError('Fork exceeds guide domain');return makeInfluence(curve.fork({...opts,handoffWidth:width}),compiled.spec,{at,amount,handoffWidth},true);},
+ influence:(g,o)=>makeInfluence(api,g,o)});return api;
+}
+function withInfluence(curve,target,options){return makeInfluence(curve,target,options);}
+function restoreInfluence(snapshot,restore){
+ const frames=[],seen=new Set();let s=snapshot;
+ while(s?.algorithm===INFLUENCE_ALGORITHM){if(!s||typeof s!=='object'||Array.isArray(s)||seen.has(s)||frames.length>=32)throw new TypeError('Invalid influence composition');seen.add(s);const keys=['algorithm','curve','guide','at','amount','handoffWidth'];if(Reflect.ownKeys(s).some(k=>!keys.includes(k))||keys.some(k=>!Object.hasOwn(s,k)))throw new TypeError('Invalid influence snapshot fields');frames.push(s);s=s.curve;}
+ let result=restore(s);for(const f of frames.reverse())result=makeInfluence(result,f.guide,{at:f.at,amount:f.amount,handoffWidth:f.handoffWidth},true);return result;
+}
+
+return {withInfluence,restoreInfluence,INFLUENCE_ALGORITHM};})();
 /** Deterministic progression fields and immutable timelines. */
 const ALGORITHM='vixen-hyperfield-c2/4';
 const DIMENSIONS=16,FEATURES=48;
@@ -871,10 +1170,11 @@ function timeline(leaf,rootConfig=leaf.config,lineage=Object.freeze([]),parent=n
   const seed=forkSeed(leaf.config.seed,operation,at),entry=Object.freeze({at,operation,handoffWidth,seed}),future=createLeaf({...leaf.config,seed});
   return timeline(future,rootConfig,Object.freeze([...lineage,entry]),api,entry,evaluate);
  }
- const api=Object.freeze({...leaf,lineage,sample:x=>evaluate(x),at:(x,h)=>evaluate(x,vector(h)),inspect,fork,snapshot});return api;
+ const api=Object.freeze({...leaf,lineage,sample:x=>evaluate(x),at:(x,h)=>evaluate(x,vector(h)),inspect,fork,snapshot,influence:(target,options)=>withInfluence(api,target,options)});return api;
 }
 function create(options={}){return timeline(createLeaf(options));}
 function restore(snapshot){
+ if(snapshot&&typeof snapshot==='object'&&Object.hasOwn(snapshot,'algorithm')&&snapshot.algorithm===INFLUENCE_ALGORITHM)return restoreInfluence(snapshot,restore);
  if(!snapshot||typeof snapshot!=='object'||Array.isArray(snapshot)||!Object.hasOwn(snapshot,'algorithm')||!Object.hasOwn(snapshot,'config')||!snapshot.config||typeof snapshot.config!=='object'||Array.isArray(snapshot.config))throw new TypeError('Snapshot with configuration required');
  if(Reflect.ownKeys(snapshot).some(k=>typeof k!=='string'||!['algorithm','config','lineage'].includes(k)))throw new TypeError('Unknown snapshot field');
  if(snapshot.algorithm===ALGORITHM){
@@ -890,15 +1190,16 @@ function restore(snapshot){
  throw new Error('Algorithm mismatch: use the matching archived sampler');
 }
 
+
 let configDirty=false,activeTimeline=null;
 const rootIds=['seed','seedType','compareSeed','openingEndpoint','introVariation','floor','ceilingEnabled','ceilingMargin','boundarySoftness','stabilizer','strength','ramp','tempo','contrast','u','v','travel','rotatePlane','origin','nextSeed'];
-function lockRoot(){const locked=!!activeTimeline?.lineage.length;for(const id of rootIds)$(id).disabled=locked;$('ceilingMargin').disabled=locked||!$('ceilingEnabled').checked;$('map').setAttribute('aria-disabled',String(locked));$('timelineStatus').textContent=locked?`Branch depth ${instrument.lineage.length} · future seed ${instrument.config.seed} · root controls locked; save snapshot before resetting.`:`Root timeline · supported x ${instrument.domain[0]}–${number(instrument.domain[1])}`;}
+function lockRoot(){const locked=!!activeTimeline&&(activeTimeline.lineage.length>0||activeTimeline.influences?.length>0);for(const id of rootIds)$(id).disabled=locked;$('ceilingMargin').disabled=locked||!$('ceilingEnabled').checked;$('map').setAttribute('aria-disabled',String(locked));$('timelineStatus').textContent=locked?`Branch depth ${instrument.lineage.length} · future seed ${instrument.config.seed} · root controls locked; save snapshot before resetting.`:`Root timeline · supported x ${instrument.domain[0]}–${number(instrument.domain[1])}`;}
 const $=id=>document.getElementById(id),zero=()=>Array(16).fill(0);
 let instrument=create(),comparison=create({seed:'bench'}),anchor=zero(),pathVelocity=zero(),planeIndex=0,basis=navigationBasis(0),suffix=0,customPath=false;
 const number=v=>Math.abs(v)>=1e6?v.toExponential(4):v.toLocaleString('en-US',{maximumFractionDigits:4});
 function latent(){return anchor.map((h,i)=>h+Number($('u').value)*basis.u[i]+Number($('v').value)*basis.v[i]);}
 function readConfig(){const seed=$('seedType').value==='number'?Number($('seed').value):$('seed').value;return {seed,openingEndpoint:Number($('openingEndpoint').value),introVariation:Number($('introVariation').value),floor:$('floor').value,ceilingMargin:$('ceilingEnabled').checked?Number($('ceilingMargin').value):null,boundarySoftness:Number($('boundarySoftness').value),stabilizer:Number($('stabilizer').value),strength:Number($('strength').value),ramp:Number($('ramp').value),tempo:Number($('tempo').value),contrast:Number($('contrast').value),latent:latent(),velocity:pathVelocity.slice()};}
-function updatePoint(x){try{const p=instrument.sample(x);$('forkTimeline').textContent='Fork at x = '+String(x);$('forkTimeline').disabled=x>=instrument.domain[1]||(instrument.lineage.length>0&&x<instrument.lineage.at(-1).at);$('point').textContent=JSON.stringify({...p,latent:instrument.location(x)},null,2);$('outputs').replaceChildren();for(const [label,key] of [['Raw value','value'],['Signed deviation','deviation'],['Signed multiplier','multiplier'],['Positive multiplier','positiveMultiplier'],['Positive growing value','positiveValue'],['Activity · not probability','activity']]){const d=document.createElement('div');d.className='output';const strong=document.createElement('strong');strong.textContent=number(p[key]);const span=document.createElement('span');span.textContent=label;d.append(strong,span);$('outputs').append(d);}$('ridges').textContent=JSON.stringify(instrument.inspect(x).slice(0,8),null,2);$('hover').textContent=`x ${x.toFixed(3)} · raw ${number(p.value)} · deviation ${number(p.deviation)}`;$('vector').textContent=JSON.stringify(instrument.config.latent,null,2);$('error').textContent='';queueMap();}catch(e){$('error').textContent=e.message;}}
+function updatePoint(x){try{const p=instrument.sample(x);$('forkTimeline').textContent='Fork at x = '+String(x);$('forkTimeline').disabled=x>=instrument.domain[1]||(instrument.lineage.length>0&&x<instrument.lineage.at(-1).at);$('point').textContent=JSON.stringify({...p,latent:instrument.location(x),foreignGuide:instrument.influenceAt?.(x)??null},null,2);$('outputs').replaceChildren();for(const [label,key] of [['Raw value','value'],['Signed deviation','deviation'],['Signed multiplier','multiplier'],['Positive multiplier','positiveMultiplier'],['Positive growing value','positiveValue'],['Activity · not probability','activity']]){const d=document.createElement('div');d.className='output';const strong=document.createElement('strong');strong.textContent=number(p[key]);const span=document.createElement('span');span.textContent=label;d.append(strong,span);$('outputs').append(d);}$('ridges').textContent=JSON.stringify(instrument.inspect(x).slice(0,8),null,2);$('hover').textContent=`x ${x.toFixed(3)} · raw ${number(p.value)} · deviation ${number(p.deviation)}`;$('vector').textContent=JSON.stringify(instrument.config.latent,null,2);$('error').textContent='';queueMap();}catch(e){$('error').textContent=e.message;}}
 function plot(id,end,calm=false){
  const c=$(id),ctx=c.getContext('2d'),width=Math.max(260,c.clientWidth),height=calm?220:340,dpr=Math.min(2,window.devicePixelRatio||1);c.width=Math.round(width*dpr);c.height=Math.round(height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,width,height);const L=width<500?53:64,R=15,T=27,D=32,key=calm?'value':$('output').value,kind=calm?'continuous':$('render').value,withCompare=!calm&&$('compare').value==='yes';const useLog=!calm&&$('scale').value==='symlog',factor=['value','positiveValue'].includes(key)?50:1;
  const trans=y=>useLog?Math.sign(y)*Math.log1p(Math.abs(y)/factor):y,inv=y=>useLog?Math.sign(y)*factor*Math.expm1(Math.abs(y)):y;
@@ -917,8 +1218,8 @@ function drawMap(){const x=Number($('inspectX').value);if(!Number.isFinite(x)||x
 let mapPending=false;function queueMap(){if(mapPending)return;mapPending=true;requestAnimationFrame(()=>{mapPending=false;try{drawMap();}catch(e){$('error').textContent=e.message;}});}
 let redrawPending=false;function queueRedraw(){if(redrawPending)return;redrawPending=true;requestAnimationFrame(()=>{redrawPending=false;redraw();});}
 function fft(real,imag){const n=real.length;for(let i=1,j=0;i<n;i++){let bit=n>>1;for(;j&bit;bit>>=1)j^=bit;j^=bit;if(i<j){[real[i],real[j]]=[real[j],real[i]];[imag[i],imag[j]]=[imag[j],imag[i]];}}for(let len=2;len<=n;len<<=1){const a=-2*Math.PI/len,wr=Math.cos(a),wi=Math.sin(a);for(let i=0;i<n;i+=len){let ur=1,ui=0;for(let j=0;j<len/2;j++){const k=i+j,l=k+len/2,tr=ur*real[l]-ui*imag[l],ti=ur*imag[l]+ui*real[l];real[l]=real[k]-tr;imag[l]=imag[k]-ti;real[k]+=tr;imag[k]+=ti;const z=ur*wr-ui*wi;ui=ur*wi+ui*wr;ur=z;}}}}
-function drawSpectrum(){if(instrument.domain[1]<1203){$('spectrum').getContext('2d').clearRect(0,0,$('spectrum').width,$('spectrum').height);$('spectralStats').textContent='Fixed-window spectrum unavailable: this clock domain ends before x=1203.';window.vixenSpectrum={available:false};return;}const n=1024,real=new Float64Array(n),imag=new Float64Array(n),energy=[];let mean=0;for(let i=0;i<n;i++){const d=instrument.sample(180+i).deviation;energy.push(d*d);mean+=d*d/n;}for(let i=0;i<n;i++)real[i]=(energy[i]-mean)*(.5-.5*Math.cos(2*Math.PI*i/(n-1)));fft(real,imag);const power=Array.from({length:n/2+1},(_,i)=>real[i]*real[i]+imag[i]*imag[i]),total=power.slice(1).reduce((a,b)=>a+b,0),k=Math.round(n/12),band=power.slice(k-1,k+2).reduce((a,b)=>a+b,0);const c=$('spectrum'),ctx=c.getContext('2d'),w=Math.max(260,c.clientWidth),h=220,dpr=Math.min(2,devicePixelRatio||1);c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);const L=38,R=14,T=12,B=30,X=f=>L+f/.5*(w-L-R),Y=db=>T+(0-db)/90*(h-T-B);ctx.font='11px system-ui';ctx.fillStyle='#aab8c9';for(const db of [-90,-60,-30,0]){ctx.strokeStyle='#334457';ctx.beginPath();ctx.moveTo(L,Y(db));ctx.lineTo(w-R,Y(db));ctx.stroke();ctx.fillText(db+'',2,Y(db)+3);}for(const f of [0,.125,.25,.375,.5])ctx.fillText(f.toFixed(3),X(f)-12,h-8);if(total>1e-24){ctx.strokeStyle='#bcabed';ctx.lineWidth=1.5;ctx.beginPath();for(let i=1;i<power.length;i++){const db=Math.max(-90,10*Math.log10(Math.max(1e-30,power[i]/total)));if(i===1)ctx.moveTo(X(i/n),Y(db));else ctx.lineTo(X(i/n),Y(db));}ctx.stroke();}ctx.strokeStyle='#f3b878';ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(X(1/12),T);ctx.lineTo(X(1/12),h-B);ctx.stroke();ctx.setLineDash([]);$('spectralStats').textContent=total>1e-24?`Former-clock band: ${(100*band/total).toFixed(3)}% of this slice's energy-spectrum power · x-frequency, cycles/unit · display floor −90 dB`:'Flat deviation: no nonzero spectrum to analyze.';window.vixenSpectrum={power,total,clockBandFraction:total>1e-24?band/total:0};}
-function redraw(){try{instrument=activeTimeline||create(readConfig());lockRoot();$('extent').max=instrument.domain[1];$('extent').value=Math.min(instrument.domain[1],Math.max(2,Number($('extent').value)));$('inspectX').max=instrument.domain[1];if(!Number.isFinite(Number($('inspectX').value))||Number($('inspectX').value)<1||Number($('inspectX').value)>instrument.domain[1])$('inspectX').value=Math.min(instrument.domain[1],instrument.config.openingEndpoint+44);const snap=instrument.snapshot();comparison=activeTimeline?restore({...snap,lineage:snap.lineage.slice(0,-1)}):create({...instrument.config,seed:$('compareSeed').value});$('comparisonLegend').textContent=activeTimeline?'Dashed violet: parent timeline':'Dashed violet: comparison seed';for(const id of ['introVariation','boundarySoftness','ceilingMargin','stabilizer','strength','ramp','tempo','contrast','extent','u','v'])$(id+'V').textContent=Number($(id).value).toFixed(id==='extent'?0:2);$('travelV').textContent=customPath?'preserved vector':Number($('travel').value).toFixed(2);const samples=plot('plot',Number($('extent').value));plot('calm',instrument.config.openingEndpoint,true);const start=Math.ceil(instrument.config.openingEndpoint)+1,raw=Array.from({length:Math.max(0,Math.floor(Number($('extent').value))-start+1)},(_,i)=>instrument.sample(start+i)),ys=raw.map(p=>p.value);let turns=0,run=0,maxRun=0;for(let i=1;i<ys.length;i++){run=ys[i]>ys[i-1]?run+1:0;maxRun=Math.max(maxRun,run);if(i<ys.length-1&&(ys[i]-ys[i-1])*(ys[i+1]-ys[i])<0)turns++;}$('stats').textContent=`Two authored dip parameters · raw negative integer samples: ${raw.filter(p=>p.value<0).length} · raw turns: ${turns} · longest rising run: ${maxRun} steps`;$('axes').textContent='x: progression · y: '+$('output').selectedOptions[0].textContent+' · '+$('scale').selectedOptions[0].textContent+' display.';if(!configDirty)$('config').value=JSON.stringify(instrument.snapshot(),null,2);updatePoint(Number($('inspectX').value));drawSpectrum();const body=$('waves');body.replaceChildren();for(const x of [25,50,75,100,120,140,160,180,200,240,300].filter(x=>x<=instrument.domain[1])){const authored=10+.4*x,m=instrument.sample(x).positiveMultiplier,tr=document.createElement('tr');for(const v of [x,authored.toFixed(1),m.toFixed(3),Math.max(1,Math.round(authored*m))]){const td=document.createElement('td');td.textContent=v;tr.append(td);}body.append(tr);}window.vixenInstrument=instrument;window.vixenNavigation={anchor:anchor.slice(),basis,planeIndex};}catch(e){$('error').textContent=e.message;}}
+function drawSpectrum(){if(instrument.influences?.length){$('spectrum').getContext('2d').clearRect(0,0,$('spectrum').width,$('spectrum').height);$('spectralStats').textContent='Source-rhythm spectrum unavailable for foreign guides; export samples for target-specific analysis.';window.vixenSpectrum={available:false};return;}if(instrument.domain[1]<1203){$('spectrum').getContext('2d').clearRect(0,0,$('spectrum').width,$('spectrum').height);$('spectralStats').textContent='Fixed-window spectrum unavailable: this clock domain ends before x=1203.';window.vixenSpectrum={available:false};return;}const n=1024,real=new Float64Array(n),imag=new Float64Array(n),energy=[];let mean=0;for(let i=0;i<n;i++){const d=instrument.sample(180+i).deviation;energy.push(d*d);mean+=d*d/n;}for(let i=0;i<n;i++)real[i]=(energy[i]-mean)*(.5-.5*Math.cos(2*Math.PI*i/(n-1)));fft(real,imag);const power=Array.from({length:n/2+1},(_,i)=>real[i]*real[i]+imag[i]*imag[i]),total=power.slice(1).reduce((a,b)=>a+b,0),k=Math.round(n/12),band=power.slice(k-1,k+2).reduce((a,b)=>a+b,0);const c=$('spectrum'),ctx=c.getContext('2d'),w=Math.max(260,c.clientWidth),h=220,dpr=Math.min(2,devicePixelRatio||1);c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);const L=38,R=14,T=12,B=30,X=f=>L+f/.5*(w-L-R),Y=db=>T+(0-db)/90*(h-T-B);ctx.font='11px system-ui';ctx.fillStyle='#aab8c9';for(const db of [-90,-60,-30,0]){ctx.strokeStyle='#334457';ctx.beginPath();ctx.moveTo(L,Y(db));ctx.lineTo(w-R,Y(db));ctx.stroke();ctx.fillText(db+'',2,Y(db)+3);}for(const f of [0,.125,.25,.375,.5])ctx.fillText(f.toFixed(3),X(f)-12,h-8);if(total>1e-24){ctx.strokeStyle='#bcabed';ctx.lineWidth=1.5;ctx.beginPath();for(let i=1;i<power.length;i++){const db=Math.max(-90,10*Math.log10(Math.max(1e-30,power[i]/total)));if(i===1)ctx.moveTo(X(i/n),Y(db));else ctx.lineTo(X(i/n),Y(db));}ctx.stroke();}ctx.strokeStyle='#f3b878';ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(X(1/12),T);ctx.lineTo(X(1/12),h-B);ctx.stroke();ctx.setLineDash([]);$('spectralStats').textContent=total>1e-24?`Former-clock band: ${(100*band/total).toFixed(3)}% of this slice's energy-spectrum power · x-frequency, cycles/unit · display floor −90 dB`:'Flat deviation: no nonzero spectrum to analyze.';window.vixenSpectrum={power,total,clockBandFraction:total>1e-24?band/total:0};}
+function redraw(){try{instrument=activeTimeline||create(readConfig());lockRoot();$('extent').max=instrument.domain[1];$('extent').value=Math.min(instrument.domain[1],Math.max(2,Number($('extent').value)));$('inspectX').max=instrument.domain[1];if(!Number.isFinite(Number($('inspectX').value))||Number($('inspectX').value)<1||Number($('inspectX').value)>instrument.domain[1])$('inspectX').value=Math.min(instrument.domain[1],instrument.config.openingEndpoint+44);const snap=instrument.snapshot();comparison=activeTimeline?restore(snap.curve??{...snap,lineage:snap.lineage.slice(0,-1)}):create({...instrument.config,seed:$('compareSeed').value});$('comparisonLegend').textContent=activeTimeline?(snap.curve?'Dashed violet: underlying timeline':'Dashed violet: parent timeline'):'Dashed violet: comparison seed';for(const id of ['introVariation','boundarySoftness','ceilingMargin','stabilizer','strength','ramp','tempo','contrast','extent','u','v'])$(id+'V').textContent=Number($(id).value).toFixed(id==='extent'?0:2);$('travelV').textContent=customPath?'preserved vector':Number($('travel').value).toFixed(2);const samples=plot('plot',Number($('extent').value));plot('calm',Math.min(instrument.config.openingEndpoint,instrument.domain[1]),true);const start=Math.ceil(instrument.config.openingEndpoint)+1,raw=Array.from({length:Math.max(0,Math.floor(Number($('extent').value))-start+1)},(_,i)=>instrument.sample(start+i)),ys=raw.map(p=>p.value);let turns=0,run=0,maxRun=0;for(let i=1;i<ys.length;i++){run=ys[i]>ys[i-1]?run+1:0;maxRun=Math.max(maxRun,run);if(i<ys.length-1&&(ys[i]-ys[i-1])*(ys[i+1]-ys[i])<0)turns++;}$('stats').textContent=`Two authored dip parameters · raw negative integer samples: ${raw.filter(p=>p.value<0).length} · raw turns: ${turns} · longest rising run: ${maxRun} steps`;$('axes').textContent='x: progression · y: '+$('output').selectedOptions[0].textContent+' · '+$('scale').selectedOptions[0].textContent+' display.';if(!configDirty)$('config').value=JSON.stringify(instrument.snapshot(),null,2);updatePoint(Number($('inspectX').value));drawSpectrum();const body=$('waves');body.replaceChildren();for(const x of [25,50,75,100,120,140,160,180,200,240,300].filter(x=>x<=instrument.domain[1])){const authored=10+.4*x,m=instrument.sample(x).positiveMultiplier,tr=document.createElement('tr');for(const v of [x,authored.toFixed(1),m.toFixed(3),Math.max(1,Math.round(authored*m))]){const td=document.createElement('td');td.textContent=v;tr.append(td);}body.append(tr);}window.vixenInstrument=instrument;window.vixenNavigation={anchor:anchor.slice(),basis,planeIndex};}catch(e){$('error').textContent=e.message;}}
 for(const id of ['openingEndpoint','introVariation','floor','ceilingEnabled','ceilingMargin','boundarySoftness','seed','seedType','compareSeed','stabilizer','strength','ramp','tempo','contrast','extent','output','render','scale','compare','u','v'])$(id).addEventListener('input',queueRedraw);
 $('travel').addEventListener('input',()=>{pathVelocity=basis.v.map(v=>v*Number($('travel').value));customPath=false;queueRedraw();});
 $('inspectX').addEventListener('input',()=>{const x=Number($('inspectX').value);updatePoint(x);if(x>=1&&x<=instrument.domain[1])for(const f of Object.values(window.vixenCursors||{}))f(x);});
@@ -928,10 +1229,11 @@ $('viewSnapshot').addEventListener('click',()=>{configDirty=false;$('config').va
 $('reset').addEventListener('click',()=>{activeTimeline=null;configDirty=false;anchor=zero();pathVelocity=zero();planeIndex=0;basis=navigationBasis(0);customPath=false;for(const id of ['openingEndpoint','introVariation','floor','boundarySoftness','seed','stabilizer','strength','ramp','tempo','contrast'])$(id).value=DEFAULTS[id];$('ceilingEnabled').checked=false;$('ceilingMargin').value=.5;for(const id of ['u','v','travel'])$(id).value=0;$('seedType').value='text';$('compareSeed').value='bench';$('extent').value=300;$('output').value='value';$('render').value='both';$('scale').value='linear';$('compare').value='yes';redraw();});
 $('nextSeed').addEventListener('click',()=>{$('seedType').value='text';$('seed').value='vixen:'+ ++suffix;redraw();});
 $('config').addEventListener('input',()=>{configDirty=true;});
-$('applyConfig').addEventListener('click',()=>{try{const snap=JSON.parse($('config').value);const f=restore(snap),cfg=f.snapshot().config;activeTimeline=f.lineage.length?f:null;configDirty=false;anchor=cfg.latent.slice();pathVelocity=cfg.velocity.slice();customPath=pathVelocity.some(v=>v!==0);planeIndex=0;basis=navigationBasis(0);for(const id of ['openingEndpoint','introVariation','floor','boundarySoftness','seed','stabilizer','strength','ramp','tempo','contrast'])$(id).value=cfg[id];$('ceilingEnabled').checked=cfg.ceilingMargin!==null;$('ceilingMargin').value=cfg.ceilingMargin??.5;for(const id of ['u','v','travel'])$(id).value=0;$('seedType').value=typeof cfg.seed==='number'?'number':'text';redraw();}catch(e){$('error').textContent=e.message;}});
+$('applyConfig').addEventListener('click',()=>{try{const snap=JSON.parse($('config').value);const f=restore(snap);let baseSnapshot=f.snapshot();while(baseSnapshot.curve)baseSnapshot=baseSnapshot.curve;const cfg=baseSnapshot.config;activeTimeline=(f.lineage.length||f.influences?.length)?f:null;configDirty=false;anchor=cfg.latent.slice();pathVelocity=cfg.velocity.slice();customPath=pathVelocity.some(v=>v!==0);planeIndex=0;basis=navigationBasis(0);for(const id of ['openingEndpoint','introVariation','floor','boundarySoftness','seed','stabilizer','strength','ramp','tempo','contrast'])$(id).value=cfg[id];$('ceilingEnabled').checked=cfg.ceilingMargin!==null;$('ceilingMargin').value=cfg.ceilingMargin??.5;for(const id of ['u','v','travel'])$(id).value=0;$('seedType').value=typeof cfg.seed==='number'?'number':'text';redraw();}catch(e){$('error').textContent=e.message;}});
+$('attachGuide').addEventListener('click',()=>{try{const current=window.vixenInstrument,at=Number($('inspectX').value),end=Math.min(Number($('guideEnd').value),current.domain[1]),center=Number($('guideCenter').value),kind=$('guideKind').value;let guide;if(kind==='wave')guide=captureGuide(x=>(2*x+3)*(1+.15*Math.sin(x/17)+.05*Math.cos(x*x/10000)),{domain:[at,end],count:Number($('guideCount').value)});else if(kind==='data')guide=JSON.parse($('guideInput').value);else{const values=JSON.parse($('guideInput').value);guide=kind==='taylor'?taylorGuide(values,{center,domain:[1,end]}):polynomialGuide(values,{center,domain:[1,end]});}activeTimeline=current.influence(guide,{at,amount:Number($('guideAmount').value),handoffWidth:Number($('handoffWidth').value)});configDirty=false;redraw();}catch(e){$('error').textContent=e.message;}});
 $('forkTimeline').addEventListener('click',()=>{try{activeTimeline=instrument.fork({at:Number($('inspectX').value),operation:$('operation').value,handoffWidth:Number($('handoffWidth').value)});configDirty=false;redraw();}catch(e){$('error').textContent=e.message;}});
 $('csv').addEventListener('click',()=>{const keys=['unconstrainedValue','unconstrainedGuideValue','floorValue','ceilingValue','boundaryWidth','constraintApplied','x','value','base','guideValue','stabilizationWeight','deviation','multiplier','activity','positiveMultiplier','positiveValue','score','gate'],rows=[[...keys,...Array.from({length:16},(_,i)=>'h'+i)].join(',')];for(let x=1;x<=Number($('extent').value);x++){const p=instrument.sample(x);rows.push([...keys.map(k=>p[k]),...instrument.location(x)].join(','));}$('csvText').value=rows.join('\n');$('csvText').focus();$('csvText').select();});
-let touchDragging=false;function moveOnMap(ev){if(activeTimeline?.lineage.length)return;const rect=$('map').getBoundingClientRect(),w=Math.max(120,$('map').clientWidth),h=$('map').vixenMapHeight||280,px=(ev.clientX-rect.left)/rect.width*w,py=(ev.clientY-rect.top)/rect.height*h;$('u').value=Math.max(-6,Math.min(6,-6+12*(px-26)/(w-38)));$('v').value=Math.max(-6,Math.min(6,6-12*(py-12)/(h-37)));queueRedraw();}
+let touchDragging=false;function moveOnMap(ev){if(activeTimeline&&(activeTimeline.lineage.length||activeTimeline.influences?.length))return;const rect=$('map').getBoundingClientRect(),w=Math.max(120,$('map').clientWidth),h=$('map').vixenMapHeight||280,px=(ev.clientX-rect.left)/rect.width*w,py=(ev.clientY-rect.top)/rect.height*h;$('u').value=Math.max(-6,Math.min(6,-6+12*(px-26)/(w-38)));$('v').value=Math.max(-6,Math.min(6,6-12*(py-12)/(h-37)));queueRedraw();}
 $('map').addEventListener('pointerdown',ev=>{if(!ev.isPrimary||ev.button!==0)return;touchDragging=ev.pointerType==='touch';try{$('map').setPointerCapture(ev.pointerId);}catch{}moveOnMap(ev);});$('map').addEventListener('pointermove',ev=>{if(!ev.isPrimary)return;if((ev.buttons&1)||(touchDragging&&ev.pointerType==='touch'))moveOnMap(ev);});for(const name of ['pointerup','pointercancel','lostpointercapture'])$('map').addEventListener(name,()=>{touchDragging=false;});
 let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(redraw,120);});redraw();
 

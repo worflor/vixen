@@ -1,0 +1,7 @@
+{
+  "cases": 1760,
+  "seed": 97431,
+  "max_scaled_error": 3.005090742475242e-14,
+  "tolerance": 1e-10,
+  "scope": "stored polynomial/captured guide recipes, layered guides, later forks, four floors, nullable/collapsed ceilings and coordinate sampling"
+}
