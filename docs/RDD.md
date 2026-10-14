@@ -1,72 +1,31 @@
 # Research design
 
-## The question
+## Objective
 
-Can a progression curve have an authored, legible opening and an irregular continuation that remains reproducible, smoothly explorable, and controllably coherent?
+Construct deterministic progression with a legible opening, smooth irregular continuation, navigable seed-local variation and controllable coherence. The object should expose reproducible math, not imply balance, semantics or dynamical chaos.
 
-The narrow brief matters: progression 1–100 should look like mild exponential growth with a couple of tasteful dips. Beyond that, the curve may climb, fall, turn negative or change direction, but should not feel like independent random samples or a shared sine-wave timetable disguised by seeds.
+## Separate questions
 
-Vixen is a constructed answer to that question, not a claim to have invented universal noise, formal dynamical chaos, or an optimal difficulty curve.
+- **Seed diversity:** do different seeds produce meaningfully different sampled shapes?
+- **Timing diversity:** do seeds retain a common cadence despite low ordinary correlation?
+- **Spatial sensitivity:** how do scalar observations vary along each latent direction over a stated window?
+- **Coherence:** does stabilization approach its actual seeded guide rather than a generic exponential?
+- **Admissibility:** do output policies satisfy their selected bounds without changing exports or adapters?
+- **Branch composition:** are history, coordinates, contact order and lineage preserved independently of future shape?
+- **Conditioning:** how do timing, contrast, velocity and handoff width affect derivative bounds and numeric resolution?
 
-## What the work learned
+## Method
 
-**Seed diversity and timing diversity are different.** The old pulse construction could have low cross-seed correlation while retaining high phase coherence at a shared clock. Making pulse signs and amplitudes more random did not remove that timetable.
+Pin seed, complete snapshot, coordinates, window, resolution and output. Compare continuous and integer observations. Use phase/spectral analysis for shared rhythm, not correlation alone. Test direction rank across multiple observation points; a single scalar observation cannot have a full-rank sixteen-dimensional Jacobian.
 
-**A seed and a coordinate serve different purposes.** The seed selects a landscape. Continuous real coordinates provide a way to explore nearby variants within that landscape. The 16-dimensional space is a procedural parameterization, not a learned meaning space.
+Use exact component derivations for joins and bounds, deterministic fuzzing for broad sampled invariants, differential replay for optimization, and mutation tests for assertion strength. Record refusals and counterexamples. Benchmarks report workload, runtime, repetitions and variation, not universal speed claims.
 
-**Amplitude and coherence are different controls.** Turning down strength approaches the plain baseline. Stabilization instead approaches a gentler, seed-dependent trajectory. It should keep useful identity while reducing short-scale excursions.
+## Evidence
 
-**Exact components and empirical behavior belong together.** Deriving joins and bounds gives reliable construction constraints. Sampling spectra, sensitivity and trajectories exposes behavior that those constraints alone do not settle.
+`research/verification-game.json` records executable acceptance. Cross-port reports distinguish exact integer/hash derivation from floating tolerances. Component evidence includes Scryer subjects, invocation provenance and complete proof DAGs where available. Only independently replayed certificates are described as replayed proofs.
 
-## What counts as evidence
+Spectral and roughness observations remain finite-window results. Gaussian dip-count samples are not an all-seed extrema theorem. Component proofs do not constitute a whole-sampler certificate. Float evaluation is not fixed-point lockstep, and C2 continuity is not band limitation.
 
-- `research/evidence.json`: annotated earlier deployed Scryer component findings, retained with their original algorithm label and invocation provenance. It is not a raw proof transcript or a new whole-object certificate.
-- `research/verification-game.json` and cross-port reports: sampled implementation acceptance with explicit scope.
-- `research/rhythm-audit.json`: finite-window spectral and sensitivity measurements, including comparison to the historical pulse construction.
-- `research/stabilizer-audit.json`: twelve sampled seeds and several stabilizer settings. Its second-difference roughness decreased at every tested setting. That is a scoped observation, not a theorem about every configuration.
-- Tests: executable invariants and regressions, not a substitute for all-seed mathematical analysis.
+## Boundaries
 
-The baseline-positivity argument combines an elementary interval decomposition with recorded exact sign checks. The gate's coefficients, monotonicity/range and complement witness have recorded engine findings. Composing those into the sampler is an engineering/mathematical argument; the evidence does not pretend to be one replayable whole-program certificate.
-
-## Experimental method
-
-When changing a construction, preserve the exact seed, full configuration, coordinate window, resolution, output used and failure case. Compare a meaningful predecessor or control, not only a attractive final plot.
-
-- Test timing with spectra and cross-seed phase coherence, not correlation alone.
-- Test every intended latent direction, then assess numerical rank and conditioning over a declared window.
-- Examine continuous curves and integer samples separately; narrow events can disappear at game-level sampling resolution.
-- Evaluate stabilization against its actual target. Distance to the baseline is a different quantity.
-- Compare both language implementations, including strings, numeric seeds and edge cases.
-- Keep negative results and engine refusals legible.
-
-## Taste and boundaries
-
-Preserve recognizable structure without putting every seed on a metronome. Prefer smooth transitions and navigable variation over arbitrary independent jumps. Give users an honest instrument with inspectable parameters, not mysterious sliders that quietly rewrite exported data.
-
-A mathematically valid curve can still be a poor game curve. Balance, payout expectations, player readability and progression pacing require domain-specific evaluation. A locally full-rank sensitivity matrix can still lose useful differentiation over another window or near full stabilization.
-
-No cryptographic randomness, semantic coordinate labels, strict monotonicity, universal seed independence, guaranteed balance, or production adoption is claimed. C2 continuity is not band limitation or an antialiasing guarantee.
-
-## Timeline extension
-
-Changing a seed is discontinuous; forking a history need not be. An immutable parent plus a compact quintic transition gives exact inherited history and matching endpoint jets before settling into an operation-derived leaf future. Convex blending of actual values and their bounds preserves admissibility. The active position/path is inherited, not rerolled. Intro variation interpolates two notch parameter triples instead of overlaying four notches; a bounded fade returns to the original continuation.
-
-[Timing and branch semantics](reference/TIMELINES.md) states the contract and positive-baseline argument. `research/timelines-evidence.json` records exact component findings, rigorous exponential enclosures, a convex-positivity certificate, rechecked claims and a matrix-inverse refusal/wish. The full program is still not certified. Operation tokens are deterministic seed material, not interpreted physics; uint32 collisions remain possible.
-
-## Useful next questions
-
-Let real integrations choose the next work:
-
-- Which backbone scales and amplitudes retain useful differences over a game's actual window?
-- Which bounded-output calibrations give appropriate encounter or difficulty distributions?
-- Does integer/fixed-point evaluation need a separate deterministic contract?
-- Is another authored baseline useful enough to deserve a compatible interface?
-- Can the full projection/gating/stabilization composition earn a replayable certificate?
-
-Do not add knobs simply because they are possible. Preserve the small, understandable mechanism until a concrete use exposes a need.
-
-## Boundary-policy extension
-
-Developers need an admissible signal, not only interesting variation. Zero, baseline and backbone floors are distinct requirements. The new boundary kernel was derived with exact Scryer linear algebra and checked for range, monotonicity and endpoint joins. Full source evidence and explicit refusals live in research/constraints-evidence.json; these are component findings, not a blanket proof of the implementation.
-
-The design uses a gate-scaled transition width and smooth rational band allocation rather than hard minima between widths. A hard mode is explicit. Constraints can flatten excursions and weaken short-window coordinate distinguishability; this is a consequence of the requested admissible range, not an independently useful increase in chaos. Investigate host-specific tuning and boundary sensitivity before asserting universal improvements to roughness or balance.
+Runtime dependencies remain empty. Reward authorization, fairness, adversarial entropy and host-specific calibration are external responsibilities. New controls must solve a concrete integration problem. Preserve current numerical contracts and keep historical observations separate from current API documentation.

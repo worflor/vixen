@@ -1,0 +1,21 @@
+{
+  "baseline_commit": "c681802a0495a27763f35ca4194a82c821a93830",
+  "comparisons": 6400,
+  "sample_fields": "exact in executed JavaScript golden suite",
+  "scope": "declared seeded configurations and points; not universal equivalence proof",
+  "optimizations": [
+    "cached immutable stabilization weight",
+    "coordinate normalization once through private evaluation",
+    "no discarded fork-position sample",
+    "fixed source-field interpolation and adapter recomputation"
+  ],
+  "validation_fixes": [
+    "strict envelope fields for every supported replay identifier",
+    "own algorithm/config fields and non-array JavaScript envelopes"
+  ],
+  "component_proof": "research/proofs/gate-contact.json",
+  "new_metadata": "bounds.unconstrainedSpatialSlope",
+  "independent_review": "read-only Codex final runtime review: PASS; inline nested/nullable/validation/replay probes; full suite executed by parent",
+  "python_exact_comparisons": 3960,
+  "python_scope": "60 configured roots, nested forks, both sample and explicit coordinates, all returned fields"
+}

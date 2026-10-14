@@ -64,7 +64,7 @@ class _Leaf:
   for key,lo,hi in [('openingEndpoint',2,50000),('introVariation',0,1),('boundarySoftness',0,1),('stabilizer',0,1),('strength',0,2),('ramp',1,64),('tempo',.25,4),('contrast',0,16)]:
    v=c[key]
    if isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) or not lo<=v<=hi:raise ValueError('Invalid '+key)
-  c['latent']=_vector(c['latent'],128);c['velocity']=_vector(c['velocity'],4);self.config=MappingProxyType(c)
+  c['latent']=_vector(c['latent'],128);c['velocity']=_vector(c['velocity'],4);self.config=MappingProxyType(c);self._stabilization_weight=smooth5(c['stabilizer'])
   self.domain=(1,min(50000,1+(50000-1)*(c['openingEndpoint']-1)/99))
   v=c['introVariation'];self.dips=tuple(MappingProxyType({'center':old_center+v*(a+b*_unit(self.seed,i,700)-old_center),'width':math.sqrt(old_den+v*((4+w*_unit(self.seed,i,701))**2-old_den)),'depth':old_depth+v*(d+e*_unit(self.seed,i,702)-old_depth)}) for i,a,b,w,d,e,old_center,old_den,old_depth in [(0,32,15,2,18,6,42,32,25),(1,62,20,3,35,13,71,28,38)])
   ridges=[]
@@ -73,10 +73,10 @@ class _Leaf:
    scale=(4+76*_unit(self.seed,i,1))*c['tempo'];base_phase=_unit(self.seed,i,2)*1024
    ridges.append(MappingProxyType({'index':i,'direction':direction,'scale':scale,'basePhase':base_phase,'phase':base_phase+_dot(direction,c['latent']),'slope':1/scale+_dot(direction,c['velocity'])/100,'guidePhase':base_phase+_dot(direction,c['latent'])/32,'guideSlope':(1/scale+_dot(direction,c['velocity'])/100)/32,'channel':i+200}))
   self._ridges=tuple(ridges)
-  envelope=(2.2*(1-smooth5(c['stabilizer']))+.25*smooth5(c['stabilizer']))*c['strength']
+  envelope=(2.2*(1-self._stabilization_weight)+.25*self._stabilization_weight)*c['strength']
   lower=-envelope if c['floor']=='none' else -1 if c['floor']=='zero' else 0 if c['floor']=='baseline' else -.25*c['strength']
   upper=envelope if c['ceilingMargin'] is None else (0 if c['floor']=='baseline' else .25*c['strength'])+c['ceilingMargin']
-  self.bounds=MappingProxyType({'score':(-1,1),'deviation':(lower,upper),'multiplier':(1+lower,1+upper),'activity':(0,1),'positiveMultiplier':(math.exp(-.55),math.exp(.55))})
+  self.bounds=MappingProxyType({'unconstrainedSpatialSlope':c['strength']*((1-self._stabilization_weight)*33*c['contrast']/4+self._stabilization_weight*15/256),'score':(-1,1),'deviation':(lower,upper),'multiplier':(1+lower,1+upper),'activity':(0,1),'positiveMultiplier':(math.exp(-.55),math.exp(.55))})
  def _clock(self,x):return x if self.config['openingEndpoint']==100 else 1+(x-1)*99/(self.config['openingEndpoint']-1)
  def _check(self,x):
   _coordinate(x)
@@ -101,7 +101,7 @@ class _Leaf:
   y=y if lo is None else _floor_map(y,lo,e)
   return y if hi is None else _ceil_map(y,hi,e)
  def _result(self,x,score,guide_score):
-  c=self.config;gate=smooth5((x-c['openingEndpoint'])/c['ramp']);raw=c['strength']*gate*2.2*math.tanh(c['contrast']*score);ug=c['strength']*gate*.25*math.tanh(2*guide_score);w=smooth5(c['stabilizer']);u=raw if w==0 else ug if w==1 else raw+(ug-raw)*w;base=self._authored(self._clock(x));uv=base+base*u;ugv=base+base*ug;lim=self._limits(base,ugv,gate);value=self._apply(uv,lim);gv=self._apply(ugv,lim);inactive=c['floor']=='none' and c['ceilingMargin'] is None;d=u if inactive else (value-base)/base;gd=ug if inactive else (gv-base)/base;pos=math.exp(.55*math.tanh(d))
+  c=self.config;gate=smooth5((x-c['openingEndpoint'])/c['ramp']);raw=c['strength']*gate*2.2*math.tanh(c['contrast']*score);ug=c['strength']*gate*.25*math.tanh(2*guide_score);w=self._stabilization_weight;u=raw if w==0 else ug if w==1 else raw+(ug-raw)*w;base=self._authored(self._clock(x));uv=base+base*u;ugv=base+base*ug;lim=self._limits(base,ugv,gate);value=self._apply(uv,lim);gv=self._apply(ugv,lim);inactive=c['floor']=='none' and c['ceilingMargin'] is None;d=u if inactive else (value-base)/base;gd=ug if inactive else (gv-base)/base;pos=math.exp(.55*math.tanh(d))
   return {'x':x,'value':value,'base':base,'score':score,'guideScore':guide_score,'rawDeviation':raw,'guideDeviation':gd,'guideValue':gv,'stabilizationWeight':w,'deviation':d,'multiplier':1+d,'activity':.5+.5*math.tanh(d),'positiveMultiplier':pos,'positiveValue':base*pos,'gate':gate,'unconstrainedValue':uv,'unconstrainedDeviation':u,'unconstrainedGuideValue':ugv,'unconstrainedGuideDeviation':ug,**lim,'constraintApplied':value!=uv}
  def sample(self,x):
   self._check(x);score=guide_score=0
@@ -111,8 +111,9 @@ class _Leaf:
     score+=self._noise(r['phase']+u*r['slope'],r['channel'])/FEATURES
     guide_score+=self._noise(r['guidePhase']+u*r['guideSlope'],r['channel'])/FEATURES
   return self._result(x,score,guide_score)
- def at(self,x,h):
-  self._check(x);h=_vector(h);score=guide_score=0
+ def at(self,x,h):return self._at_validated(x,_vector(h))
+ def _at_validated(self,x,h):
+  self._check(x);score=guide_score=0
   if x>self.config['openingEndpoint']:
    u=self._clock(x)-100
    for r in self._ridges:
@@ -136,8 +137,12 @@ def _fork_seed(parent_seed,operation,at):
  import struct
  hi,lo=struct.unpack('>II',struct.pack('>d',at))
  return hash32(hash32(seed32(parent_seed),1 if isinstance(parent_seed,str) else 2,seed32(operation)),hi,lo)
+_MIX_FIELDS=('x', 'value', 'base', 'score', 'guideScore', 'rawDeviation', 'guideValue', 'stabilizationWeight', 'gate', 'unconstrainedValue', 'unconstrainedGuideValue', 'boundaryWidth')
 def _mix_samples(a,b,w):
- r={k:av+(b[k]-av)*w if isinstance(av,(int,float)) and not isinstance(av,bool) and isinstance(b[k],(int,float)) and not isinstance(b[k],bool) else av for k,av in a.items()}
+ r=a.copy()
+ for k in _MIX_FIELDS:r[k]=a[k]+(b[k]-a[k])*w
+ for k in ('floorValue','ceilingValue'):
+  if a[k] is not None:r[k]=a[k]+(b[k]-a[k])*w
  if r['floorValue'] is not None:r['value']=max(r['value'],r['floorValue'])
  if r['ceilingValue'] is not None:r['value']=min(r['value'],r['ceilingValue'])
  r['deviation']=(r['value']-r['base'])/r['base'];r['multiplier']=1+r['deviation'];r['activity']=.5+.5*math.tanh(r['deviation'])
@@ -168,9 +173,9 @@ class Vixen:
  def lineage(self):return self._lineage
  def _evaluate(self,x,h=None):
   n=self._node
-  if n is None or x>=n['at']+n['handoffWidth']:return self._leaf.sample(x) if h is None else self._leaf.at(x,h)
-  if x<=n['at']:return self._parent.sample(x) if h is None else self._parent.at(x,h)
-  w=smooth5((x-n['at'])/n['handoffWidth']);a=self._parent.sample(x) if h is None else self._parent.at(x,h);b=self._leaf.sample(x) if h is None else self._leaf.at(x,h)
+  if n is None or x>=n['at']+n['handoffWidth']:return self._leaf.sample(x) if h is None else self._leaf._at_validated(x,h)
+  if x<=n['at']:return self._parent._evaluate(x,h)
+  w=smooth5((x-n['at'])/n['handoffWidth']);a=self._parent._evaluate(x,h);b=self._leaf.sample(x) if h is None else self._leaf._at_validated(x,h)
   return _mix_samples(a,b,w)
  def sample(self,x):
   self._leaf._check(x);return self._evaluate(x)
@@ -199,9 +204,9 @@ class Vixen:
 
 def restore(snapshot):
  if not isinstance(snapshot,dict) or not isinstance(snapshot.get('config'),(dict,MappingProxyType)):raise ValueError('Snapshot with configuration required')
+ if set(snapshot)-{'algorithm','config','lineage'}:raise ValueError('Unknown snapshot field')
  cfg=snapshot['config'];algorithm=snapshot.get('algorithm')
  if algorithm==ALGORITHM:
-  if set(snapshot)-{'algorithm','config','lineage'}:raise ValueError('Unknown snapshot field')
   lineage=snapshot.get('lineage',[])
   if lineage is None:lineage=[]
   if not isinstance(lineage,(list,tuple)) or len(lineage)>32:raise ValueError('Invalid branch lineage')

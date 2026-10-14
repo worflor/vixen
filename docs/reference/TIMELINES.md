@@ -1,6 +1,6 @@
 # Timing, seeded openings and timelines
 
-Algorithm: `vixen-hyperfield-c2/4`. Defaults replay the previous `/3` sampler exactly. These controls and branches are in both base objects, not just the instrument UI.
+Timing and immutable branches are part of both runtime objects.
 
 ## Translate the opening
 
@@ -10,7 +10,7 @@ Algorithm: `vixen-hyperfield-c2/4`. Defaults replay the previous `/3` sampler ex
 t(x) = 1 + (x-1)*99/(openingEndpoint-1)
 ```
 
-The default takes a direct `t=x` path to retain old floating evaluations exactly. Consequently the two dips, baseline growth, field timing and configured travel all stretch with the opening. This is time reparameterization, not an additive offset or a new output scale. `ramp` remains in caller progression units: the chaos gate opens from `openingEndpoint` to `openingEndpoint+ramp`.
+At the default endpoint, the clock is exactly `t=x`. Consequently the two dips, baseline growth, field timing and configured travel all stretch with the opening. This is time reparameterization, not an additive offset or a new output scale. `ramp` remains in caller progression units: the chaos gate opens from `openingEndpoint` to `openingEndpoint+ramp`.
 
 `domain` is `[1, min(50000, 1+49999*(openingEndpoint-1)/99)]`. It keeps both the caller coordinate and canonical clock inside their supported domains. Short openings therefore reduce the maximum accepted caller coordinate. Inspect `domain` rather than assuming every timing configuration accepts 50000. An opening at the domain end may leave no usable continuation.
 
@@ -21,7 +21,7 @@ The default takes a direct `t=x` path to retain old floating evaluations exactly
 - First center: [32,47]; width: [4,6]; depth: [18,25].
 - Second center: [62,82]; width: [4,7]; depth: [35,48].
 
-These are canonical-clock ranges, including the old endpoint parameters. `dips` exposes the actual parameter triples. Each dip is Gaussian `depth*exp(-((t-center)/width)^2)` subtracted from `t*exp(t/100)`. The varied opening returns to the unchanged authored baseline using a quintic fade on canonical [90,100]. At and beyond 100 it is exactly the old baseline. The seed controls bounded variability, not cryptographic unpredictability or a proof that seeds are statistically independent.
+These are canonical-clock ranges, including the fixed authored parameters. `dips` exposes the actual parameter triples. Each dip is Gaussian `depth*exp(-((t-center)/width)^2)` subtracted from `t*exp(t/100)`. The varied opening returns to the unchanged authored baseline using a quintic fade on canonical [90,100]. At and beyond 100 it is exactly the fixed authored baseline. The seed controls bounded variability, not cryptographic unpredictability or a proof that seeds are statistically independent.
 
 ### Why the opening stays positive
 

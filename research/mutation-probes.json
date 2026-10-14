@@ -1,0 +1,31 @@
+{
+  "scope": "five selected runtime mutations, not exhaustive mutation coverage",
+  "mutants": [
+    {
+      "mutant": "gate",
+      "killed": true,
+      "exit_code": 1
+    },
+    {
+      "mutant": "history",
+      "killed": true,
+      "exit_code": 1
+    },
+    {
+      "mutant": "adapter",
+      "killed": true,
+      "exit_code": 1
+    },
+    {
+      "mutant": "zero-floor",
+      "killed": true,
+      "exit_code": 1
+    },
+    {
+      "mutant": "snapshot-envelope",
+      "killed": true,
+      "exit_code": 1
+    }
+  ],
+  "killed": 5
+}

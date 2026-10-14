@@ -27,6 +27,7 @@ Unknown configuration keys and invalid values are rejected. Numeric 42 and text 
 - `inspect(x)`: fine and backbone ridge contributions before nonlinear transforms, sorted by absolute fine contribution. These do not sum directly to final deviation.
 - `ridges()`: immutable feature definitions.
 - `config`, `algorithm`, `bounds`: latest-leaf configuration and conservative metadata.
+- `bounds.unconstrainedSpatialSlope`: conservative Euclidean spatial sensitivity bound for unrestricted deviation. [Derivation and scope](CONDITIONING.md).
 - `domain`: actual caller-coordinate limits; short openings can reduce the upper limit.
 - `dips`: the two active Gaussian parameter triples in canonical units.
 - `fork({at, operation, handoffWidth?})`: a new immutable timeline with exact inherited history and a C2 handoff.

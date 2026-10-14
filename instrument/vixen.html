@@ -348,7 +348,7 @@ O(48) work per configured-path sample; no prior samples needed.</pre><details><s
 }
 </pre><p>This is procedural disorder, not proven dynamical chaos. Source-bound component mathematics and implementation tests have different scopes. Finite-window spectral improvement does not establish universal absence of rhythm. The 16-axis sensitivity audit is local and numerical; all directions need not have equal strength.</p></details><details><summary>Verification ledger</summary><pre>{
   &quot;algorithm&quot;: &quot;vixen-hyperfield-c2/4&quot;,
-  &quot;node_tests&quot;: 34,
+  &quot;node_tests&quot;: 37,
   &quot;cross_port&quot;: {
     &quot;algorithm&quot;: &quot;vixen-hyperfield-c2/4&quot;,
     &quot;cases&quot;: 2400,
@@ -441,9 +441,7 @@ O(48) work per configured-path sample; no prior samples needed.</pre><details><s
     ]
   }
 }</pre></details></section>
-<section class="panel"><h2>Take the landscape with you</h2><label>Replay configuration<textarea id="config" rows="12" spellcheck="false"></textarea></label><div class="actions"><button id="applyConfig" type="button">Apply configuration</button><button id="csv" type="button">Generate integer CSV</button></div><label>Current samples<textarea id="csvText" rows="7" spellcheck="false" readonly></textarea></label><details><summary>JavaScript engine · no dependencies</summary><textarea id="jsSource" rows="20" spellcheck="false" readonly>/** Vixen: continuous seeded 16-D landscape. Dependency-free, random-access.
- * Save algorithm + full config. Float curves are not cross-libm bitwise lockstep.
- */
+<section class="panel"><h2>Take the landscape with you</h2><label>Replay configuration<textarea id="config" rows="12" spellcheck="false"></textarea></label><div class="actions"><button id="applyConfig" type="button">Apply configuration</button><button id="csv" type="button">Generate integer CSV</button></div><label>Current samples<textarea id="csvText" rows="7" spellcheck="false" readonly></textarea></label><details><summary>JavaScript engine · no dependencies</summary><textarea id="jsSource" rows="20" spellcheck="false" readonly>/** Deterministic progression fields and immutable timelines. */
 export const ALGORITHM=&#x27;vixen-hyperfield-c2/4&#x27;;
 export const DIMENSIONS=16,FEATURES=48;
 export const DEFAULTS=Object.freeze({seed:&#x27;vixen&#x27;,openingEndpoint:100,introVariation:0,floor:&#x27;none&#x27;,ceilingMargin:null,boundarySoftness:.1,stabilizer:0,strength:1,ramp:16,tempo:.8,contrast:10,latent:Object.freeze(Array(16).fill(0)),velocity:Object.freeze(Array(16).fill(0))});
@@ -452,6 +450,7 @@ export function boundaryRamp(t){if(typeof t!==&#x27;number&#x27;||!Number.isFini
 export function bump(t){if(Math.abs(t)&gt;=1)return 0;const v=1-t*t;return v*v*v;}
 export function seed32(seed){if(typeof seed===&#x27;number&#x27;){if(!Number.isInteger(seed)||seed&lt;0||seed&gt;0xffffffff)throw new RangeError(&#x27;Numeric seed must be uint32&#x27;);return seed&gt;&gt;&gt;0;}if(typeof seed!==&#x27;string&#x27;)throw new TypeError(&#x27;Seed must be text or uint32&#x27;);if(seed.length&gt;1024)throw new RangeError(&#x27;Text seed limit: 1024 UTF-16 code units&#x27;);let h=2166136261;for(const b of new TextEncoder().encode(seed))h=Math.imul(h^b,16777619)&gt;&gt;&gt;0;return h;}
 export function hash32(seed,index,channel){let h=(seed^Math.imul(index&gt;&gt;&gt;0,0x9e3779b9)^Math.imul(channel&gt;&gt;&gt;0,0x85ebca6b))&gt;&gt;&gt;0;h=Math.imul(h^(h&gt;&gt;&gt;16),0x7feb352d)&gt;&gt;&gt;0;h=Math.imul(h^(h&gt;&gt;&gt;15),0x846ca68b)&gt;&gt;&gt;0;return (h^(h&gt;&gt;&gt;16))&gt;&gt;&gt;0;}
+const leafAt=new WeakMap();
 const unit=(s,k,c)=&gt;hash32(s,k,c)/4294967296;
 const dot=(a,b)=&gt;{let n=0;for(let j=0;j&lt;16;j++)n+=a[j]*b[j];return n;};
 function normal(a){const n=Math.sqrt(dot(a,a));if(n===0)return Array.from({length:16},(_,i)=&gt;i===0?1:0);return a.map(v=&gt;v/n);}
@@ -462,7 +461,7 @@ export function navigationBasis(index=0){if(!Number.isInteger(index)||index&lt;0
 function createLeaf(options={}){
  if(!options||typeof options!==&#x27;object&#x27;||Array.isArray(options))throw new TypeError(&#x27;Config must be an object&#x27;);for(const key of Object.keys(options))if(!Object.hasOwn(DEFAULTS,key))throw new TypeError(&#x27;Unknown config key: &#x27;+key);
  const c={...DEFAULTS,...options};if(![&#x27;none&#x27;,&#x27;zero&#x27;,&#x27;baseline&#x27;,&#x27;backbone&#x27;].includes(c.floor))throw new RangeError(&#x27;Invalid floor&#x27;);if(c.ceilingMargin!==null&amp;&amp;(typeof c.ceilingMargin!==&#x27;number&#x27;||!Number.isFinite(c.ceilingMargin)||c.ceilingMargin&lt;0||c.ceilingMargin&gt;16))throw new RangeError(&#x27;ceilingMargin must be null or in [0,16]&#x27;);const seed=seed32(c.seed);for(const [key,lo,hi] of [[&#x27;openingEndpoint&#x27;,2,50000],[&#x27;introVariation&#x27;,0,1],[&#x27;boundarySoftness&#x27;,0,1],[&#x27;stabilizer&#x27;,0,1],[&#x27;strength&#x27;,0,2],[&#x27;ramp&#x27;,1,64],[&#x27;tempo&#x27;,.25,4],[&#x27;contrast&#x27;,0,16]])if(typeof c[key]!==&#x27;number&#x27;||!Number.isFinite(c[key])||c[key]&lt;lo||c[key]&gt;hi)throw new RangeError(`${key} must lie in [${lo},${hi}]`);
- c.latent=Object.freeze(vector(c.latent,128));c.velocity=Object.freeze(vector(c.velocity,4));const config=Object.freeze(c);
+ c.latent=Object.freeze(vector(c.latent,128));c.velocity=Object.freeze(vector(c.velocity,4));const config=Object.freeze(c),stabilizationWeight=smooth5(c.stabilizer);
  const clock=x=&gt;c.openingEndpoint===100?x:1+(x-1)*99/(c.openingEndpoint-1);
  const domain=Object.freeze([1,Math.min(50000,1+(50000-1)*(c.openingEndpoint-1)/99)]);
  function check(x){coordinate(x);if(x&gt;domain[1])throw new RangeError(&#x27;x exceeds the canonical clock domain&#x27;);}
@@ -478,26 +477,30 @@ function createLeaf(options={}){
  }
  function apply(y,lim){if(lim.floorValue!==null&amp;&amp;lim.ceilingValue!==null&amp;&amp;lim.ceilingValue&lt;=lim.floorValue)return lim.floorValue;const lo=lim.floorValue===null?y:floorMap(y,lim.floorValue,lim.boundaryWidth);return lim.ceilingValue===null?lo:ceilMap(lo,lim.ceilingValue,lim.boundaryWidth);}
  function result(x,score,guideScore){
- const gate=smooth5((x-c.openingEndpoint)/c.ramp),rawDeviation=c.strength*gate*2.2*Math.tanh(c.contrast*score),unconstrainedGuideDeviation=c.strength*gate*.25*Math.tanh(2*guideScore),w=smooth5(c.stabilizer),u=w===0?rawDeviation:w===1?unconstrainedGuideDeviation:rawDeviation+(unconstrainedGuideDeviation-rawDeviation)*w,base=authored(clock(x)),unconstrainedValue=base+base*u,unconstrainedGuideValue=base+base*unconstrainedGuideDeviation,lim=limits(base,unconstrainedGuideValue,gate),value=apply(unconstrainedValue,lim),guideValue=apply(unconstrainedGuideValue,lim),deviation=c.floor===&#x27;none&#x27;&amp;&amp;c.ceilingMargin===null?u:(value-base)/base,guideDeviation=c.floor===&#x27;none&#x27;&amp;&amp;c.ceilingMargin===null?unconstrainedGuideDeviation:(guideValue-base)/base,positiveMultiplier=Math.exp(.55*Math.tanh(deviation));
+ const gate=smooth5((x-c.openingEndpoint)/c.ramp),rawDeviation=c.strength*gate*2.2*Math.tanh(c.contrast*score),unconstrainedGuideDeviation=c.strength*gate*.25*Math.tanh(2*guideScore),w=stabilizationWeight,u=w===0?rawDeviation:w===1?unconstrainedGuideDeviation:rawDeviation+(unconstrainedGuideDeviation-rawDeviation)*w,base=authored(clock(x)),unconstrainedValue=base+base*u,unconstrainedGuideValue=base+base*unconstrainedGuideDeviation,lim=limits(base,unconstrainedGuideValue,gate),value=apply(unconstrainedValue,lim),guideValue=apply(unconstrainedGuideValue,lim),deviation=c.floor===&#x27;none&#x27;&amp;&amp;c.ceilingMargin===null?u:(value-base)/base,guideDeviation=c.floor===&#x27;none&#x27;&amp;&amp;c.ceilingMargin===null?unconstrainedGuideDeviation:(guideValue-base)/base,positiveMultiplier=Math.exp(.55*Math.tanh(deviation));
  return Object.freeze({x,value,base,score,guideScore,rawDeviation,guideDeviation,guideValue,stabilizationWeight:w,deviation,multiplier:1+deviation,activity:.5+.5*Math.tanh(deviation),positiveMultiplier,positiveValue:base*positiveMultiplier,gate,unconstrainedValue,unconstrainedDeviation:u,unconstrainedGuideValue,unconstrainedGuideDeviation,...lim,constraintApplied:value!==unconstrainedValue});
  }
  function sample(x){check(x);let score=0,guideScore=0;if(x&gt;c.openingEndpoint){const u=clock(x)-100;for(const r of ridges){score+=noise(r.phase+u*r.slope,r.channel)/FEATURES;guideScore+=noise(r.guidePhase+u*r.guideSlope,r.channel)/FEATURES;}}return result(x,score,guideScore);}
- function at(x,h){check(x);const latent=vector(h);let score=0,guideScore=0;if(x&gt;c.openingEndpoint){const u=clock(x)-100;for(const r of ridges){const projection=dot(r.direction,latent);score+=noise(r.basePhase+projection+u/r.scale,r.channel)/FEATURES;guideScore+=noise(r.basePhase+projection/32+u/(32*r.scale),r.channel)/FEATURES;}}return result(x,score,guideScore);}
+ function atValidated(x,latent){check(x);let score=0,guideScore=0;if(x&gt;c.openingEndpoint){const u=clock(x)-100;for(const r of ridges){const projection=dot(r.direction,latent);score+=noise(r.basePhase+projection+u/r.scale,r.channel)/FEATURES;guideScore+=noise(r.basePhase+projection/32+u/(32*r.scale),r.channel)/FEATURES;}}return result(x,score,guideScore);}
+ function at(x,h){return atValidated(x,vector(h));}
  function location(x){check(x);const t=Math.max(0,clock(x)-100)/100;return Object.freeze(c.latent.map((h,i)=&gt;h+t*c.velocity[i]));}
  function inspect(x){check(x);if(x&lt;=c.openingEndpoint)return Object.freeze([]);const u=clock(x)-100;return Object.freeze(ridges.map(r=&gt;{const p=r.phase+u*r.slope;return Object.freeze({index:r.index,scale:r.scale,coordinate:p,cell:Math.floor(p),contribution:noise(p,r.channel)/FEATURES,guideContribution:noise(r.guidePhase+u*r.guideSlope,r.channel)/FEATURES});}).sort((a,b)=&gt;Math.abs(b.contribution)-Math.abs(a.contribution)));}
- const envelope=(2.2*(1-smooth5(c.stabilizer))+.25*smooth5(c.stabilizer))*c.strength;
+ const envelope=(2.2*(1-stabilizationWeight)+.25*stabilizationWeight)*c.strength;
  const lower=c.floor===&#x27;none&#x27;?-envelope:c.floor===&#x27;zero&#x27;?-1:c.floor===&#x27;baseline&#x27;?0:-.25*c.strength;
  const upper=c.ceilingMargin===null?envelope:(c.floor===&#x27;baseline&#x27;?0:.25*c.strength)+c.ceilingMargin;
- const bounds=Object.freeze({score:Object.freeze([-1,1]),deviation:Object.freeze([lower,upper]),multiplier:Object.freeze([1+lower,1+upper]),activity:Object.freeze([0,1]),positiveMultiplier:Object.freeze([Math.exp(-.55),Math.exp(.55)])});
- return Object.freeze({algorithm:ALGORITHM,config,bounds,domain,dips,sample,at,location,inspect,ridges:()=&gt;Object.freeze(ridges.slice())});
+ const unconstrainedSpatialSlope=c.strength*((1-stabilizationWeight)*33*c.contrast/4+stabilizationWeight*15/256);
+ const bounds=Object.freeze({unconstrainedSpatialSlope,score:Object.freeze([-1,1]),deviation:Object.freeze([lower,upper]),multiplier:Object.freeze([1+lower,1+upper]),activity:Object.freeze([0,1]),positiveMultiplier:Object.freeze([Math.exp(-.55),Math.exp(.55)])});
+ const leaf=Object.freeze({algorithm:ALGORITHM,config,bounds,domain,dips,sample,at,location,inspect,ridges:()=&gt;Object.freeze(ridges.slice())});leafAt.set(leaf,atValidated);return leaf;
 }
 
 function forkSeed(parentSeed,operation,at){
  const bits=new DataView(new ArrayBuffer(8));bits.setFloat64(0,at,false);
  return hash32(hash32(seed32(parentSeed),typeof parentSeed===&#x27;string&#x27;?1:2,seed32(operation)),bits.getUint32(0,false),bits.getUint32(4,false));
 }
+const MIX_FIELDS=Object.freeze([&#x27;x&#x27;,&#x27;value&#x27;,&#x27;base&#x27;,&#x27;score&#x27;,&#x27;guideScore&#x27;,&#x27;rawDeviation&#x27;,&#x27;guideValue&#x27;,&#x27;stabilizationWeight&#x27;,&#x27;gate&#x27;,&#x27;unconstrainedValue&#x27;,&#x27;unconstrainedGuideValue&#x27;,&#x27;boundaryWidth&#x27;]);
 function mixSamples(a,b,w){
- const r={};for(const key of Object.keys(a)){const av=a[key],bv=b[key];r[key]=typeof av===&#x27;number&#x27;&amp;&amp;typeof bv===&#x27;number&#x27;?av+(bv-av)*w:av;}
+ const r={...a};for(const key of MIX_FIELDS)r[key]=a[key]+(b[key]-a[key])*w;
+ for(const key of [&#x27;floorValue&#x27;,&#x27;ceilingValue&#x27;])if(a[key]!==null)r[key]=a[key]+(b[key]-a[key])*w;
  // Blend actual constrained values and their references, then derive every adapter afresh.
  if(r.floorValue!==null)r.value=Math.max(r.value,r.floorValue);
  if(r.ceilingValue!==null)r.value=Math.min(r.value,r.ceilingValue);
@@ -507,11 +510,11 @@ function mixSamples(a,b,w){
  r.unconstrainedGuideDeviation=(r.unconstrainedGuideValue-r.base)/r.base;r.constraintApplied=r.value!==r.unconstrainedValue;
  return Object.freeze(r);
 }
-function timeline(leaf,rootConfig=leaf.config,lineage=Object.freeze([]),parent=null,node=null){
+function timeline(leaf,rootConfig=leaf.config,lineage=Object.freeze([]),parent=null,node=null,parentEvaluate=null){
  function evaluate(x,h){
-  if(!node||x&gt;=node.at+node.handoffWidth)return h===undefined?leaf.sample(x):leaf.at(x,h);
-  if(x&lt;=node.at)return h===undefined?parent.sample(x):parent.at(x,h);
-  const w=smooth5((x-node.at)/node.handoffWidth),a=h===undefined?parent.sample(x):parent.at(x,h),b=h===undefined?leaf.sample(x):leaf.at(x,h);
+  if(!node||x&gt;=node.at+node.handoffWidth)return h===undefined?leaf.sample(x):leafAt.get(leaf)(x,h);
+  if(x&lt;=node.at)return parentEvaluate(x,h);
+  const w=smooth5((x-node.at)/node.handoffWidth),a=parentEvaluate(x,h),b=h===undefined?leaf.sample(x):leafAt.get(leaf)(x,h);
   return mixSamples(a,b,w);
  }
  function inspect(x){
@@ -523,23 +526,23 @@ function timeline(leaf,rootConfig=leaf.config,lineage=Object.freeze([]),parent=n
  function snapshot(){return Object.freeze({algorithm:ALGORITHM,config:rootConfig,lineage:Object.freeze(lineage.map(({at,operation,handoffWidth})=&gt;Object.freeze({at,operation,handoffWidth})))});}
  function fork(options){
   if(!options||typeof options!==&#x27;object&#x27;||Array.isArray(options)||Object.keys(options).some(k=&gt;![&#x27;at&#x27;,&#x27;operation&#x27;,&#x27;handoffWidth&#x27;].includes(k)))throw new TypeError(&#x27;Fork options: at, operation, handoffWidth&#x27;);
-  const {at,operation}=options;leaf.sample(at);
+  const {at,operation}=options;coordinate(at);if(at&gt;leaf.domain[1])throw new RangeError(&#x27;x exceeds the canonical clock domain&#x27;);
   if(typeof operation!==&#x27;string&#x27;||operation.length===0)throw new TypeError(&#x27;A nonempty operation string is required&#x27;);seed32(operation);
   if(lineage.length&gt;=32)throw new RangeError(&#x27;Maximum branch depth: 32&#x27;);
   if(node&amp;&amp;at&lt;node.at)throw new RangeError(&#x27;Nested forks cannot precede their parent fork&#x27;);
   const handoffWidth=options.handoffWidth??Math.min(16,leaf.domain[1]-at);
   if(typeof handoffWidth!==&#x27;number&#x27;||!Number.isFinite(handoffWidth)||handoffWidth&lt;=0||at+handoffWidth&lt;=at||at+handoffWidth&gt;leaf.domain[1])throw new RangeError(&#x27;Handoff must have positive representable width inside the domain&#x27;);
   const seed=forkSeed(leaf.config.seed,operation,at),entry=Object.freeze({at,operation,handoffWidth,seed}),future=createLeaf({...leaf.config,seed});
-  return timeline(future,rootConfig,Object.freeze([...lineage,entry]),api,entry);
+  return timeline(future,rootConfig,Object.freeze([...lineage,entry]),api,entry,evaluate);
  }
- const api=Object.freeze({...leaf,lineage,sample:x=&gt;evaluate(x),at:(x,h)=&gt;{vector(h);return evaluate(x,h);},inspect,fork,snapshot});return api;
+ const api=Object.freeze({...leaf,lineage,sample:x=&gt;evaluate(x),at:(x,h)=&gt;evaluate(x,vector(h)),inspect,fork,snapshot});return api;
 }
 export function create(options={}){return timeline(createLeaf(options));}
 export function restore(snapshot){
- if(!snapshot||typeof snapshot!==&#x27;object&#x27;||!snapshot.config||typeof snapshot.config!==&#x27;object&#x27;||Array.isArray(snapshot.config))throw new TypeError(&#x27;Snapshot with configuration required&#x27;);
+ if(!snapshot||typeof snapshot!==&#x27;object&#x27;||Array.isArray(snapshot)||!Object.hasOwn(snapshot,&#x27;algorithm&#x27;)||!Object.hasOwn(snapshot,&#x27;config&#x27;)||!snapshot.config||typeof snapshot.config!==&#x27;object&#x27;||Array.isArray(snapshot.config))throw new TypeError(&#x27;Snapshot with configuration required&#x27;);
+ if(Reflect.ownKeys(snapshot).some(k=&gt;typeof k!==&#x27;string&#x27;||![&#x27;algorithm&#x27;,&#x27;config&#x27;,&#x27;lineage&#x27;].includes(k)))throw new TypeError(&#x27;Unknown snapshot field&#x27;);
  if(snapshot.algorithm===ALGORITHM){
-  if(Object.keys(snapshot).some(k=&gt;![&#x27;algorithm&#x27;,&#x27;config&#x27;,&#x27;lineage&#x27;].includes(k)))throw new TypeError(&#x27;Unknown snapshot field&#x27;);
-  const lineage=snapshot.lineage??[];if(!Array.isArray(lineage)||lineage.length&gt;32)throw new RangeError(&#x27;Invalid branch lineage&#x27;);
+  const lineage=(Object.hasOwn(snapshot,&#x27;lineage&#x27;)?snapshot.lineage:[])??[];if(!Array.isArray(lineage)||lineage.length&gt;32)throw new RangeError(&#x27;Invalid branch lineage&#x27;);
   let result=create(snapshot.config);for(const entry of lineage)result=result.fork(entry);return result;
  }
  if([&#x27;vixen-hyperfield-c2/1&#x27;,&#x27;vixen-hyperfield-c2/2&#x27;,&#x27;vixen-hyperfield-c2/3&#x27;].includes(snapshot.algorithm)){
@@ -616,7 +619,7 @@ class _Leaf:
   for key,lo,hi in [(&#x27;openingEndpoint&#x27;,2,50000),(&#x27;introVariation&#x27;,0,1),(&#x27;boundarySoftness&#x27;,0,1),(&#x27;stabilizer&#x27;,0,1),(&#x27;strength&#x27;,0,2),(&#x27;ramp&#x27;,1,64),(&#x27;tempo&#x27;,.25,4),(&#x27;contrast&#x27;,0,16)]:
    v=c[key]
    if isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) or not lo&lt;=v&lt;=hi:raise ValueError(&#x27;Invalid &#x27;+key)
-  c[&#x27;latent&#x27;]=_vector(c[&#x27;latent&#x27;],128);c[&#x27;velocity&#x27;]=_vector(c[&#x27;velocity&#x27;],4);self.config=MappingProxyType(c)
+  c[&#x27;latent&#x27;]=_vector(c[&#x27;latent&#x27;],128);c[&#x27;velocity&#x27;]=_vector(c[&#x27;velocity&#x27;],4);self.config=MappingProxyType(c);self._stabilization_weight=smooth5(c[&#x27;stabilizer&#x27;])
   self.domain=(1,min(50000,1+(50000-1)*(c[&#x27;openingEndpoint&#x27;]-1)/99))
   v=c[&#x27;introVariation&#x27;];self.dips=tuple(MappingProxyType({&#x27;center&#x27;:old_center+v*(a+b*_unit(self.seed,i,700)-old_center),&#x27;width&#x27;:math.sqrt(old_den+v*((4+w*_unit(self.seed,i,701))**2-old_den)),&#x27;depth&#x27;:old_depth+v*(d+e*_unit(self.seed,i,702)-old_depth)}) for i,a,b,w,d,e,old_center,old_den,old_depth in [(0,32,15,2,18,6,42,32,25),(1,62,20,3,35,13,71,28,38)])
   ridges=[]
@@ -625,10 +628,10 @@ class _Leaf:
    scale=(4+76*_unit(self.seed,i,1))*c[&#x27;tempo&#x27;];base_phase=_unit(self.seed,i,2)*1024
    ridges.append(MappingProxyType({&#x27;index&#x27;:i,&#x27;direction&#x27;:direction,&#x27;scale&#x27;:scale,&#x27;basePhase&#x27;:base_phase,&#x27;phase&#x27;:base_phase+_dot(direction,c[&#x27;latent&#x27;]),&#x27;slope&#x27;:1/scale+_dot(direction,c[&#x27;velocity&#x27;])/100,&#x27;guidePhase&#x27;:base_phase+_dot(direction,c[&#x27;latent&#x27;])/32,&#x27;guideSlope&#x27;:(1/scale+_dot(direction,c[&#x27;velocity&#x27;])/100)/32,&#x27;channel&#x27;:i+200}))
   self._ridges=tuple(ridges)
-  envelope=(2.2*(1-smooth5(c[&#x27;stabilizer&#x27;]))+.25*smooth5(c[&#x27;stabilizer&#x27;]))*c[&#x27;strength&#x27;]
+  envelope=(2.2*(1-self._stabilization_weight)+.25*self._stabilization_weight)*c[&#x27;strength&#x27;]
   lower=-envelope if c[&#x27;floor&#x27;]==&#x27;none&#x27; else -1 if c[&#x27;floor&#x27;]==&#x27;zero&#x27; else 0 if c[&#x27;floor&#x27;]==&#x27;baseline&#x27; else -.25*c[&#x27;strength&#x27;]
   upper=envelope if c[&#x27;ceilingMargin&#x27;] is None else (0 if c[&#x27;floor&#x27;]==&#x27;baseline&#x27; else .25*c[&#x27;strength&#x27;])+c[&#x27;ceilingMargin&#x27;]
-  self.bounds=MappingProxyType({&#x27;score&#x27;:(-1,1),&#x27;deviation&#x27;:(lower,upper),&#x27;multiplier&#x27;:(1+lower,1+upper),&#x27;activity&#x27;:(0,1),&#x27;positiveMultiplier&#x27;:(math.exp(-.55),math.exp(.55))})
+  self.bounds=MappingProxyType({&#x27;unconstrainedSpatialSlope&#x27;:c[&#x27;strength&#x27;]*((1-self._stabilization_weight)*33*c[&#x27;contrast&#x27;]/4+self._stabilization_weight*15/256),&#x27;score&#x27;:(-1,1),&#x27;deviation&#x27;:(lower,upper),&#x27;multiplier&#x27;:(1+lower,1+upper),&#x27;activity&#x27;:(0,1),&#x27;positiveMultiplier&#x27;:(math.exp(-.55),math.exp(.55))})
  def _clock(self,x):return x if self.config[&#x27;openingEndpoint&#x27;]==100 else 1+(x-1)*99/(self.config[&#x27;openingEndpoint&#x27;]-1)
  def _check(self,x):
   _coordinate(x)
@@ -653,7 +656,7 @@ class _Leaf:
   y=y if lo is None else _floor_map(y,lo,e)
   return y if hi is None else _ceil_map(y,hi,e)
  def _result(self,x,score,guide_score):
-  c=self.config;gate=smooth5((x-c[&#x27;openingEndpoint&#x27;])/c[&#x27;ramp&#x27;]);raw=c[&#x27;strength&#x27;]*gate*2.2*math.tanh(c[&#x27;contrast&#x27;]*score);ug=c[&#x27;strength&#x27;]*gate*.25*math.tanh(2*guide_score);w=smooth5(c[&#x27;stabilizer&#x27;]);u=raw if w==0 else ug if w==1 else raw+(ug-raw)*w;base=self._authored(self._clock(x));uv=base+base*u;ugv=base+base*ug;lim=self._limits(base,ugv,gate);value=self._apply(uv,lim);gv=self._apply(ugv,lim);inactive=c[&#x27;floor&#x27;]==&#x27;none&#x27; and c[&#x27;ceilingMargin&#x27;] is None;d=u if inactive else (value-base)/base;gd=ug if inactive else (gv-base)/base;pos=math.exp(.55*math.tanh(d))
+  c=self.config;gate=smooth5((x-c[&#x27;openingEndpoint&#x27;])/c[&#x27;ramp&#x27;]);raw=c[&#x27;strength&#x27;]*gate*2.2*math.tanh(c[&#x27;contrast&#x27;]*score);ug=c[&#x27;strength&#x27;]*gate*.25*math.tanh(2*guide_score);w=self._stabilization_weight;u=raw if w==0 else ug if w==1 else raw+(ug-raw)*w;base=self._authored(self._clock(x));uv=base+base*u;ugv=base+base*ug;lim=self._limits(base,ugv,gate);value=self._apply(uv,lim);gv=self._apply(ugv,lim);inactive=c[&#x27;floor&#x27;]==&#x27;none&#x27; and c[&#x27;ceilingMargin&#x27;] is None;d=u if inactive else (value-base)/base;gd=ug if inactive else (gv-base)/base;pos=math.exp(.55*math.tanh(d))
   return {&#x27;x&#x27;:x,&#x27;value&#x27;:value,&#x27;base&#x27;:base,&#x27;score&#x27;:score,&#x27;guideScore&#x27;:guide_score,&#x27;rawDeviation&#x27;:raw,&#x27;guideDeviation&#x27;:gd,&#x27;guideValue&#x27;:gv,&#x27;stabilizationWeight&#x27;:w,&#x27;deviation&#x27;:d,&#x27;multiplier&#x27;:1+d,&#x27;activity&#x27;:.5+.5*math.tanh(d),&#x27;positiveMultiplier&#x27;:pos,&#x27;positiveValue&#x27;:base*pos,&#x27;gate&#x27;:gate,&#x27;unconstrainedValue&#x27;:uv,&#x27;unconstrainedDeviation&#x27;:u,&#x27;unconstrainedGuideValue&#x27;:ugv,&#x27;unconstrainedGuideDeviation&#x27;:ug,**lim,&#x27;constraintApplied&#x27;:value!=uv}
  def sample(self,x):
   self._check(x);score=guide_score=0
@@ -663,8 +666,9 @@ class _Leaf:
     score+=self._noise(r[&#x27;phase&#x27;]+u*r[&#x27;slope&#x27;],r[&#x27;channel&#x27;])/FEATURES
     guide_score+=self._noise(r[&#x27;guidePhase&#x27;]+u*r[&#x27;guideSlope&#x27;],r[&#x27;channel&#x27;])/FEATURES
   return self._result(x,score,guide_score)
- def at(self,x,h):
-  self._check(x);h=_vector(h);score=guide_score=0
+ def at(self,x,h):return self._at_validated(x,_vector(h))
+ def _at_validated(self,x,h):
+  self._check(x);score=guide_score=0
   if x&gt;self.config[&#x27;openingEndpoint&#x27;]:
    u=self._clock(x)-100
    for r in self._ridges:
@@ -688,8 +692,12 @@ def _fork_seed(parent_seed,operation,at):
  import struct
  hi,lo=struct.unpack(&#x27;&gt;II&#x27;,struct.pack(&#x27;&gt;d&#x27;,at))
  return hash32(hash32(seed32(parent_seed),1 if isinstance(parent_seed,str) else 2,seed32(operation)),hi,lo)
+_MIX_FIELDS=(&#x27;x&#x27;, &#x27;value&#x27;, &#x27;base&#x27;, &#x27;score&#x27;, &#x27;guideScore&#x27;, &#x27;rawDeviation&#x27;, &#x27;guideValue&#x27;, &#x27;stabilizationWeight&#x27;, &#x27;gate&#x27;, &#x27;unconstrainedValue&#x27;, &#x27;unconstrainedGuideValue&#x27;, &#x27;boundaryWidth&#x27;)
 def _mix_samples(a,b,w):
- r={k:av+(b[k]-av)*w if isinstance(av,(int,float)) and not isinstance(av,bool) and isinstance(b[k],(int,float)) and not isinstance(b[k],bool) else av for k,av in a.items()}
+ r=a.copy()
+ for k in _MIX_FIELDS:r[k]=a[k]+(b[k]-a[k])*w
+ for k in (&#x27;floorValue&#x27;,&#x27;ceilingValue&#x27;):
+  if a[k] is not None:r[k]=a[k]+(b[k]-a[k])*w
  if r[&#x27;floorValue&#x27;] is not None:r[&#x27;value&#x27;]=max(r[&#x27;value&#x27;],r[&#x27;floorValue&#x27;])
  if r[&#x27;ceilingValue&#x27;] is not None:r[&#x27;value&#x27;]=min(r[&#x27;value&#x27;],r[&#x27;ceilingValue&#x27;])
  r[&#x27;deviation&#x27;]=(r[&#x27;value&#x27;]-r[&#x27;base&#x27;])/r[&#x27;base&#x27;];r[&#x27;multiplier&#x27;]=1+r[&#x27;deviation&#x27;];r[&#x27;activity&#x27;]=.5+.5*math.tanh(r[&#x27;deviation&#x27;])
@@ -720,9 +728,9 @@ class Vixen:
  def lineage(self):return self._lineage
  def _evaluate(self,x,h=None):
   n=self._node
-  if n is None or x&gt;=n[&#x27;at&#x27;]+n[&#x27;handoffWidth&#x27;]:return self._leaf.sample(x) if h is None else self._leaf.at(x,h)
-  if x&lt;=n[&#x27;at&#x27;]:return self._parent.sample(x) if h is None else self._parent.at(x,h)
-  w=smooth5((x-n[&#x27;at&#x27;])/n[&#x27;handoffWidth&#x27;]);a=self._parent.sample(x) if h is None else self._parent.at(x,h);b=self._leaf.sample(x) if h is None else self._leaf.at(x,h)
+  if n is None or x&gt;=n[&#x27;at&#x27;]+n[&#x27;handoffWidth&#x27;]:return self._leaf.sample(x) if h is None else self._leaf._at_validated(x,h)
+  if x&lt;=n[&#x27;at&#x27;]:return self._parent._evaluate(x,h)
+  w=smooth5((x-n[&#x27;at&#x27;])/n[&#x27;handoffWidth&#x27;]);a=self._parent._evaluate(x,h);b=self._leaf.sample(x) if h is None else self._leaf._at_validated(x,h)
   return _mix_samples(a,b,w)
  def sample(self,x):
   self._leaf._check(x);return self._evaluate(x)
@@ -751,9 +759,9 @@ class Vixen:
 
 def restore(snapshot):
  if not isinstance(snapshot,dict) or not isinstance(snapshot.get(&#x27;config&#x27;),(dict,MappingProxyType)):raise ValueError(&#x27;Snapshot with configuration required&#x27;)
+ if set(snapshot)-{&#x27;algorithm&#x27;,&#x27;config&#x27;,&#x27;lineage&#x27;}:raise ValueError(&#x27;Unknown snapshot field&#x27;)
  cfg=snapshot[&#x27;config&#x27;];algorithm=snapshot.get(&#x27;algorithm&#x27;)
  if algorithm==ALGORITHM:
-  if set(snapshot)-{&#x27;algorithm&#x27;,&#x27;config&#x27;,&#x27;lineage&#x27;}:raise ValueError(&#x27;Unknown snapshot field&#x27;)
   lineage=snapshot.get(&#x27;lineage&#x27;,[])
   if lineage is None:lineage=[]
   if not isinstance(lineage,(list,tuple)) or len(lineage)&gt;32:raise ValueError(&#x27;Invalid branch lineage&#x27;)
@@ -769,9 +777,7 @@ def restore(snapshot):
   return Vixen(**(cfg if algorithm==&#x27;vixen-hyperfield-c2/3&#x27; else {**cfg,&#x27;floor&#x27;:&#x27;none&#x27;,&#x27;ceilingMargin&#x27;:None}))
  raise ValueError(&#x27;Algorithm mismatch&#x27;)
 </textarea></details><p class="note">Save the complete snapshot: algorithm, root configuration and ordered branch lineage. A future seed or leaf configuration alone loses history. Valid older hyperfield snapshots are restored explicitly; their source remains archived. Default samples support x=1–50,000; short opening clocks reduce the domain. Floating curves are not cross-platform bitwise lockstep: bake shared samples or use a specified numeric backend for that requirement.</p></section><footer>Vixen remains the same public instrument. Its internal algorithm identifier exists to preserve an honest replay contract. The document runs locally after loading; exploration makes no network requests.</footer></main><script>
-/** Vixen: continuous seeded 16-D landscape. Dependency-free, random-access.
- * Save algorithm + full config. Float curves are not cross-libm bitwise lockstep.
- */
+/** Deterministic progression fields and immutable timelines. */
 const ALGORITHM='vixen-hyperfield-c2/4';
 const DIMENSIONS=16,FEATURES=48;
 const DEFAULTS=Object.freeze({seed:'vixen',openingEndpoint:100,introVariation:0,floor:'none',ceilingMargin:null,boundarySoftness:.1,stabilizer:0,strength:1,ramp:16,tempo:.8,contrast:10,latent:Object.freeze(Array(16).fill(0)),velocity:Object.freeze(Array(16).fill(0))});
@@ -780,6 +786,7 @@ function boundaryRamp(t){if(typeof t!=='number'||!Number.isFinite(t))throw new R
 function bump(t){if(Math.abs(t)>=1)return 0;const v=1-t*t;return v*v*v;}
 function seed32(seed){if(typeof seed==='number'){if(!Number.isInteger(seed)||seed<0||seed>0xffffffff)throw new RangeError('Numeric seed must be uint32');return seed>>>0;}if(typeof seed!=='string')throw new TypeError('Seed must be text or uint32');if(seed.length>1024)throw new RangeError('Text seed limit: 1024 UTF-16 code units');let h=2166136261;for(const b of new TextEncoder().encode(seed))h=Math.imul(h^b,16777619)>>>0;return h;}
 function hash32(seed,index,channel){let h=(seed^Math.imul(index>>>0,0x9e3779b9)^Math.imul(channel>>>0,0x85ebca6b))>>>0;h=Math.imul(h^(h>>>16),0x7feb352d)>>>0;h=Math.imul(h^(h>>>15),0x846ca68b)>>>0;return (h^(h>>>16))>>>0;}
+const leafAt=new WeakMap();
 const unit=(s,k,c)=>hash32(s,k,c)/4294967296;
 const dot=(a,b)=>{let n=0;for(let j=0;j<16;j++)n+=a[j]*b[j];return n;};
 function normal(a){const n=Math.sqrt(dot(a,a));if(n===0)return Array.from({length:16},(_,i)=>i===0?1:0);return a.map(v=>v/n);}
@@ -790,7 +797,7 @@ function navigationBasis(index=0){if(!Number.isInteger(index)||index<0||index>10
 function createLeaf(options={}){
  if(!options||typeof options!=='object'||Array.isArray(options))throw new TypeError('Config must be an object');for(const key of Object.keys(options))if(!Object.hasOwn(DEFAULTS,key))throw new TypeError('Unknown config key: '+key);
  const c={...DEFAULTS,...options};if(!['none','zero','baseline','backbone'].includes(c.floor))throw new RangeError('Invalid floor');if(c.ceilingMargin!==null&&(typeof c.ceilingMargin!=='number'||!Number.isFinite(c.ceilingMargin)||c.ceilingMargin<0||c.ceilingMargin>16))throw new RangeError('ceilingMargin must be null or in [0,16]');const seed=seed32(c.seed);for(const [key,lo,hi] of [['openingEndpoint',2,50000],['introVariation',0,1],['boundarySoftness',0,1],['stabilizer',0,1],['strength',0,2],['ramp',1,64],['tempo',.25,4],['contrast',0,16]])if(typeof c[key]!=='number'||!Number.isFinite(c[key])||c[key]<lo||c[key]>hi)throw new RangeError(`${key} must lie in [${lo},${hi}]`);
- c.latent=Object.freeze(vector(c.latent,128));c.velocity=Object.freeze(vector(c.velocity,4));const config=Object.freeze(c);
+ c.latent=Object.freeze(vector(c.latent,128));c.velocity=Object.freeze(vector(c.velocity,4));const config=Object.freeze(c),stabilizationWeight=smooth5(c.stabilizer);
  const clock=x=>c.openingEndpoint===100?x:1+(x-1)*99/(c.openingEndpoint-1);
  const domain=Object.freeze([1,Math.min(50000,1+(50000-1)*(c.openingEndpoint-1)/99)]);
  function check(x){coordinate(x);if(x>domain[1])throw new RangeError('x exceeds the canonical clock domain');}
@@ -806,26 +813,30 @@ function createLeaf(options={}){
  }
  function apply(y,lim){if(lim.floorValue!==null&&lim.ceilingValue!==null&&lim.ceilingValue<=lim.floorValue)return lim.floorValue;const lo=lim.floorValue===null?y:floorMap(y,lim.floorValue,lim.boundaryWidth);return lim.ceilingValue===null?lo:ceilMap(lo,lim.ceilingValue,lim.boundaryWidth);}
  function result(x,score,guideScore){
- const gate=smooth5((x-c.openingEndpoint)/c.ramp),rawDeviation=c.strength*gate*2.2*Math.tanh(c.contrast*score),unconstrainedGuideDeviation=c.strength*gate*.25*Math.tanh(2*guideScore),w=smooth5(c.stabilizer),u=w===0?rawDeviation:w===1?unconstrainedGuideDeviation:rawDeviation+(unconstrainedGuideDeviation-rawDeviation)*w,base=authored(clock(x)),unconstrainedValue=base+base*u,unconstrainedGuideValue=base+base*unconstrainedGuideDeviation,lim=limits(base,unconstrainedGuideValue,gate),value=apply(unconstrainedValue,lim),guideValue=apply(unconstrainedGuideValue,lim),deviation=c.floor==='none'&&c.ceilingMargin===null?u:(value-base)/base,guideDeviation=c.floor==='none'&&c.ceilingMargin===null?unconstrainedGuideDeviation:(guideValue-base)/base,positiveMultiplier=Math.exp(.55*Math.tanh(deviation));
+ const gate=smooth5((x-c.openingEndpoint)/c.ramp),rawDeviation=c.strength*gate*2.2*Math.tanh(c.contrast*score),unconstrainedGuideDeviation=c.strength*gate*.25*Math.tanh(2*guideScore),w=stabilizationWeight,u=w===0?rawDeviation:w===1?unconstrainedGuideDeviation:rawDeviation+(unconstrainedGuideDeviation-rawDeviation)*w,base=authored(clock(x)),unconstrainedValue=base+base*u,unconstrainedGuideValue=base+base*unconstrainedGuideDeviation,lim=limits(base,unconstrainedGuideValue,gate),value=apply(unconstrainedValue,lim),guideValue=apply(unconstrainedGuideValue,lim),deviation=c.floor==='none'&&c.ceilingMargin===null?u:(value-base)/base,guideDeviation=c.floor==='none'&&c.ceilingMargin===null?unconstrainedGuideDeviation:(guideValue-base)/base,positiveMultiplier=Math.exp(.55*Math.tanh(deviation));
  return Object.freeze({x,value,base,score,guideScore,rawDeviation,guideDeviation,guideValue,stabilizationWeight:w,deviation,multiplier:1+deviation,activity:.5+.5*Math.tanh(deviation),positiveMultiplier,positiveValue:base*positiveMultiplier,gate,unconstrainedValue,unconstrainedDeviation:u,unconstrainedGuideValue,unconstrainedGuideDeviation,...lim,constraintApplied:value!==unconstrainedValue});
  }
  function sample(x){check(x);let score=0,guideScore=0;if(x>c.openingEndpoint){const u=clock(x)-100;for(const r of ridges){score+=noise(r.phase+u*r.slope,r.channel)/FEATURES;guideScore+=noise(r.guidePhase+u*r.guideSlope,r.channel)/FEATURES;}}return result(x,score,guideScore);}
- function at(x,h){check(x);const latent=vector(h);let score=0,guideScore=0;if(x>c.openingEndpoint){const u=clock(x)-100;for(const r of ridges){const projection=dot(r.direction,latent);score+=noise(r.basePhase+projection+u/r.scale,r.channel)/FEATURES;guideScore+=noise(r.basePhase+projection/32+u/(32*r.scale),r.channel)/FEATURES;}}return result(x,score,guideScore);}
+ function atValidated(x,latent){check(x);let score=0,guideScore=0;if(x>c.openingEndpoint){const u=clock(x)-100;for(const r of ridges){const projection=dot(r.direction,latent);score+=noise(r.basePhase+projection+u/r.scale,r.channel)/FEATURES;guideScore+=noise(r.basePhase+projection/32+u/(32*r.scale),r.channel)/FEATURES;}}return result(x,score,guideScore);}
+ function at(x,h){return atValidated(x,vector(h));}
  function location(x){check(x);const t=Math.max(0,clock(x)-100)/100;return Object.freeze(c.latent.map((h,i)=>h+t*c.velocity[i]));}
  function inspect(x){check(x);if(x<=c.openingEndpoint)return Object.freeze([]);const u=clock(x)-100;return Object.freeze(ridges.map(r=>{const p=r.phase+u*r.slope;return Object.freeze({index:r.index,scale:r.scale,coordinate:p,cell:Math.floor(p),contribution:noise(p,r.channel)/FEATURES,guideContribution:noise(r.guidePhase+u*r.guideSlope,r.channel)/FEATURES});}).sort((a,b)=>Math.abs(b.contribution)-Math.abs(a.contribution)));}
- const envelope=(2.2*(1-smooth5(c.stabilizer))+.25*smooth5(c.stabilizer))*c.strength;
+ const envelope=(2.2*(1-stabilizationWeight)+.25*stabilizationWeight)*c.strength;
  const lower=c.floor==='none'?-envelope:c.floor==='zero'?-1:c.floor==='baseline'?0:-.25*c.strength;
  const upper=c.ceilingMargin===null?envelope:(c.floor==='baseline'?0:.25*c.strength)+c.ceilingMargin;
- const bounds=Object.freeze({score:Object.freeze([-1,1]),deviation:Object.freeze([lower,upper]),multiplier:Object.freeze([1+lower,1+upper]),activity:Object.freeze([0,1]),positiveMultiplier:Object.freeze([Math.exp(-.55),Math.exp(.55)])});
- return Object.freeze({algorithm:ALGORITHM,config,bounds,domain,dips,sample,at,location,inspect,ridges:()=>Object.freeze(ridges.slice())});
+ const unconstrainedSpatialSlope=c.strength*((1-stabilizationWeight)*33*c.contrast/4+stabilizationWeight*15/256);
+ const bounds=Object.freeze({unconstrainedSpatialSlope,score:Object.freeze([-1,1]),deviation:Object.freeze([lower,upper]),multiplier:Object.freeze([1+lower,1+upper]),activity:Object.freeze([0,1]),positiveMultiplier:Object.freeze([Math.exp(-.55),Math.exp(.55)])});
+ const leaf=Object.freeze({algorithm:ALGORITHM,config,bounds,domain,dips,sample,at,location,inspect,ridges:()=>Object.freeze(ridges.slice())});leafAt.set(leaf,atValidated);return leaf;
 }
 
 function forkSeed(parentSeed,operation,at){
  const bits=new DataView(new ArrayBuffer(8));bits.setFloat64(0,at,false);
  return hash32(hash32(seed32(parentSeed),typeof parentSeed==='string'?1:2,seed32(operation)),bits.getUint32(0,false),bits.getUint32(4,false));
 }
+const MIX_FIELDS=Object.freeze(['x','value','base','score','guideScore','rawDeviation','guideValue','stabilizationWeight','gate','unconstrainedValue','unconstrainedGuideValue','boundaryWidth']);
 function mixSamples(a,b,w){
- const r={};for(const key of Object.keys(a)){const av=a[key],bv=b[key];r[key]=typeof av==='number'&&typeof bv==='number'?av+(bv-av)*w:av;}
+ const r={...a};for(const key of MIX_FIELDS)r[key]=a[key]+(b[key]-a[key])*w;
+ for(const key of ['floorValue','ceilingValue'])if(a[key]!==null)r[key]=a[key]+(b[key]-a[key])*w;
  // Blend actual constrained values and their references, then derive every adapter afresh.
  if(r.floorValue!==null)r.value=Math.max(r.value,r.floorValue);
  if(r.ceilingValue!==null)r.value=Math.min(r.value,r.ceilingValue);
@@ -835,11 +846,11 @@ function mixSamples(a,b,w){
  r.unconstrainedGuideDeviation=(r.unconstrainedGuideValue-r.base)/r.base;r.constraintApplied=r.value!==r.unconstrainedValue;
  return Object.freeze(r);
 }
-function timeline(leaf,rootConfig=leaf.config,lineage=Object.freeze([]),parent=null,node=null){
+function timeline(leaf,rootConfig=leaf.config,lineage=Object.freeze([]),parent=null,node=null,parentEvaluate=null){
  function evaluate(x,h){
-  if(!node||x>=node.at+node.handoffWidth)return h===undefined?leaf.sample(x):leaf.at(x,h);
-  if(x<=node.at)return h===undefined?parent.sample(x):parent.at(x,h);
-  const w=smooth5((x-node.at)/node.handoffWidth),a=h===undefined?parent.sample(x):parent.at(x,h),b=h===undefined?leaf.sample(x):leaf.at(x,h);
+  if(!node||x>=node.at+node.handoffWidth)return h===undefined?leaf.sample(x):leafAt.get(leaf)(x,h);
+  if(x<=node.at)return parentEvaluate(x,h);
+  const w=smooth5((x-node.at)/node.handoffWidth),a=parentEvaluate(x,h),b=h===undefined?leaf.sample(x):leafAt.get(leaf)(x,h);
   return mixSamples(a,b,w);
  }
  function inspect(x){
@@ -851,23 +862,23 @@ function timeline(leaf,rootConfig=leaf.config,lineage=Object.freeze([]),parent=n
  function snapshot(){return Object.freeze({algorithm:ALGORITHM,config:rootConfig,lineage:Object.freeze(lineage.map(({at,operation,handoffWidth})=>Object.freeze({at,operation,handoffWidth})))});}
  function fork(options){
   if(!options||typeof options!=='object'||Array.isArray(options)||Object.keys(options).some(k=>!['at','operation','handoffWidth'].includes(k)))throw new TypeError('Fork options: at, operation, handoffWidth');
-  const {at,operation}=options;leaf.sample(at);
+  const {at,operation}=options;coordinate(at);if(at>leaf.domain[1])throw new RangeError('x exceeds the canonical clock domain');
   if(typeof operation!=='string'||operation.length===0)throw new TypeError('A nonempty operation string is required');seed32(operation);
   if(lineage.length>=32)throw new RangeError('Maximum branch depth: 32');
   if(node&&at<node.at)throw new RangeError('Nested forks cannot precede their parent fork');
   const handoffWidth=options.handoffWidth??Math.min(16,leaf.domain[1]-at);
   if(typeof handoffWidth!=='number'||!Number.isFinite(handoffWidth)||handoffWidth<=0||at+handoffWidth<=at||at+handoffWidth>leaf.domain[1])throw new RangeError('Handoff must have positive representable width inside the domain');
   const seed=forkSeed(leaf.config.seed,operation,at),entry=Object.freeze({at,operation,handoffWidth,seed}),future=createLeaf({...leaf.config,seed});
-  return timeline(future,rootConfig,Object.freeze([...lineage,entry]),api,entry);
+  return timeline(future,rootConfig,Object.freeze([...lineage,entry]),api,entry,evaluate);
  }
- const api=Object.freeze({...leaf,lineage,sample:x=>evaluate(x),at:(x,h)=>{vector(h);return evaluate(x,h);},inspect,fork,snapshot});return api;
+ const api=Object.freeze({...leaf,lineage,sample:x=>evaluate(x),at:(x,h)=>evaluate(x,vector(h)),inspect,fork,snapshot});return api;
 }
 function create(options={}){return timeline(createLeaf(options));}
 function restore(snapshot){
- if(!snapshot||typeof snapshot!=='object'||!snapshot.config||typeof snapshot.config!=='object'||Array.isArray(snapshot.config))throw new TypeError('Snapshot with configuration required');
+ if(!snapshot||typeof snapshot!=='object'||Array.isArray(snapshot)||!Object.hasOwn(snapshot,'algorithm')||!Object.hasOwn(snapshot,'config')||!snapshot.config||typeof snapshot.config!=='object'||Array.isArray(snapshot.config))throw new TypeError('Snapshot with configuration required');
+ if(Reflect.ownKeys(snapshot).some(k=>typeof k!=='string'||!['algorithm','config','lineage'].includes(k)))throw new TypeError('Unknown snapshot field');
  if(snapshot.algorithm===ALGORITHM){
-  if(Object.keys(snapshot).some(k=>!['algorithm','config','lineage'].includes(k)))throw new TypeError('Unknown snapshot field');
-  const lineage=snapshot.lineage??[];if(!Array.isArray(lineage)||lineage.length>32)throw new RangeError('Invalid branch lineage');
+  const lineage=(Object.hasOwn(snapshot,'lineage')?snapshot.lineage:[])??[];if(!Array.isArray(lineage)||lineage.length>32)throw new RangeError('Invalid branch lineage');
   let result=create(snapshot.config);for(const entry of lineage)result=result.fork(entry);return result;
  }
  if(['vixen-hyperfield-c2/1','vixen-hyperfield-c2/2','vixen-hyperfield-c2/3'].includes(snapshot.algorithm)){

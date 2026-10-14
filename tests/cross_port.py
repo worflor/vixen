@@ -15,10 +15,10 @@ for i in range(2400):
  if i%7==0 and lineage:x=lineage[-1]['at']+lineage[-1]['handoffWidth']*.5
  h=[rng.uniform(-8,8) for _ in range(16)] if i%2 else None
  cases.append({'config':cfg,'x':x,'h':h,'lineage':lineage})
-program="import fs from 'node:fs';import {ALGORITHM,restore,seed32,hash32,navigationBasis} from './vixen.mjs';const cases=JSON.parse(fs.readFileSync(0,'utf8'));console.log(JSON.stringify(cases.map((c,i)=>{const f=restore({algorithm:ALGORITHM,config:c.config,lineage:c.lineage});return {sample:c.h?f.at(c.x,c.h):f.sample(c.x),seed:f.config.seed,hash:hash32(seed32(c.config.seed),i,7),plane:navigationBasis(i%20)}})));"
+program="import fs from 'node:fs';import {ALGORITHM,restore,seed32,hash32,navigationBasis} from './vixen.mjs';const cases=JSON.parse(fs.readFileSync(0,'utf8'));console.log(JSON.stringify(cases.map((c,i)=>{const f=restore({algorithm:ALGORITHM,config:c.config,lineage:c.lineage});return {sample:c.h?f.at(c.x,c.h):f.sample(c.x),seed:f.config.seed,hash:hash32(seed32(c.config.seed),i,7),plane:navigationBasis(i%20),sensitivity:f.bounds.unconstrainedSpatialSlope}})));"
 r=subprocess.run(['node','--input-type=module','-e',program],input=json.dumps(cases),text=True,encoding='utf-8',capture_output=True,cwd=ROOT,check=True);rows=json.loads(r.stdout);assert len(rows)==len(cases)==2400;max_error=0
 for i,(case,js) in enumerate(zip(cases,rows)):
- f=restore({'algorithm':ALGORITHM,'config':case['config'],'lineage':case['lineage']});p=f.at(case['x'],case['h']) if case['h'] else f.sample(case['x']);assert js['hash']==hash32(seed32(case['config']['seed']),i,7);assert js['seed']==f.config['seed']
+ f=restore({'algorithm':ALGORITHM,'config':case['config'],'lineage':case['lineage']});p=f.at(case['x'],case['h']) if case['h'] else f.sample(case['x']);assert js['hash']==hash32(seed32(case['config']['seed']),i,7);assert js['seed']==f.config['seed'];assert js['sensitivity']==f.bounds['unconstrainedSpatialSlope']
  if p['floorValue'] is not None:assert p['value']>=p['floorValue']
  if p['ceilingValue'] is not None:assert p['value']<=p['ceilingValue']
  assert f.bounds['deviation'][0]-1e-12<=p['deviation']<=f.bounds['deviation'][1]+1e-12
@@ -28,5 +28,5 @@ for i,(case,js) in enumerate(zip(cases,rows)):
  plane=navigation_basis(i%20)
  for key in ['u','v']:
   for a,b in zip(plane[key],js['plane'][key]):assert abs(a-b)<1e-12
-metrics={'algorithm':ALGORITHM,'cases':len(cases),'fork_cases':sum(bool(c['lineage']) for c in cases),'nested_fork_cases':sum(len(c['lineage'])==2 for c in cases),'max_scaled_error':max_error,'acceptance_tolerance':1e-10,'hash_parity':'exact','branch_seed_parity':'exact','navigation_basis_parity_tolerance':1e-12,'seed_types':len(seeds)}
+metrics={'algorithm':ALGORITHM,'cases':len(cases),'fork_cases':sum(bool(c['lineage']) for c in cases),'nested_fork_cases':sum(len(c['lineage'])==2 for c in cases),'max_scaled_error':max_error,'acceptance_tolerance':1e-10,'sensitivity_parity':'exact','hash_parity':'exact','branch_seed_parity':'exact','navigation_basis_parity_tolerance':1e-12,'seed_types':len(seeds)}
 (ROOT/'research'/'hyper-parity.json').write_text(json.dumps(metrics,indent=2),encoding='utf-8');print(json.dumps(metrics,indent=2))

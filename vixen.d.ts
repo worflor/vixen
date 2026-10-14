@@ -80,6 +80,7 @@ export interface Contribution {
   readonly guideContribution: number;
 }
 export interface Bounds {
+  readonly unconstrainedSpatialSlope: number;
   readonly score: readonly [number, number];
   readonly deviation: readonly [number, number];
   readonly multiplier: readonly [number, number];

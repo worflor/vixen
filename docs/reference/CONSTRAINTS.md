@@ -24,7 +24,7 @@ Scryer derived the coefficients by exact augmented-matrix nullspace, proved uniq
 
 Let `a=strength*entranceGate*boundarySoftness`. For a single boundary, e=B*a. With both boundaries and positive normalized gap d=(C-L)/B, use `e=B*a*d/(d+2a)`. This smooth rational expression gives `0<2e<C-L`, rather than a kink-producing minimum between widths. The lower and upper transition strips cannot overlap. Zero gap returns the reference; zero a uses hard boundaries.
 
-Width vanishes with the entrance gate and strength. The exact authored first hundred remains unchanged, and zero strength remains authored growth for every policy. Where a transition reaches the opening, the correction has the entrance gate's cubic vanishing factor, preserving its first two derivatives in the exact construction.
+Width vanishes with the entrance gate and strength. The configured authored opening remains unchanged, and zero strength remains authored growth for every policy. Where a transition reaches the opening, the correction has the entrance gate's cubic vanishing factor, preserving its first two derivatives in the exact construction.
 
 ## Honest semantics
 
@@ -38,4 +38,4 @@ Width vanishes with the entrance gate and strength. The exact authored first hun
 
 ## Replay
 
-The algorithm identifier is `vixen-hyperfield-c2/3`. With floor none and ceiling null, prior output values are unchanged. Valid v1/v2 snapshots explicitly restore with constraints disabled; a retagged snapshot containing newer fields is rejected. Save the identifier and complete configuration. Floating arithmetic uses the established scaled tolerance, not cross-libm bitwise lockstep.
+Save the complete timeline snapshot. Unsupported identifiers and fields inconsistent with their declared replay schema are rejected. Floating arithmetic uses the declared scaled tolerance; exact bitwise portability across numeric backends is not guaranteed.

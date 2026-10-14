@@ -1,0 +1,81 @@
+{
+  "baseline": {
+    "runtime": "v24.12.0",
+    "results": {
+      "leaf.sample": {
+        "samples": 20000,
+        "repeats": 7,
+        "median_ms": 32.4654,
+        "min_ms": 31.787199999999984,
+        "max_ms": 36.47789999999999
+      },
+      "leaf.at": {
+        "samples": 20000,
+        "repeats": 7,
+        "median_ms": 254.52319999999997,
+        "min_ms": 251.6733999999999,
+        "max_ms": 350.9946000000002
+      },
+      "branch.sample": {
+        "samples": 20000,
+        "repeats": 7,
+        "median_ms": 132.95119999999997,
+        "min_ms": 131.26520000000028,
+        "max_ms": 140.32110000000011
+      },
+      "branch.at": {
+        "samples": 20000,
+        "repeats": 7,
+        "median_ms": 569.3288000000002,
+        "min_ms": 564.4116999999997,
+        "max_ms": 580.8679000000002
+      }
+    },
+    "checksum": 242982.3563602427
+  },
+  "current": {
+    "runtime": "v24.12.0",
+    "results": {
+      "leaf.sample": {
+        "samples": 20000,
+        "repeats": 7,
+        "median_ms": 32.1276,
+        "min_ms": 31.675399999999996,
+        "max_ms": 36.751099999999994
+      },
+      "leaf.at": {
+        "samples": 20000,
+        "repeats": 7,
+        "median_ms": 246.76369999999997,
+        "min_ms": 244.05230000000006,
+        "max_ms": 257.55359999999996
+      },
+      "branch.sample": {
+        "samples": 20000,
+        "repeats": 7,
+        "median_ms": 92.01519999999982,
+        "min_ms": 90.3610000000001,
+        "max_ms": 92.98780000000033
+      },
+      "branch.at": {
+        "samples": 20000,
+        "repeats": 7,
+        "median_ms": 533.0748000000003,
+        "min_ms": 529.0171,
+        "max_ms": 534.6420000000007
+      }
+    },
+    "checksum": 242982.3563602427
+  },
+  "median_change_percent": {
+    "leaf.sample": 1.040492339536865,
+    "leaf.at": 3.048641538374499,
+    "branch.sample": 30.79024484171648,
+    "branch.at": 6.367849299034212
+  },
+  "scope": "Same local host, seven repetitions per workload, separate baseline/current process; not universal throughput or isolated CPU contention",
+  "baseline_commit": "c681802a0495a27763f35ca4194a82c821a93830",
+  "measured_source_sha256": "a8867b11981360bdbecad8009023aa2de9e51820525fba8fba0ca73eacb08376",
+  "measured_source": "history/benchmark-kernel.mjs",
+  "delivery_difference": "Comment header only; executable sampling unchanged"
+}

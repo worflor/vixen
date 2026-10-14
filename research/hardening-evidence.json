@@ -1,0 +1,41 @@
+{
+  "scope": "Component derivations and replay; not a whole-sampler certificate",
+  "engine_version": "1.0.28",
+  "findings": [
+    {
+      "subject": "forall t. (t>=0 and t<=1) implies (30*t^2-60*t^3+30*t^4>=0 and 30*t^2-60*t^3+30*t^4<=15/8 and (60*t-180*t^2+120*t^3)^2<=100/3)",
+      "value": true,
+      "invocation": "fd4b03ad-c619-40f5-8e8d-bb528fe74e36"
+    },
+    {
+      "subject": "forall z. z>0 implies ((1+z)^2>0 and 4*z<=(1+z)^2)",
+      "value": true,
+      "invocation": "7b35543f-3ed4-465a-a1de-23811492bed5"
+    },
+    {
+      "subject": "15/8 * 2 * 11/5",
+      "value": "33/4",
+      "invocation": "5653021b-95e5-4d2f-b74f-ba97dc9b23a8"
+    }
+  ],
+  "contact_proof": {
+    "file": "proofs/gate-contact.json",
+    "ask_invocation": "6409fe68-5f99-4bfe-a20d-efc5908612ae",
+    "verify_invocation": "abd950e4-6dc7-4667-95e9-0d9b9db2825f",
+    "root": "9990aa33a8d57d32c29b56d711944ba3c0d0df78fa33c1d7efc8018601d0fd1b",
+    "result": "valid",
+    "node_receipt": "verified",
+    "contact_order": 3
+  },
+  "refusals": [
+    {
+      "invocation": "9f918f6f-e688-4e1f-b4bf-ee128cc7d17d",
+      "reason": "Atlas requires explicit tagged rational transport, not bare coefficient strings"
+    },
+    {
+      "invocation": "5297745c-a9ef-4758-8a71-6515b52a04e4",
+      "reason": "Order is exact contact order; degree-two truncation was not the declared contact order"
+    }
+  ],
+  "composition": "Normalized ridge directions, triangle inequality and nonexpansive tanh compose the unrestricted spatial bound. Boundary maps with moving anchors are excluded."
+}
