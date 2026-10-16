@@ -5,7 +5,7 @@ ROOT=Path(__file__).resolve().parents[1]
 source=(ROOT/'vixen.mjs').read_text(encoding='utf-8')
 mutants=[
  ('gate','10+t*(-15+6*t)','9+t*(-15+6*t)'),
- ('history','if(x<=node.at)return parentEvaluate(x,h);','if(x<=node.at)return leaf.sample(x);'),
+ ('history','if(!last||x>=last.entry.at+last.entry.handoffWidth)return {base:leaf,active:[]};','if(true)return {base:leaf,active:[]};'),
  ('adapter','r.activity=.5+.5*Math.tanh(r.deviation)','r.activity=.4+.5*Math.tanh(r.deviation)'),
  ('zero-floor',"c.floor==='zero'?0", "c.floor==='zero'?-1"),
  ('snapshot-envelope',"if(Reflect.ownKeys(snapshot).some(k=>typeof k!=='string'||!['algorithm','config','lineage'].includes(k)))throw new TypeError('Unknown snapshot field');",'')]

@@ -1,0 +1,95 @@
+{
+  "scope": "exact-real construction components only; not whole-runtime certification",
+  "engine": "1.0.28",
+  "tool": "wolf.scryer.check",
+  "records": [
+    {
+      "invocation": "a35fa4cd-018e-4c83-9d56-5d7f09c258e6",
+      "checks": [
+        {
+          "claim": "d/dx (6*x^5-15*x^4+10*x^3) :: derivative = 30*x^2*(1-x)^2",
+          "verdict": "CONFIRMED"
+        },
+        {
+          "claim": "d/dx (24*x^8-432/7*x^7+176/3*x^6-24*x^5+10/3*x^4) :: derivative = (80*x^3-240*x^4+192*x^5)*(x^2-x+1/6)",
+          "verdict": "CONFIRMED"
+        },
+        {
+          "claim": "2*(24*(1/2)^8-432/7*(1/2)^7+176/3*(1/2)^6-24*(1/2)^5+10/3*(1/2)^4) :: value = -3/112",
+          "verdict": "CONFIRMED",
+          "derived": "-3/112"
+        },
+        {
+          "claim": "1/6-(-3/112)/(1/2) :: value = 37/168",
+          "verdict": "CONFIRMED",
+          "derived": "37/168"
+        }
+      ]
+    },
+    {
+      "invocation": "766da10a-c3e8-43a9-aef4-a5f12a183c8f",
+      "checks": [
+        {
+          "claim": "forall p. forall a. forall b. forall w. forall z. (p+w*a)+z*b=p+(w*a+z*b) :: true or false = true",
+          "verdict": "CONFIRMED",
+          "derived": "true"
+        },
+        {
+          "claim": "forall p. forall q. forall r. forall a. forall b. forall c. forall d. forall e. forall f. forall x. (p+q*x+r*x^2/2)+(a+b*x+c*x^2/2)*(d+e*x+f*x^2/2)=p+a*d+(q+b*d+a*e)*x+(r+c*d+2*b*e+a*f)*x^2/2+(b*f+c*e)*x^3/2+c*f*x^4/4 :: true or false = true",
+          "verdict": "CONFIRMED",
+          "derived": "true"
+        },
+        {
+          "claim": "forall m. forall u. forall v. m != 0 implies v-u+(u-v)/m*m=0 :: true or false = true",
+          "verdict": "REFUSED",
+          "reason": "a globally defined polynomial cannot discard the expression's domain restrictions"
+        }
+      ]
+    },
+    {
+      "invocation": "835c8cd3-ac29-46e0-ae4a-a1f7f1ca12f0",
+      "checks": [
+        {
+          "claim": "forall m. forall u. forall v. forall c. c*m=u-v implies v-u+c*m=0 :: true or false = true",
+          "verdict": "REFUSED",
+          "reason": "four-variable implication requires unsupported full cylindrical algebraic decomposition"
+        },
+        {
+          "claim": "forall x. (x>=0 and x<=1) implies 1-x/2>=1/2 :: true or false = true",
+          "verdict": "REFUSED",
+          "reason": "unsupported character / in this parsing path"
+        }
+      ]
+    },
+    {
+      "invocation": "7c17b75f-abad-44a0-b8ca-d4e4a4a66226",
+      "checks": [
+        {
+          "claim": "forall u. forall v. v-u+(u-v)=0 :: true or false = true",
+          "verdict": "UNKNOWN",
+          "reason": "automatic routing selected the integer/automaton family, whose reading names differ"
+        },
+        {
+          "claim": "forall x. (x>=0 and x<=1) implies 2-x>=1 :: true or false = true",
+          "verdict": "UNKNOWN",
+          "reason": "automatic routing selected the integer/automaton family, whose reading names differ"
+        }
+      ]
+    },
+    {
+      "invocation": "02df5c9b-26dd-4b94-8d62-e93c93db945a",
+      "checks": [
+        {
+          "claim": "--reals forall u. forall v. v-u+(u-v)=0 :: true or false = true",
+          "verdict": "CONFIRMED",
+          "derived": "true"
+        },
+        {
+          "claim": "--reals forall x. (x>=0 and x<=1) implies 2-x>=1 :: true or false = true",
+          "verdict": "CONFIRMED",
+          "derived": "true"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+import {restore} from '../vixen.mjs';
+import assert from 'node:assert/strict';
+import {createExtended} from '../vixen-extended.mjs';
+import {extendedPolynomialGuide,withExtendedInfluence,withExtendedImpulse,withExtendedRedistribution} from '../vixen-extended-operations.mjs';
+
+const domain=[1,2**40];
+const guide=extendedPolynomialGuide([1],{domain});
+const root=createExtended({seed:'ops-test',floor:'none'});
+const full=withExtendedInfluence(root,guide,{at:1,amount:1,handoffWidth:1,reference:'value'});
+assert.throws(()=>full.sample(1e9),/Raw base/);
+assert.equal(full.sampleNormalized(1e9).value,1);
+assert.throws(()=>full.atNormalized(1e9,Array(15).fill(0)),RangeError);
+const constrained=withExtendedInfluence(createExtended({seed:'ops-floor',floor:'baseline'}),guide,{at:1,amount:1,handoffWidth:1,reference:'value'});
+const constrainedRecord=constrained.sampleNormalized(1e9);assert.deepEqual(constrainedRecord.scaledValue,constrainedRecord.scaledBase);
+const windowed=withExtendedInfluence(root,guide,{at:2,amount:.7,handoffWidth:1,until:8,releaseWidth:2});
+assert.deepEqual(windowed.sampleNormalized(10),root.sampleNormalized(10));
+const farImpulse=withExtendedImpulse(root,{at:1e9,magnitude:.2,attack:2,relaxation:8});
+const farRedistribution=withExtendedRedistribution(root,{from:1e9+20,until:1e9+40,coefficients:[1],measure:'unconstrainedDeviation'});
+assert.equal(farImpulse.snapshot().operation,'impulse');
+assert.equal(farRedistribution.snapshot().operation,'redistribution');
+assert.equal(farImpulse.sampleNormalized(1e9+30).x,1e9+30);
+assert.equal(farRedistribution.sampleNormalized(1e9+30).x,1e9+30);
+assert.equal(farImpulse.fork({at:1e9+12,operation:'far-fork'}).sampleNormalized(1e9+15).x,1e9+15);
+assert.ok(farRedistribution.tail(1e9+50));
+let deep=root;
+for(let i=0;i<6000;i++)deep=withExtendedImpulse(deep,{at:1,magnitude:0,attack:1,relaxation:1});
+assert.equal(deep.sampleNormalized(100).x,100);
+const graph=deep.snapshot();
+assert.equal(graph.algorithm,'vixen-graph/1');
+assert.equal(graph.nodes.length,6001);
+
+const replay=restore(JSON.parse(JSON.stringify(full.snapshot())));assert.deepEqual(replay.sampleNormalized(1e9),full.sampleNormalized(1e9));
+const forked=full.fork({at:1e8,operation:'keep-guide'});assert.equal(forked.sampleNormalized(1e9).value,1);assert.deepEqual(restore(forked.tail(1e9)).sampleNormalized(1e9+10),forked.sampleNormalized(1e9+10));

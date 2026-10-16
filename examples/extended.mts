@@ -1,0 +1,13 @@
+import {createExtended,extendedPolynomialGuide,withExtendedInfluence,withExtendedImpulse,withExtendedRedistribution,coupleExtended,restore,type ExtendedSource} from '@worflor/vixen';
+const a=createExtended({seed:'typed-a'}),b=createExtended({seed:'typed-b'});
+const guide=extendedPolynomialGuide([.1,-.02,.004],{center:1e9,scale:100});
+const guided=withExtendedInfluence(a,guide,{at:1e9,handoffWidth:20,reference:'baseline',until:1e9+300,releaseWidth:50});
+const impulse=withExtendedImpulse(guided,{at:1e9+5,magnitude:.4,attack:20,relaxation:200});
+const redistributed=withExtendedRedistribution(b,{from:1e9,until:1e9+400,coefficients:[1,-2,.5]});
+const inputs:readonly ExtendedSource[]=[impulse,redistributed];
+const group=coupleExtended(inputs,.5,[1e9+20,1e9+280]);
+const snapshot=group.curves[0].snapshot(), restored=restore(snapshot);
+if(!('sampleNormalized' in restored))throw new Error('Extended replay lost normalized sampling');
+const result=restored.sampleNormalized(1e9+150);
+if(Array.isArray(result))throw new Error('A projection must replay as one signal');
+console.log('Extended typed replay at far coordinate passed');

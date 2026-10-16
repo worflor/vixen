@@ -1,3 +1,4 @@
+import {jet} from './vixen-calculus.mjs';
 export const GUIDE_FORMAT='vixen-guide/1';
 function guideNumber(v,lo=-1e250,hi=1e250){if(typeof v!=='number'||!Number.isFinite(v)||v<lo||v>hi)throw new RangeError('Guide number outside finite bounds');return v;}
 function guideRecord(v,keys){if(!v||typeof v!=='object'||Array.isArray(v)||Reflect.ownKeys(v).some(k=>!keys.includes(k)))throw new TypeError('Invalid guide record fields');}
@@ -9,3 +10,21 @@ export function sampledGuide(knots){if(!Array.isArray(knots)||knots.length<2||kn
 function compileQuintic(data){guideRecord(data,['format','kind','knots']);if(data.format!==GUIDE_FORMAT||['format','kind','knots'].some(k=>!Object.hasOwn(data,k)))throw new TypeError('Invalid quintic guide');const spec=sampledGuide(data.knots),k=spec.knots,domain=Object.freeze([k[0].x,k.at(-1).x]),segments=[];for(let i=0;i<k.length-1;i++){const a=k[i],b=k[i+1],h=b.x-a.x,A=a.y,B=h*a.d1,C=h*h*a.d2/2,U=b.y-(A+B+C),V=h*b.d1-(B+2*C),W=h*h*b.d2-2*C,c=[A,B,C,10*U-4*V+W/2,-15*U+7*V-W,6*U-3*V+W/2];for(const v of c)guideNumber(v,-1e280,1e280);guideNumber(c.reduce((sum,v)=>sum+Math.abs(v),0),0,1e250);segments.push(c);}return Object.freeze({spec,domain,evaluate:x=>{guideNumber(x,...domain);let lo=0,hi=k.length-1;while(lo<hi){const m=Math.ceil((lo+hi)/2);if(k[m].x<=x)lo=m;else hi=m-1;}if(x===k[lo].x)return k[lo].y;const t=(x-k[lo].x)/(k[lo+1].x-k[lo].x),c=segments[lo];let y=0;for(let j=5;j>=0;j--)y=y*t+c[j];return guideNumber(y);}});}
 export function captureGuide(fn,options={}){guideRecord(options,['domain','count','derivative','curvature']);if(typeof fn!=='function'||['derivative','curvature'].some(k=>options[k]!==undefined&&typeof options[k]!=='function'))throw new TypeError('Trusted numeric callbacks required');const domain=guideDomain(options.domain===undefined?[1,50000]:options.domain),n=options.count===undefined?129:options.count;if(!Number.isInteger(n)||n<2||n>2049)throw new RangeError('Capture count must be 2..2049');const knots=[];for(let i=0;i<n;i++){const x=i===n-1?domain[1]:domain[0]+(domain[1]-domain[0])*i/(n-1);if(i&&x<=knots[i-1].x)throw new RangeError('Capture grid is not representable');knots.push({x,y:guideNumber(fn(x)),d1:0,d2:0});}for(let i=0;i<n;i++){let d1,d2;if(n===2){d1=(knots[1].y-knots[0].y)/(knots[1].x-knots[0].x);d2=0;}else{const j=Math.max(0,Math.min(n-3,i-1)),a=knots[j],b=knots[j+1],c=knots[j+2],q0=(b.y-a.y)/(b.x-a.x),q1=(c.y-b.y)/(c.x-b.x),q2=(q1-q0)/(c.x-a.x);d1=q0+q2*((knots[i].x-a.x)+(knots[i].x-b.x));d2=2*q2;}knots[i].d1=guideNumber(options.derivative?options.derivative(knots[i].x):d1);knots[i].d2=guideNumber(options.curvature?options.curvature(knots[i].x):d2);}const spec=sampledGuide(knots);compileGuide(spec);return spec;}
 export function evaluateGuide(spec,x){return compileGuide(spec).evaluate(x);}
+
+export function guideJet(guide,x){
+ const compiled=guide?.spec&&typeof guide.evaluate==='function'?guide:compileGuide(guide),s=compiled.spec,value=compiled.evaluate(x);
+ let coefficients,scale,z;
+ if(s.kind==='polynomial'){
+  coefficients=s.coefficients;scale=s.scale;z=(x-s.center)/scale;
+ }else{
+  const knots=s.knots;let lo=0,hi=knots.length-1;
+  while(lo<hi){const mid=Math.ceil((lo+hi)/2);if(knots[mid].x<=x)lo=mid;else hi=mid-1;}
+  const a=knots[lo];if(x===a.x)return jet(value,a.d1,a.d2);
+  const b=knots[lo+1],h=b.x-a.x,A=a.y,B=h*a.d1,C=h*h*a.d2/2;
+  const U=b.y-(A+B+C),V=h*b.d1-(B+2*C),W=h*h*b.d2-2*C;
+  coefficients=[A,B,C,10*U-4*V+W/2,-15*U+7*V-W,6*U-3*V+W/2];scale=h;z=(x-a.x)/h;
+ }
+ let y=0,d1=0,d2=0;
+ for(let i=coefficients.length-1;i>=0;i--){d2=d2*z+2*d1;d1=d1*z+y;y=y*z+coefficients[i];}
+ return jet(value,d1/scale,d2/scale/scale);
+}

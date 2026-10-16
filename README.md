@@ -1,6 +1,6 @@
 # Vixen
 
-**A seeded landscape with teeth.** A deterministic, navigable family of smooth trajectories with history-preserving branches and authored function guides. JavaScript and Python; no runtime dependencies.
+**A seeded landscape with teeth.** A deterministic, navigable family of smooth trajectories with history-preserving branches and authored function guides. JavaScript, Python and Java; no runtime dependencies.
 
 ![Six seeds with fixed axes and three stabilization settings](docs/media/seed-gallery.gif)
 
@@ -62,7 +62,13 @@ value = replay.sample(300)['value']
 
 ESM/Node 20+ or modern browsers; Python 3.10+. No AI model, Scryer connection, server or viewer is required at runtime.
 
-**Vendoring:** keep `vixen.mjs`, `vixen-guide.mjs` and `vixen-influence.mjs` together, plus `vixen.d.ts` for TypeScript. Python needs `vixen.py`, `vixen_guide.py` and `vixen_influence.py`. The instrument's SDK exports bundle those modules into a single file for each language.
+**Vendoring:** keep the complete `vixen*.mjs` or `vixen*.py` module family together, plus `vixen.d.ts` for TypeScript. The instrument exports self-contained JavaScript and Python SDKs. Java 17+ applications can build a dependency-free JAR with `python tools/build_java.py`; see [Java integration](docs/reference/JAVA.md).
+
+## Numeric modes
+
+`create()` preserves the historical `/4` arithmetic. `createCoherent()` selects `/5`, which composes unrestricted values and boundary state before applying output policy. Use the coherent mode for new constrained compositions; the legacy algorithm is retained for replay compatibility rather than silently rewritten.
+
+`createExtended()` / `create_extended()` / `Vixen.createExtended()` selects `/6` and an explicit domain up to `2^40`. Normalized samples carry signed-log adapters and scaled 53-bit values with arbitrary integer exponents. Raw sampling refuses unrepresentable output instead of returning infinity. Extended guides, impulses, redistribution and shared coupling retain this representation through composition. See [extended-domain contracts](docs/reference/EXTENDED.md) and [scaled arithmetic](docs/reference/SCALED-NUMBERS.md).
 
 ## Choose a trajectory and output
 
@@ -122,6 +128,7 @@ See [technical design](docs/TDD.md) for distribution checks, self-contained expo
 
 - [Construction](docs/reference/CONSTRUCTION.md): field, progression and composition.
 - [API](docs/reference/API.md): accepted inputs, outputs and replay schemas.
+- [Extended signals](docs/reference/EXTENDED.md), [Java integration](docs/reference/JAVA.md), [analytic calculus](docs/reference/CALCULUS.md), [operations](docs/reference/OPERATIONS.md), [analysis](docs/reference/ANALYSIS.md).
 - [Function guides](docs/reference/GUIDES.md), [boundaries](docs/reference/CONSTRAINTS.md), [timelines](docs/reference/TIMELINES.md), [conditioning](docs/reference/CONDITIONING.md).
 - [Limitations and release policy](docs/STATUS.md).
 

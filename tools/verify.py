@@ -14,7 +14,7 @@ def run(args):
         raise SystemExit(p.returncode)
     return p.stdout
 
-files=['test-hyperfield.mjs','test-kernel.mjs','test-stabilizer.mjs','test-constraints.mjs','test-examples.mjs','test-opening-endpoint.mjs','test-fork.mjs','test-timeline-safety.mjs','test-fork-collisions.mjs','test-replay-boundary.mjs','test-sensitivity.mjs','test-influence.mjs']
+files=[p.name for p in sorted((ROOT/'tests').glob('test-*.mjs'))]
 xml=run(['node','--test','--test-reporter=junit']+['tests/'+f for f in files])
 tree=ET.fromstring(xml)
 assert not list(tree.iter('failure')) and not list(tree.iter('error'))

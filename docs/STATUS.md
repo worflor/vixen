@@ -1,6 +1,10 @@
 # Scope, limitations and release policy
 
-Vixen provides deterministic progression fields, matching JavaScript/Python runtimes, native stabilization, configurable openings, admissible output policies, immutable timeline branches, replayable function guides and an offline instrument. Runtime dependencies are empty. Applications in README are integration possibilities, not evidence of production adoption.
+Vixen provides deterministic progression fields, matching JavaScript/Python/Java runtimes, native stabilization, configurable openings, admissible output policies, immutable timeline branches, replayable function guides and an offline instrument. Runtime dependencies are empty. Applications in README are integration possibilities, not evidence of production adoption.
+
+## Numeric modes
+
+Historical `/4` replay preserves its original arithmetic, including legacy constrained-composition limitations. Coherent `/5` is the explicit construction for new constrained compositions. Extended `/6` supports normalized/scaled value composition through `2^40`; its range extension does not imply arbitrary-precision values or extended-domain analytic/enclosure support. [Extended contracts](reference/EXTENDED.md), [Java integration](reference/JAVA.md).
 
 ## Mathematical and numerical boundaries
 

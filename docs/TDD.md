@@ -1,59 +1,66 @@
 # Technical design
 
-## Runtime
+## Runtime and numeric modes
 
-`vixen.mjs` and `vixen.py` implement the same random-access object with no runtime dependencies. A configuration resolves typed seed, sixteen-dimensional position/travel, progression clock, amplitude/coherence controls, authored opening and output policy. Instances are immutable through the public API.
+JavaScript, Python and Java implement the same seeded, random-access field without runtime dependencies. The configuration resolves a typed seed, sixteen continuous coordinates, configured travel, authored opening, native modulation and output policy. Instances retain immutable source data.
 
-Leaf evaluation averages counter-addressed C2 ridge interpolation and a broader guide field. The opening clock drives baseline, projections and configured travel. Stabilization blends fine and broad deviation; boundaries act on the resulting scalar signal. Adapters derive from the actual constrained value and baseline.
+Historical `/4` arithmetic remains explicit for compatibility. Coherent `/5` composes unrestricted value, unrestricted guide and boundary state, then applies output policy once. Extended `/6` carries that state in signed 53-bit scaled arithmetic and supports an explicit progression domain through `2^40`. Representation range is not arbitrary significand precision. [Extended contracts](reference/EXTENDED.md).
 
-## Function guides
+## Timelines and compositions
 
-Optional guide/compiler and influence modules leave root numerical evaluation unchanged. Polynomial and finite Taylor guides represent supplied coefficients; captured callbacks become immutable shared-jet quintic data. Influences compose unrestricted values, then apply output policy and recompute dependent adapters. Guided snapshots store the underlying timeline plus data and controls; no callback is replayed. The instrument bundles these modules into self-contained JavaScript and Python exports. See [guide contracts](reference/GUIDES.md).
+Native fork history uses persistent indexed storage, not recursive parent calls. Present-time settled sampling selects the current leaf directly. Historical queries select the relevant suffix; overlapping handoffs retain the required active sources. A fork preserves the inherited prefix, coordinates, seed derivation and diagnostics.
 
-## Timelines
+Unary influences and operations use immutable DAG nodes with temporal identity intervals and jump metadata. Shared coupling evaluates each input node once per query. Evaluation, graph replay, fork rebuilding and checkpoint traversal are iterative. Projection forks refuse ambiguous branch semantics; input lineages must branch before coupling.
 
-A fork retains its parent object and creates an operation-derived future leaf. History delegates directly to the parent. Within the handoff, the quintic gate blends actual values, references and diagnostics. Only source fields are blended; dependent adapters are recomputed. Coordinate vectors are normalized at the public boundary and passed through private evaluation without repeated allocation.
+Complete snapshots preserve root configuration, lineage, numeric guides, operation recipes and sharing. Deep or shared compositions use flat `vixen-graph/1` records with backward references. Future-only checkpoints fold settled native history with a witness and retain active effects. Expired finite effects are removed without changing the retained future. Latest-leaf configuration alone is not replay data.
 
-A complete snapshot describes its replay schema and composition: core configuration and fork lineage, or a guided envelope containing the underlying snapshot, numeric guide data and attachment controls. Leaf configuration alone cannot reconstruct history. Envelope fields are validated consistently before version dispatch. Depth and data ranges bound replay work. Supported historical schemas remain explicit; malformed or wrongly retagged snapshots fail closed.
+## Guides and analysis
 
-## Contracts
+Polynomial and finite Taylor guides represent authored coefficients. Captured callbacks become numeric shared-jet quintic data, never executable replay source. Relative and additive influence distinguish value, baseline and backbone references. Output adapters derive from the constrained signal.
 
-- Defaults retain the pinned authored opening and numerical behavior.
-- Samplers are independent of evaluation order; no mutable RNG stream.
-- Prefix history, coordinates and all diagnostic fields remain exact within a backend.
-- Every adapter corresponds to the constrained signal.
-- Valid soft constructions have C2 joins in exact arithmetic; hard clipping can introduce corners.
-- Spatial sensitivity metadata concerns unrestricted deviation, not arbitrary moving-boundary compositions.
-- Hash and branch seed derivation are exact across ports. Floats use scale-aware tolerance, not cross-libm lockstep.
-- Domains include the translated clock's supported extent; no extrapolation beyond them.
+Finite curve jets propagate analytic first and second derivatives through native fields, guides, boundaries, forks and supported operations. Availability is order-specific. Hard contacts, overflow and unsupported analysis are not replaced with finite differences. Extended value composition does not itself establish extended analytic or interval capability.
+
+Crossing queries require an applicable enclosure oracle and expose unresolved/resource states. Occupancy calibration names its finite population, comparison convention and witness. Correlation validation uses exact binary64 inputs for the PSD decision; output constraints do not preserve an unrestricted correlation guarantee.
+
+## Invariants
+
+- Sampling order consumes no random stream.
+- Historical defaults and valid historical replay remain unchanged.
+- Prefix samples and coordinates remain exact within a backend.
+- Coherent compositions apply policy to unrestricted state, not already-mapped observations.
+- Soft C2 claims concern the declared real construction. Hard clipping may introduce corners; floating execution has separately tested error.
+- Integer hash and branch seed derivation are exact across ports. Floating agreement uses scale-aware tolerances.
+- An unrepresentable nonzero raw value is unavailable, never an invented zero or infinity.
+- Domain, chronology, numeric types and replay references are validated explicitly.
 
 ## Verification
 
 ```sh
+npm ci
 npm test
 npm run typecheck
-python -m unittest discover -s tests -p 'test_python*.py'
-python tests/cross_port.py
-node tests/fuzz.mjs
+npm run test:python
+npm run test:java
+npm run test:standalone
+npm run test:fuzz
 python tools/mutation_probe.py
 python tools/verify.py
-python tools/build_instrument.py
+npm run build:instrument
 node tests/browser.mjs
-npm pack
+node tests/browser-replay.mjs
+python tools/test_java_distribution.py
+npm pack --ignore-scripts
 uv build --wheel
 python tools/install_smoke.py
+python tools/test_installed_features.py
 ```
 
-Fuzzing is deterministic and records its seed and actual observation count. Mutation probes use disposable copies and distinguish assertion failures from syntax failures. Optimization is checked against a pinned implementation with exact sample/diagnostic equality before cross-port and browser acceptance. Benchmarks state workload, repetitions, runtime and variation.
+Frozen fixtures distinguish historical compatibility from newly recorded cross-port conformance. Exact rational, high-precision decimal and independent graph-model tests exercise components separately from application-level samples. Mutation probes use disposable copies and distinguish assertion failures from syntax failures. Depth and traversal-work tests cover active, mixed and retired histories, not only elapsed time.
 
-The instrument embeds the tested source. Its exports preserve complete lineage; display changes do not recreate the root. Root changes require explicit reset once branched. Standalone and served-compartment checks have distinct interaction scope.
-
-## Documentation media
-
-`uv run --with pillow python tools/build_animation.py` rebuilds the sampled README GIF. Its six seed cuts share fixed continuation axes; the opening is a labelled zoom. Pillow and system fonts are build tools, not runtime dependencies.
+The instrument embeds tested source and exports standalone SDKs. Browser acceptance covers both `file:` and loopback-served use. Installed-package and isolated-JAR probes execute outside source-tree import paths. Hosted CI is a separate delivery condition, not implied by local acceptance.
 
 ## Repository boundaries
 
-README is the front door. API and mathematical references describe current behavior. RDD states research questions and evidence rules. Raw observations and proofs live under `research`; historical implementations and observations remain separate from current docs. Runtime comments explain only non-obvious invariants.
+README is the front door; references describe current contracts. RDD states research and evidence rules. Proofs and observations live under `research`, historical implementations under `legacy`, and Java source under `java`. Build outputs and private operational records are not source dependencies.
 
-Repository visibility, registry publication and licensing are independent controls. MIT applies to the source; registry publication remains disabled. Public releases require owner approval. Host-specific paths, secrets, access grants, dependencies and disposable environments are not tracked.
+Visibility, registry publication and licensing are independent controls. Source is MIT-licensed; npm publication remains disabled. Public releases require owner approval. Mathematical component certificates do not certify the whole runtime.

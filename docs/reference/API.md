@@ -72,6 +72,12 @@ At full stabilization and maximum strength, the target lies conservatively betwe
 
 Samples also contain unconstrainedValue, unconstrainedDeviation, unconstrainedGuideValue, unconstrainedGuideDeviation, nullable floorValue/ceilingValue, boundaryWidth, and constraintApplied. The guideValue/guideDeviation pair describes the constrained guide. Existing game adapters derive from constrained deviation. `boundaryRamp(t)` / Python `boundary_ramp(t)` expose the validated finite-coordinate C2 join (zero below 0, quintic in [0,1], identity above 1).
 
+## Coherent and extended modes
+
+`createCoherent` selects `/5`; `createExtended` selects `/6` rather than changing the historical constructor. Python exposes matching snake-case factories. Java provides `Vixen.createCoherent` and `Vixen.createExtended`. See [extended signals](EXTENDED.md) and [Java integration](JAVA.md) for their representation and capability contracts.
+
 ## Replay schemas
 
 `vixen-hyperfield-c2/4` describes the core and fork lineage. `vixen-influence-c2/1` describes a guided composition containing its underlying snapshot, numeric guide data and attachment controls. Valid historical `/1`, `/2` and `/3` schemas remain supported; inconsistent fields and unrelated identifiers are rejected. Save the whole snapshot, not a manually retagged configuration. Constraints remain disabled by default.
+
+Coherent native snapshots use `vixen-hyperfield-c2/5` and `vixen-tail-c2/3`. Extended native snapshots use `vixen-hyperfield-c2/6` and `vixen-tail-c2/4`. Windowed, relative and additive influence use explicit influence versions through `/3`. Finite operations use `vixen-operation-c2/1`; scaled operations and coupling use `vixen-extended-operations/1` and `vixen-extended-coupling/1`. Deep/shared compositions use `vixen-graph/1` with validated backward references. The schema identifies semantics, not merely an interchangeable tag.

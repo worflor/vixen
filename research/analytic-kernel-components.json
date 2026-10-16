@@ -1,0 +1,35 @@
+{
+  "scope": "Analytic component identities and their real domains; not a program certificate.",
+  "engine": "1.0.28",
+  "invocations": [
+    {
+      "id": "ffe5d5c1-d7de-4ec6-a8c5-1951b0ee2d97",
+      "checks": [
+        {
+          "claim": "d/dx log(x) :: derivative = 1/x",
+          "verdict": "CONFIRMED",
+          "domain": "x > 0"
+        },
+        {
+          "claim": "d/dx (1/x) :: derivative = -1/x^2",
+          "verdict": "CONFIRMED",
+          "domain": "x != 0"
+        },
+        {
+          "claim": "(1+x)^2-(1-x)^2 :: expanded = 4*x",
+          "verdict": "UNKNOWN",
+          "note": "Unsupported reading; narrowed below."
+        }
+      ]
+    },
+    {
+      "id": "a7897cf3-4c26-4742-b77a-9037bbc5c315",
+      "checks": [
+        {
+          "claim": "--reals forall x. (1+x)^2-(1-x)^2=4*x :: true or false = true",
+          "verdict": "CONFIRMED"
+        }
+      ]
+    }
+  ]
+}

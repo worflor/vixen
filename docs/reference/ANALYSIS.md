@@ -1,0 +1,25 @@
+# Analysis helpers
+
+`vixen-analysis.mjs` and `vixen_analysis.py` are dependency-free helpers for querying and composing curves. They do not change Vixen samples, history, or seeded state. They are separate modules and do not import the Vixen core.
+
+## First threshold crossing
+
+`nextCrossing(curve, threshold, from, horizon, options)` and `next_crossing` search in increasing coordinate order. The query interval must lie inside `curve.domain` (or an explicitly supplied `options.domain`). A curve supplies `sample(x)` and an enclosure oracle. For Vixen deviations the hook is `encloseDeviation(lo, hi) -> [lower, upper]`; a general curve can use `enclosureProvider(lo, hi, measure)` or `options.enclose(lo, hi)`. The default measure is `deviation`. Enclosures must be finite, ordered, and sound for every output in the interval.
+
+Intervals are discarded only when their enclosure excludes the threshold. A result is `absent` only after the full query interval is certified root-free. A `found` result contains a tolerance-sized earliest bracket whose endpoint values straddle the threshold or meet it. Set `continuous: true` only when the curve is continuous on the queried domain; that assumption is needed to infer a crossing from opposite endpoint signs. Tangencies and intervals that cannot be decided at the requested tolerance return `unresolved`. Resource limits also return `unresolved`, listing the outstanding intervals. A found result lists unexamined intervals after its earliest bracket.
+
+Without a sound enclosure provider, the result is `unresolved` with reason `enclosure-unavailable`; sampled values alone never certify a search. `makeLipschitzEnclosure` / `make_lipschitz_enclosure` can build a conditional enclosure from a caller-certified Lipschitz constant and point-evaluation error. Its guarantee is only as sound as those caller-supplied assumptions. An arbitrary callback or sampled derivative estimate does not provide such a guarantee. No built-in Vixen enclosure provider is included here; core integration requires a separately reviewed provider.
+
+## Occupancy calibration
+
+`calibrateOccupancy(population, options)` / `calibrate_occupancy` fits a shifted, scaled tanh map from an explicit nonempty population of finite deviations to values in `(0, 1)`. Entries may be scalar deviations or `{deviation, weight}` records with positive finite weights. Options require `targetFraction` in `[0, 1]` and `outputThreshold` strictly in `(0, 1)`; positive `slope` and `scale` are optional. The cutoff is chosen from representable population boundaries to minimize empirical fraction error. Values tied at the cutoff are included (`deviation >= cutoff`). The result reports the achieved empirical fraction, difference, cutoff, population count, and total weight. Ties may make the requested fraction unattainable.
+
+`recipe` / `serialize()` contains only numeric mapping data and metadata; `restoreOccupancy` / `restore_occupancy` reconstructs evaluation. `validateOccupancy(calibration, holdout)` / `validate_occupancy` reports measured holdout fraction and error. It does not assert a future-population or all-seed guarantee or statistical confidence. Floating-point evaluation can plateau at machine precision. The mapping is an output adapter: it does not alter Vixen raw deviation or timeline history. Native integration should use an explicit seed/time population and persist the numeric recipe, not a callback.
+
+## Correlated channels
+
+`validateCorrelationMatrix` / `validate_correlation_matrix` checks a finite symmetric unit-diagonal matrix and factors positive-semidefinite matrices, including rank-deficient cases. The default PSD tolerance is `1e-10`. Symmetry and diagonal deviations within that tolerance are canonicalized for factorization; negative pivots or incompatible zero pivots outside tolerance are rejected.
+
+`createCorrelatedChannels(matrix, createSource, rootSeed, options)` / `create_correlated_channels` calls the injected source factory once per derived uint32 seed. The callback accepts that seed and returns a curve with `domain`, `sample(x)`, and `at(x, coordinates)`. `channel` is explicitly `score` or `unconstrainedDeviation`; source outputs are linearly combined using the lower factor. The returned immutable group has `sample`, `at`, source seeds/config descriptors, and a serializable numeric recipe. No clipping is applied. The root callback can bind Vixen configuration without introducing a dependency or Python import cycle.
+
+The requested matrix describes latent linear combinations under an independent standardized-source assumption. The factory does not standardize source curves. Empirical seed/time correlations must be measured for the intended ensemble with `measureChannelCorrelation` / `measure_channel_correlation`; zero-variance channels are rejected. Nonlinear constrained outputs are not promised to match the requested Pearson matrix. Seed derivation uses Vixen's 32-bit hash family; it does not promise cryptographic independence or collision-free behavior for arbitrary population sizes. Latent channels have no event meanings.

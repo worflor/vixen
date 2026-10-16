@@ -89,3 +89,25 @@ def capture_guide(fn,*,domain=(1,50000),count=129,derivative=None,curvature=None
   p['d1']=_guide_number(derivative(p['x']) if derivative is not None else d1);p['d2']=_guide_number(curvature(p['x']) if curvature is not None else d2)
  spec=sampled_guide(knots);compile_guide(spec);return spec
 def evaluate_guide(spec,x):return compile_guide(spec).evaluate(x)
+
+
+def guide_jet(guide,x):
+    from vixen_calculus import Jet
+    compiled=guide if hasattr(guide,'spec') and callable(getattr(guide,'evaluate',None)) else compile_guide(guide)
+    s,value=compiled.spec,compiled.evaluate(x)
+    if s['kind']=='polynomial':
+        coefficients,scale=s['coefficients'],s['scale'];z=(x-s['center'])/scale
+    else:
+        knots=s['knots'];lo,hi=0,len(knots)-1
+        while lo<hi:
+            mid=(lo+hi+1)//2
+            if knots[mid]['x']<=x:lo=mid
+            else:hi=mid-1
+        a=knots[lo]
+        if x==a['x']:return Jet(value,a['d1'],a['d2'])
+        b=knots[lo+1];h=b['x']-a['x'];A=a['y'];B=h*a['d1'];C=h*h*a['d2']/2
+        U=b['y']-(A+B+C);V=h*b['d1']-(B+2*C);W=h*h*b['d2']-2*C
+        coefficients=[A,B,C,10*U-4*V+W/2,-15*U+7*V-W,6*U-3*V+W/2];scale=h;z=(x-a['x'])/h
+    y=d1=d2=0.0
+    for coefficient in reversed(coefficients):d2=d2*z+2*d1;d1=d1*z+y;y=y*z+coefficient
+    return Jet(value,d1/scale,d2/scale/scale)

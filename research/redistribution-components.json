@@ -1,0 +1,27 @@
+{
+  "scope": "Polynomial component identities only; not a whole-program certificate",
+  "potential": "B(t)=t^4*(1-t)^4",
+  "engineVersion": "1.0.28",
+  "invocationId": "0529195f-87cd-496c-895c-d3d242f35100",
+  "checks": [
+    {"claim":"d/dx (x^4-4*x^5+6*x^6-4*x^7+x^8) :: derivative = 4*x^3-20*x^4+36*x^5-28*x^6+8*x^7","verdict":"CONFIRMED","derived":"8x^7 − 28x^6 + 36x^5 − 20x^4 + 4x^3"},
+    {"claim":"d/dx (4*x^3-20*x^4+36*x^5-28*x^6+8*x^7) :: derivative = 12*x^2-80*x^3+180*x^4-168*x^5+56*x^6","verdict":"CONFIRMED","derived":"56x^6 − 168x^5 + 180x^4 − 80x^3 + 12x^2"},
+    {"claim":"d/dx (12*x^2-80*x^3+180*x^4-168*x^5+56*x^6) :: derivative = 24*x-240*x^2+720*x^3-840*x^4+336*x^5","verdict":"CONFIRMED","derived":"336x^5 − 840x^4 + 720x^3 − 240x^2 + 24x"},
+    {"claim":"1-4+6-4+1 :: value = 0","verdict":"CONFIRMED","derived":"0"},
+    {"claim":"4-20+36-28+8 :: value = 0","verdict":"CONFIRMED","derived":"0"},
+    {"claim":"12-80+180-168+56 :: value = 0","verdict":"CONFIRMED","derived":"0"},
+    {"claim":"24-240+720-840+336 :: value = 0","verdict":"CONFIRMED","derived":"0"}
+  ],
+  "derivedConsequences": [
+    "At t=0, B and its first three derivatives vanish by their coefficients.",
+    "For finite polynomial P, B*P and its first three derivatives vanish at both endpoints.",
+    "The derivative of B*P extends by zero as a C2 perturbation with zero unweighted integral.",
+    "A finite positive affine window width preserves these real-arithmetic statements."
+  ],
+  "notEstablishedByThisReceipt": [
+    "Correctness of all implementation paths or their floating-point errors",
+    "Zero area after nonlinear projection or clipping",
+    "Zero area of baseline-weighted values or of nonlinear adapters",
+    "Soundness of unrelated crossing, occupancy or correlation claims"
+  ]
+}

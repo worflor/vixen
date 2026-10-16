@@ -1,0 +1,36 @@
+{
+  "scope": "Hermite endpoint residuals and two-channel real-arithmetic coupling conservation only; not runtime certification.",
+  "tool": "wolf.scryer.check",
+  "engine": "1.0.28",
+  "invocationId": "32d47d62-58c6-42e2-8140-74da18770bf2",
+  "result": {
+    "kind": "verdicts",
+    "refuted": 0,
+    "verdicts": [
+      {
+        "claim": "--reals forall u. forall v. forall w. (10*u-4*v+w/2)+(-15*u+7*v-w)+(6*u-3*v+w/2)=u :: true or false = true",
+        "derived": "true",
+        "said": "true",
+        "verdict": "CONFIRMED"
+      },
+      {
+        "claim": "--reals forall u. forall v. forall w. 3*(10*u-4*v+w/2)+4*(-15*u+7*v-w)+5*(6*u-3*v+w/2)=v :: true or false = true",
+        "derived": "true",
+        "said": "true",
+        "verdict": "CONFIRMED"
+      },
+      {
+        "claim": "--reals forall u. forall v. forall w. 6*(10*u-4*v+w/2)+12*(-15*u+7*v-w)+20*(6*u-3*v+w/2)=w :: true or false = true",
+        "derived": "true",
+        "said": "true",
+        "verdict": "CONFIRMED"
+      },
+      {
+        "claim": "--reals forall a. forall b. forall w. ((1-w)*a+w*(a+b)/2)+((1-w)*b+w*(a+b)/2)=a+b :: true or false = true",
+        "derived": "true",
+        "said": "true",
+        "verdict": "CONFIRMED"
+      }
+    ]
+  }
+}

@@ -18,7 +18,7 @@ test('operation-derived futures replay full lineage, preserve typed seeds, and v
  for(const x of [1,42,200,210,250,300.125,310,400])assert.deepEqual(b.sample(x),replay.sample(x));
  for(const opts of [{at:0,operation:'x'},{at:50000,operation:'x'},{at:200,operation:''},{at:200,operation:3},{at:200,operation:'x',handoffWidth:0},{at:200,operation:'x',surprise:1}])assert.throws(()=>root.fork(opts));
  assert.throws(()=>a.fork({at:199,operation:'rewind'}));
- const bad=b.snapshot();assert.throws(()=>restore({...bad,lineage:Array(33).fill({at:300,operation:'x',handoffWidth:16})}));
+ const bad=b.snapshot();assert.equal(restore({...bad,lineage:Array(33).fill({at:300,operation:'x',handoffWidth:16})}).lineage.length,33);
  assert.throws(()=>restore({...bad,lineage:[{at:200,operation:'x',handoffWidth:16,unknown:true}]}));
  const cyclic={algorithm:ALGORITHM,config:{}};cyclic.config.seed=cyclic;assert.throws(()=>restore(cyclic));
 });

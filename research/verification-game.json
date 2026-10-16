@@ -1,6 +1,6 @@
 {
   "algorithm": "vixen-hyperfield-c2/4",
-  "node_tests": 46,
+  "node_tests": 153,
   "cross_port": {
     "algorithm": "vixen-hyperfield-c2/4",
     "cases": 2400,

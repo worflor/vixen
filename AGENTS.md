@@ -32,7 +32,7 @@ uv build --wheel
 python tools/install_smoke.py
 ```
 
-Keep only one intended current tarball and wheel in the install-smoke input locations; preserve older generated distributions in disposable archival directories when needed. Research audits require their optional dependencies. Exercise both standalone and served UI paths when their integration changes.
+The install smoke selects artifacts by the current package version; older distributions may coexist without being installed accidentally. Research audits require their optional dependencies. Exercise both standalone and served UI paths when their integration changes.
 
 ## Invariants
 
