@@ -1,6 +1,6 @@
 # C2 output operations
 
-`vixen-operations.mjs` and `vixen_operations.py` add replayable output transforms without changing a source curve or its history. The algorithm identifier is `vixen-operation-c2/1`. Each snapshot nests the source snapshot and stores only numeric operation data. The root restore dispatcher must route this identifier to `restoreOperation(snapshot, restore)` or `restore_operation(snapshot, restore)`.
+`vixen-operations.mjs` and `vixen_operations.py` add replayable output transforms without changing a source curve or its history. The algorithm identifier is `vixen-operation-c2/1`. Snapshots store numeric operation data and a source snapshot or a backward graph reference; deep/shared compositions use `vixen-graph/1`. The root restore dispatcher must route this identifier to `restoreOperation(snapshot, restore)` or `restore_operation(snapshot, restore)`.
 
 ## Impulse
 
@@ -26,4 +26,4 @@ Nonzero coupling rejects sources with nonlinear floor or ceiling policies. With 
 
 Operation wrappers provide their own `sampleRange`/`sample_range`, `sample`, and `at` paths and recompute value-derived adapters while retaining source score, guide, inspection, and configuration channels. `location`, `inspect`, and ridge inspection remain source views. `fork` wraps the forked parent with the same operation recipe; `influence` is applied to the transformed wrapper. Tails nest the parent tail snapshot, so root restoration retains the lower domain bound and active operation recipe.
 
-`perturbationJet` and `perturbation_jet` return analytic perturbation value, first derivative, and second derivative. Root normalized sampling and parent jets are not implemented by these modules; wrapper derivative and normalized adapter methods fail explicitly until root integration supplies matching hooks. Numerical regression checks can exercise these constructions but do not certify whole-program behavior or arbitrary callbacks.
+`perturbationJet` and `perturbation_jet` return analytic perturbation value, first derivative, and second derivative. Public finite wrappers provide analytically propagated `jet`, `slope` and `curvature`, and normalized sampling of the actual transformed result. Their normalized domain is the wrapper's finite domain; it does not inherit a wider native range or an ancestor's values. Derivative orders report their own availability. The separate `/6` APIs retain extended values without promising arbitrary-precision derivatives. Numerical regression checks can exercise these constructions but do not certify whole-program behavior or arbitrary callbacks.

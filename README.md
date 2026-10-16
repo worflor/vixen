@@ -27,7 +27,7 @@ Root controls lock after a fork or influence to protect history. Display control
 
 ## Install
 
-Git installation requires access to this repository:
+Install directly from GitHub:
 
 ```sh
 npm install git+https://github.com/worflor/vixen.git
@@ -35,9 +35,9 @@ python -m pip install "vixen-curves @ git+https://github.com/worflor/vixen.git"
 ```
 
 ```js
-import {create, captureGuide, restore} from '@worflor/vixen';
+import {createCoherent, captureGuide, restore} from '@worflor/vixen';
 
-const root = create({seed: 'my-world', stabilizer: 0.3});
+const root = createCoherent({seed: 'my-world', stabilizer: 0.3});
 const guide = captureGuide(x => 80*Math.sin(x/23) + .3*x,
   {domain: [100, 500], count: 129});
 const guided = root.influence(guide,
@@ -49,9 +49,9 @@ const value = replay.sample(300).value;
 
 ```python
 import json, math
-from vixen import Vixen, capture_guide, restore
+from vixen import create_coherent, capture_guide, restore
 
-root = Vixen(seed='my-world', stabilizer=0.3)
+root = create_coherent(seed='my-world', stabilizer=0.3)
 guide = capture_guide(lambda x: 80*math.sin(x/23) + .3*x,
                       domain=[100, 500], count=129)
 guided = root.influence(guide, at=120, amount=0.7, handoffWidth=24)
@@ -134,4 +134,4 @@ See [technical design](docs/TDD.md) for distribution checks, self-contained expo
 
 Exact component findings, replayed certificates, implementation regressions and sampled audits establish different kinds of evidence. Scryer is a derivation instrument, not a runtime dependency or a whole-program certificate. Historical observations remain separate from current API contracts.
 
-Licensed under [MIT](LICENSE). Licensing, repository access and publication are independent controls; npm-registry publication is disabled by `private: true`.
+Licensed under [MIT](LICENSE). Install from GitHub using the commands above; no registry publication is required.

@@ -22,6 +22,11 @@ Unknown configuration keys and invalid values are rejected. Numeric 42 and text 
 `create(config)` returns an immutable instrument:
 
 - `sample(x)`: evaluate the configured path.
+- `sampleRange(x0, x1, count=129)`: sample both endpoints and evenly spaced intermediate coordinates; count is in `[2,100001]`.
+- `jet(x, coordinates?)`, `slope(x, coordinates?)`, `curvature(x, coordinates?)`: analytic finite-domain derivatives, with order-specific availability. See [calculus](CALCULUS.md).
+- `sampleNormalized(x)`, `atNormalized(x, h)`, `normalizedDomain`: normalized diagnostics and honest raw-value availability. A finite composition uses its own domain; extended composition has a separate [scaled-value contract](EXTENDED.md).
+- `impulse(at, magnitude, relaxation)` and `redistribute(window, shape)`: replayable, prefix-preserving output operations. See [operations](OPERATIONS.md).
+- `tail(from)`: a future-only checkpoint that retains active state and folds settled history.
 - `at(x, h)`: evaluate explicit 16-D coordinates, ignoring the configured path at that point. Coordinates must be finite in [-1e6,1e6].
 - `location(x)`: the configured path position. With canonical clock t=1+(x-1)*99/(openingEndpoint-1), h=latent+max(0,t-100)*velocity/100.
 - `inspect(x)`: fine and backbone ridge contributions before nonlinear transforms, sorted by absolute fine contribution. These do not sum directly to final deviation.

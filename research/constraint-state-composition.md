@@ -18,7 +18,7 @@ A smoothstep handoff has zero first and second derivatives at both endpoints. Ea
 
 Historical native algorithm4 and checkpoint2 retain applied-value blending. Their samples are not rewritten to satisfy the new invariant. A separate frozen corpus captures six constrained legacy timelines and sixty samples per language, including active checkpoint replay.
 
-The current default constructor is still algorithm4. Coherent construction is explicit until cross-language integration and rollout are complete.
+The default constructor retains algorithm4 for compatibility. Coherent construction is an explicit, shared contract in JavaScript, Python and Java; callers choose it rather than silently changing historical replay.
 
 ## Moving-bound intervals
 

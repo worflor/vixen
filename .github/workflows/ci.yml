@@ -1,26 +1,48 @@
 name: verify
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
   tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "20"
           cache: npm
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.10"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
       - run: npm ci
       - run: npm test
+      - run: npm run test:python
+      - run: npm run test:java
       - run: npm run typecheck
-      - run: python tests/test_python.py
-      - run: python tests/test_python_new_features.py
-      - run: python tests/cross_port.py
-      - run: python tools/build_instrument.py
-      - run: npm pack
+      - run: python tools/verify.py
+      - run: npm run test:fuzz
+      - run: python tools/mutation_probe.py
+      - run: npm run test:standalone
+      - run: npx --no-install playwright-core install --with-deps chromium
+      - name: Offline and HTTP instrument acceptance
+        run: |
+          export BROWSER_EXE="$(node --input-type=module -e 'import {chromium} from "playwright-core"; process.stdout.write(chromium.executablePath())')"
+          node tests/browser.mjs
+          node tests/browser-replay.mjs
+          node tests/browser-extended.mjs
+      - run: python tools/test_java_distribution.py
+      - run: python tools/build_java.py
+      - run: npm pack --ignore-scripts
       - run: python -m pip wheel . --no-deps -w dist
       - run: python tools/install_smoke.py
+      - run: python tools/test_installed_features.py

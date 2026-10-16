@@ -35,7 +35,7 @@ replay = restore(json.loads(json.dumps(f.snapshot())))
 - `taylorGuide`: derivative values at `center`, divided by their factorials to form a finite Taylor polynomial. It does not certify convergence or truncation error of the original function.
 - `sampledGuide`: ordered `{x,y,d1,d2}` knots. A quintic Hermite segment shares each knot's value, first derivative and second derivative with its neighbors.
 - `captureGuide`: evaluates a trusted callback at ordered knots once. Optional `derivative` and `curvature` callbacks supply jets; otherwise local quadratic divided differences estimate them. Any finite numeric function can be captured, including a discontinuous source, but the resulting C2 guide is an approximation. It may overshoot and may miss behavior between knots.
-- `compileGuide` validates and freezes a guide once, returning `spec`, `domain` and `evaluate(x)`. `evaluateGuide` is a convenient one-off evaluation that compiles each call.
+- `compileGuide` validates and freezes a guide once, returning `spec`, `domain`, `evaluate(x)` and analytic `jet(x)`. `evaluateGuide` is a convenient one-off evaluation that compiles each call.
 
 Python uses the corresponding snake_case names and read-only mapping/tuple views. Save guides through timeline snapshots for ordinary JSON data.
 
@@ -51,11 +51,15 @@ Later forks retain the guide while deriving another seed-specific future. Furthe
 
 ## Replay and domains
 
-A guided snapshot uses `vixen-influence-c2/1` and contains the underlying timeline snapshot, frozen guide data and attachment controls. Root `/4` snapshots and numerical behavior are unchanged. Replay never invokes a callback or executes stored source code. Save the **whole snapshot**, including nested influences.
+Basic historical value guides use `vixen-influence-c2/1`; windowed/relative guides use `/2` and additive guides use `/3`. Each stores its underlying timeline snapshot or graph reference, numeric guide data and attachment controls. Root `/4` snapshots and numerical behavior are unchanged. Replay never invokes a callback or executes stored source code. Save the **whole snapshot**, including nested influences.
 
-The effective upper domain is the smaller of the parent and guide upper endpoints. The guide must cover the attachment and handoff; earlier history remains available. Queries beyond the effective domain are rejected, not extrapolated. Attachment defaults to the latest recorded position or opening endpoint, amount to .5 and width to at most 16 within the domain.
+For a persistent influence, the effective upper domain is the smaller of the parent and guide upper endpoints. A windowed influence supplies `until` and `releaseWidth`: it attacks, holds, releases and delegates exactly to the parent at and after release completion. Its guide must cover the active window, but does not truncate the parent domain after release. The guide must cover the attachment and handoff; earlier history remains available. Queries beyond the effective domain are rejected, not extrapolated. Attachment defaults to the latest recorded position or opening endpoint, amount to .5 and width to at most 16 within the domain.
 
-Finite input limits protect replay: 1–65 polynomial coefficients, 2–2049 strictly increasing knots, finite numbers with magnitude at most 1e250, guide coordinates in [-1e6,1e6], and at most 32 combined forks/influences. Nonrepresentable capture grids and nonfinite evaluations are rejected. Compilation checks conservative absolute-coefficient bounds over the entire guide domain; cancellation-heavy forms may require recentering, rescaling or smaller segments. Callback capture is trusted local developer code, not a sandbox; bounded call count does not preempt an expensive or nonterminating callback.
+Finite input limits protect replay: 1–65 polynomial coefficients, 2–2049 strictly increasing knots, finite numbers with magnitude at most 1e250, guide coordinates in [-1e6,1e6]. Histories have no fixed 32-stage cap; replay/traversal validation and resource limits still apply. Nonrepresentable capture grids and nonfinite evaluations are rejected. Compilation checks conservative absolute-coefficient bounds over the entire guide domain; cancellation-heavy forms may require recentering, rescaling or smaller segments. Callback capture is trusted local developer code, not a sandbox; bounded call count does not preempt an expensive or nonterminating callback.
+
+## Reference units and additive mode
+
+`reference: 'value'` uses an absolute target. `reference: 'baseline'` targets `B*(1+d)`; `reference: 'backbone'` targets the unrestricted seeded guide plus `B*d`. `mode: 'add'` adds the weighted guide contribution instead of blending toward it. Relative additions use baseline units. Output constraints still apply. An arbitrary guide multiplied by a changing window is not automatically zero-integral. See [window semantics](INFLUENCE-WINDOWS.md), [coherent state composition](../../research/constraint-state-composition.md) and [extended guides](EXTENDED.md).
 
 The sensitivity bound remains conservative for unrestricted spatial deviation: a scalar guide adds no latent dependence, and the convex pull cannot increase that field sensitivity. Guided output envelopes are deliberately broad unless an explicit output policy supplies a tighter bound.
 

@@ -1,6 +1,6 @@
 # Timing, seeded openings and timelines
 
-Timing and immutable branches are part of both runtime objects.
+Timing and immutable branches are shared across the JavaScript, Python and Java runtimes.
 
 ## Translate the opening
 
@@ -12,7 +12,7 @@ t(x) = 1 + (x-1)*99/(openingEndpoint-1)
 
 At the default endpoint, the clock is exactly `t=x`. Consequently the two dips, baseline growth, field timing and configured travel all stretch with the opening. This is time reparameterization, not an additive offset or a new output scale. `ramp` remains in caller progression units: the chaos gate opens from `openingEndpoint` to `openingEndpoint+ramp`.
 
-`domain` is `[1, min(50000, 1+49999*(openingEndpoint-1)/99)]`. It keeps both the caller coordinate and canonical clock inside their supported domains. Short openings therefore reduce the maximum accepted caller coordinate. Inspect `domain` rather than assuming every timing configuration accepts 50000. An opening at the domain end may leave no usable continuation.
+For finite `/4` and `/5` construction, `domain` is `[1, min(50000, 1+49999*(openingEndpoint-1)/99)]`. It keeps both the caller coordinate and canonical clock inside their supported domains. Short openings therefore reduce the maximum accepted caller coordinate. Inspect `domain` rather than assuming every timing configuration accepts 50000. An opening at the domain end may leave no usable continuation.
 
 ## Seed the two dips
 
@@ -65,15 +65,21 @@ Fbranch(x) = (1-w)*Fparent(x) + w*Ffuture(x)
 
 The gate has zero first and second derivatives at both ends. It is `smooth5`, not the separate `boundaryRamp(t)=6t^3-8t^4+3t^5` floor/ceiling join; the two quintics have different jobs. Hence it matches parent position/value, slope and curvature at entry, and future value/slope/curvature at exit, wherever the parents are C2. It does not extrapolate or freeze the old slope indefinitely. Hard boundary policies can still introduce corners; a fork does not cure those.
 
-Actual constrained values, baseline, guide, unconstrained diagnostics and admissible limits are blended. Every adapter is then derived from the actual branch value and baseline. Convexity preserves a convex blend of parent/future floors and ceilings. Thus a baseline or backbone floor during handoff refers to the **blended trajectory**, not solely the latest leaf. This also preserves positivity and the conservative relative envelopes. `inspect` supplies weighted ridge contributions during a handoff, tagged with `sourceSeed` so overlapping branches do not disguise distinct ridges behind identical indices; `ridges()` describes the latest future leaf, not a complete historical or composite ridge bank.
+Historical `/4` construction blends applied values and its diagnostic channels, preserving its original arithmetic for replay. Coherent `/5` and extended `/6` instead blend unrestricted values, guide state, applicable bounds and boundary width, then apply output policy once. Adapters derive from the resulting value and baseline. A baseline or backbone floor during handoff refers to the **blended trajectory**, not solely the latest leaf. Mixing already constrained outputs is not interchangeable with coherent state composition; use the coherent constructor for new constrained compositions. `inspect` supplies weighted ridge contributions during a handoff, tagged with `sourceSeed` so overlapping branches do not disguise distinct ridges behind identical indices; `ridges()` describes the latest future leaf, not a complete historical or composite ridge bank.
 
-The handoff width defaults to 16, shortened only if needed to fit the domain. A width must be positive, representable and entirely inside `domain`; a fork at the domain endpoint is rejected. Nested forks cannot precede their parent's fork coordinate. Overlapping handoffs are supported. Maximum lineage depth is 32, explicitly bounded to keep untrusted replay and evaluation work finite.
+The handoff width defaults to 16, shortened only if needed to fit the domain. A width must be positive, representable and entirely inside `domain`; a fork at the domain endpoint is rejected. Nested forks cannot precede their parent's fork coordinate. Overlapping handoffs are supported. There is no fixed 32-stage lineage cap. Persistent indexed history makes settled native sampling independent of retired depth; historical queries locate their segment without recursively walking the full lineage. Active overlapping handoffs still require their intrinsic work. Replay and graph traversal retain explicit validation and resource limits.
 
 ## Save the timeline, not just its future seed
 
 Always save `instrument.snapshot()` / `curve.snapshot()`. The snapshot contains algorithm, full **root** configuration and ordered decision lineage. `config` describes the latest future leaf; reconstructing that alone discards all branches and their history. `lineage` also exposes derived seed metadata; snapshots omit these redundant seeds and recompute them on replay.
 
 Valid `/1`, `/2` and `/3` snapshots restore old numerical behavior, without retagging newer fields as old schemas. The exact `/3` source is retained in `legacy/v3-archive/`. New lineage fields are not accepted in old snapshots. Unknown snapshot/operation fields, malformed values and excessive depth are rejected.
+
+## Future-only checkpoints
+
+`tail(from)` and `restore` retain the future from a declared lower coordinate. Settled native entries are folded into a typed seed, folded count and SHA-256 history witness; open handoffs and active effects remain. The witness is a hash commitment, not an unforgeable signature or a proof that supplied history was genuine. Expired finite effects can be pruned. Checkpoint size follows irreducible live state, not all retired history. Deep or shared compositions use the flat `vixen-graph/1` format instead of deeply nested envelopes.
+
+Extended `/6` construction permits explicit progression through `2^40`; it has a separate value representation and checkpoint schema. See [extended contracts](EXTENDED.md).
 
 ## Evidence boundary
 
